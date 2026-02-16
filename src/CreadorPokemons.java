@@ -11,7 +11,19 @@ public class CreadorPokemons {
     private ArrayList<Pokémon> gen1 =  new ArrayList<>();
     private ArrayList<Pokémon> gen3 =  new ArrayList<>();
     private ArrayList<Pokémon> gen5 =  new ArrayList<>();
-
+    
+    // metodos para poder acceder a ellos en el menú de inicio
+     public ArrayList<Pokémon> getGen1() {
+          return this.gen1;
+     }
+     
+     public ArrayList<Pokémon> getGen3() {
+          return this.gen3;
+     }
+     
+     public ArrayList<Pokémon> getGen5() {
+          return this.gen5;
+     }
     /**
      * Ataques
      */
