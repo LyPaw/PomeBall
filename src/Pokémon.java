@@ -31,6 +31,15 @@ public class Pokémon {
     public String getNombre() {
         return nombre;
     }
+    public TipoPokemon getTipoPrincipal() {
+        return tipoPrincipal;
+    }
+    public TipoPokemon getTipoSecundario() {
+        return tipoSecundario;
+    }
+    public Generacion getGeneracion() {
+        return generacion;
+    }
 
 
     @Override
