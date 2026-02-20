@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bulbasaur",
+    "tipo": ["planta", "veneno"],
+    "generacion": 1,
+    "region": "Kanto",
+    "ps": 45,
+    "nivel": 1,
+    "ataques": ["Látigo Cepa", "Drenadoras"]
+  },
+  {
+    "id": 4,
+    "nombre": "Charmander",
+    "tipo": ["fuego"],
+    "generacion": 1,
+    "region": "Kanto",
+    "ps": 39,
+    "nivel": 1,
+    "ataques": ["Ascuas"]
+  },
+  {
+    "id": 7,
+    "nombre": "Squirtle",
+    "tipo": ["agua"],
+    "generacion": 1,
+    "region": "Kanto",
+    "ps": 44,
+    "nivel": 1,
+    "ataques": ["Burbuja"]
+  },
+  {
+    "id": 252,
+    "nombre": "Treecko",
+    "tipo": ["planta"],
+    "generacion": 3,
+    "region": "Hoenn",
+    "ps": 40,
+    "nivel": 1,
+    "ataques": ["Látigo Cepa"]
+  },
+  {
+    "id": 255,
+    "nombre": "Torchic",
+    "tipo": ["fuego"],
+    "generacion": 3,
+    "region": "Hoenn",
+    "ps": 45,
+    "nivel": 1,
+    "ataques": ["Ascuas"]
+  },
+  {
+    "id": 258,
+    "nombre": "Mudkip",
+    "tipo": ["agua"],
+    "generacion": 3,
+    "region": "Hoenn",
+    "ps": 50,
+    "nivel": 1,
+    "ataques": ["Burbuja"]
+  },
+  {
+    "id": 495,
+    "nombre": "Snivy",
+    "tipo": ["planta"],
+    "generacion": 5,
+    "region": "Unova",
+    "ps": 45,
+    "nivel": 1,
+    "ataques": ["Látigo Cepa"]
+  },
+  {
+    "id": 498,
+    "nombre": "Tepig",
+    "tipo": ["fuego"],
+    "generacion": 5,
+    "region": "Unova",
+    "ps": 65,
+    "nivel": 1,
+    "ataques": ["Ascuas"]
+  },
+  {
+    "id": 501,
+    "nombre": "Oshawott",
+    "tipo": ["agua"],
+    "generacion": 5,
+    "region": "Unova",
+    "ps": 55,
+    "nivel": 1,
+    "ataques": ["Burbuja"]
+  }
+]
