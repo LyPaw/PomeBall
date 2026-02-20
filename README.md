@@ -1,4 +1,3 @@
-
 ```
                                             ,'\
               _.----.        ____         ,'  _\   ___    ___     ____
@@ -55,7 +54,6 @@
 
 <div align="center">
 
-
 # 🎮 Proyecto Pokémon
 
 *Un juego Pokémon desarrollado en Java, con transición a JavaFX*
@@ -64,6 +62,7 @@
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk&logoColor=white)
 ![JavaFX](https://img.shields.io/badge/JavaFX-23-blue?logo=java&logoColor=white)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow)
+[![Pokédex Web](https://img.shields.io/badge/Pok%C3%A9dex-Ver%20web-%23e94560?style=flat&logo=github)](https://LyPaw.github.io/nombre-del-repo)
 
 </div>
 
@@ -72,8 +71,6 @@
 ## 📖 Descripción
 
 **Proyecto Pokémon** es un juego por consola desarrollado en Java puro, actualmente en transición hacia una interfaz gráfica con **JavaFX**. El proyecto simula mecánicas clásicas de la saga Pokémon: elección de Pokémon inicial, sistema de ataques con PP, gestión del equipo del entrenador, inventario de ítems y captura de Pokémon salvajes.
-
-El objetivo es recrear la experiencia de los juegos principales de Pokémon de forma progresiva, empezando por la selección de iniciales de las **Generaciones 1, 3 y 5**.
 
 ---
 
@@ -94,6 +91,9 @@ PokemonProject/
 │   ├── TipoPokemon.java       ← Enum de tipos
 │   ├── TipoItem.java          ← Enum de tipos de ítem
 │   └── Generacion.java        ← Enum de generaciones
+└── docs/
+    ├── index.html             ← Pokédex web (GitHub Pages)
+    └── pokemons.json          ← Datos de Pokémon disponibles
 ```
 
 ---
@@ -105,6 +105,8 @@ PokemonProject/
 | Gen 1 | Bulbasaur 🌿 · Charmander 🔥 · Squirtle 💧 |
 | Gen 3 | Treecko 🌿 · Torchic 🔥 · Mudkip 💧 |
 | Gen 5 | Snivy 🌿 · Tepig 🔥 · Oshawott 💧 |
+
+> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/nombre-del-repo) para verlos con sprites.
 
 ---
 
@@ -129,6 +131,7 @@ PokemonProject/
 - [x] Sistema de generaciones y selección de inicial
 - [x] Sistema de PP en ataques
 - [x] Inventario y captura de Pokémon
+- [x] Pokédex web con GitHub Pages
 - [ ] Interfaz gráfica con JavaFX
 - [ ] Pantalla de selección de Pokémon inicial
 - [ ] Sistema de combate por turnos
