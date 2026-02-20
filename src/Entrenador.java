@@ -58,6 +58,14 @@ public class Entrenador {
         }
     }
 
+    /*public boolean elegirPokemonInicial(Pokémon pokemon) {
+        if (pokemonInicialElegido) return false; // ya eligió
+        equipo.getPokemonList().add(pokemon);
+        pokemonInicialElegido = true;
+        return true;
+    } Carmbiar a este metodo
+    */
+
     public boolean agregarPokemonAlEquipo(Pokémon pokemon){
         System.out.print("El pokémon se ha añadido al equipo-->");
         return true;

@@ -119,25 +119,16 @@ public class CreadorPokemons {
         pokemonsPorGeneracion.put(Generacion.GEN5,gen5);
     }
 
-
-    public String AtaquesCharmander(){
-        return charmander.mostrarAtaques();
+    public String getAtaquesPokemon(String nombrePokemon) {
+        for (ArrayList<Pokémon> generacion : pokemonsPorGeneracion.values()) {
+            for (Pokémon pokemon : generacion) {
+                if (pokemon.getNombre().equalsIgnoreCase(nombrePokemon)) {
+                    return pokemon.mostrarAtaques();
+                }
+            }
+        }
+        return "Pokémon no encontrado o sin ataques.";
     }
-    public String AtaquesBulbasur(){
-        return bulbasur.mostrarAtaques();
-    }
-    public String AtaquesSquirtle(){
-        return squirtle.mostrarAtaques();
-    }
-
-    public String AtaquesTorchic(){return torchic.mostrarAtaques();}
-    public String AtaquesTreecko(){return treecko.mostrarAtaques();}
-    public String AtaquesMudkip(){return mudkip.mostrarAtaques();}
-
-    public String AtaquesSnivy(){return snivy.mostrarAtaques();}
-    public String AtaquesTepig(){return tepig.mostrarAtaques();}
-    public String AtaquesOshawott(){return oshawott.mostrarAtaques();}
-
 
     @Override
     public String toString() {
