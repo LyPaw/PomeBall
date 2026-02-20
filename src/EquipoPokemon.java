@@ -6,9 +6,12 @@ public class EquipoPokemon {
     public EquipoPokemon(int Max_Equipo){
         this.Max_Equipo = Max_Equipo;
     }
-    ArrayList<Pokémon>  getPokemonList(){
+    private ArrayList<Pokémon> pokemonList = new ArrayList<>();
+
+    public ArrayList<Pokémon> getPokemonList() {
         return PokemonList;
     }
+
     ArrayList<Pokémon> setPokemonList(Pokémon pokemon){
         PokemonList.add(pokemon);
         return PokemonList;
