@@ -13,12 +13,11 @@ public class Main {
         }
     }
      
-     public static void mostrarMenu(CreadorPokemons c,
+     public static void mostrarMenu(CreadorPokemons c, Scanner sc,
                                     ArrayList<Pokémon> gen1,
                                     ArrayList<Pokémon> gen3,
                                     ArrayList<Pokémon> gen5) {
          
-          Scanner sc = new Scanner(System.in);
           System.out.println("Elige tu generación de iniciales: ");
           System.out.println("1 - Generación 1 | 2 - Generación 3 | 3 - Generación 5");
           
@@ -90,7 +89,8 @@ public class Main {
          System.out.println("Ataques de Tepig " + c.AtaquesTepig());
          System.out.println("Ataques de Oshawott " +  c.AtaquesOshawott());
          
-         mostrarMenu(c, listaGen1, listaGen3, listaGen5);
+         
+         mostrarMenu(c, sc, listaGen1, listaGen3, listaGen5);
          
     }
 }
