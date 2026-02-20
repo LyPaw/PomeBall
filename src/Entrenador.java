@@ -7,7 +7,7 @@ public class Entrenador {
     private int dinero;
     private EquipoPokemon equipo;
     private Inventario inventario;
-    private int AventurasCompletadas;
+    private int aventurasCompletadas;
     private boolean pokemonInicialElegido;
 
     public String getNombre() {
@@ -37,10 +37,10 @@ public class Entrenador {
         this.inventario = Inventario;
     }
     public int getAventurasCompletadas() {
-        return AventurasCompletadas;
+        return aventurasCompletadas;
     }
     public void setAventurasCompletadas(int AventurasCompletadas) {
-        this.AventurasCompletadas = AventurasCompletadas;
+        this.aventurasCompletadas = AventurasCompletadas;
     }
     public boolean isPokemonInicialElegido() {
         return pokemonInicialElegido;
