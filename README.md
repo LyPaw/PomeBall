@@ -106,7 +106,7 @@ PokemonProject/
 | Gen 3 | Treecko 🌿 · Torchic 🔥 · Mudkip 💧 |
 | Gen 5 | Snivy 🌿 · Tepig 🔥 · Oshawott 💧 |
 
-> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/Pokemon-OPP) para verlos con sprites.
+> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PokeRealm) para verlos con sprites.
 
 ---
 
