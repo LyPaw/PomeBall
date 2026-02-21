@@ -342,11 +342,17 @@
       padding: 0.05rem 0.35rem; transition: background 0.3s;
     }
 
+    /* ── FIX: región en pie de card, sin solaparse con GEN ── */
     .gc-region {
-      position: absolute; top: 0; right: 0;
+      display: block;
+      text-align: right;
       font-family: 'Press Start 2P', monospace; font-size: 0.32rem;
-      background: rgba(0,0,0,0.08); color: var(--muted);
-      padding: 0.2rem 0.4rem; border-radius: 0 2px 0 3px; letter-spacing: 0.05em;
+      color: var(--muted);
+      padding: 0.2rem 0.5rem 0.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--card-top);
+      letter-spacing: 0.05em;
+      transition: background 0.3s;
     }
 
     /* ── EMPTY ───────────────────────────────── */
@@ -458,14 +464,12 @@
     localStorage.setItem('pk-theme', isDark ? 'light' : 'dark');
   }
 
-  // Restore saved theme
   const saved = localStorage.getItem('pk-theme');
   if (saved) {
     document.documentElement.setAttribute('data-theme', saved);
     if (saved === 'dark') document.getElementById('themeToggle').textContent = '◑ TEMA';
   }
 
-  // ── Pokémon data ─────────────────────────────
   const SPRITE_URL = id =>
     `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
   const CRY_URL = id =>
@@ -539,7 +543,6 @@
 
       return `
         <div class="gc-card" style="animation-delay:${i * 0.04}s" onclick="playSound(${p.id}, this)">
-          <div class="gc-region">${p.region || ''}</div>
           <div class="gc-card-bar">
             <span class="gc-card-num">NO.${String(p.id).padStart(3,'0')}</span>
             <span class="gc-card-gen">GEN ${p.generacion}</span>
@@ -568,6 +571,7 @@
             </div>
             <div class="gc-ataques">${ataquesTags}</div>
           </div>
+          <div class="gc-region">${p.region || ''}</div>
         </div>`;
     }).join('');
   }
