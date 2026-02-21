@@ -28,6 +28,10 @@ public class Pokémon {
         ataques.add(ataque);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getNombre() {
         return nombre;
     }
