@@ -1,379 +1,473 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="author" content="LyPaw">
   <title>Pokédex — PokeRealm</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
   <style>
+    /* ── LIGHT THEME (default) ───────────────── */
     :root {
-      --bg:        #1a1a2e;
-      --surface:   #16213e;
-      --card:      #0f3460;
-      --red:       #e94560;
-      --yellow:    #f5a623;
-      --green:     #4cd964;
-      --blue:      #4fc3f7;
-      --purple:    #ce93d8;
-      --text:      #eaeaea;
-      --muted:     #7986a3;
-      --border:    #1e3a5f;
+      --bg:         #F0F0F5;
+      --surface:    #FFFFFF;
+      --card-bg:    #FAFAFA;
+      --card-top:   #EFEFEF;
+      --border:     #D0D0DC;
+      --border-mid: #B8B8CC;
+      --text:       #1a1a2e;
+      --muted:      #7070A0;
+      --topbar-bg:  #CC0000;
+      --topbar-txt: #FFFFFF;
+      --logo-color: #CC0000;
+      --accent:     #CC0000;
+      --accent-glow:rgba(204,0,0,0.18);
+      --btn-bg:     #EFEFEF;
+      --btn-border: #C0C0D0;
+      --btn-color:  #7070A0;
+      --scan:       rgba(0,0,0,0.02);
+      --vignette:   rgba(0,0,0,0.08);
+      --header-bg1: #F8F8FF;
+      --header-bg2: #F0F0F8;
+      --controls-bg:#FAFAFE;
+      --stat-track: #E0E0EC;
+      --card-num:   #AAAACC;
+      --card-gen-c: #CC0000;
+      --count-c:    #CC0000;
+      --footer-bg:  #F0F0F8;
+      --footer-bd:  #D0D0E0;
+      --gc-green:   #009933;
+      --gc-blue:    #0066CC;
+      --gc-teal:    #007799;
+      --ataque-bg:  #F0F0FF;
+      --ataque-bd:  #C0C0E0;
+      --ataque-txt: #5050A0;
+    }
 
-      /* tipo colores */
-      --fuego:   #FF6B35;
-      --agua:    #4FC3F7;
-      --planta:  #66BB6A;
-      --veneno:  #CE93D8;
-      --normal:  #A8A878;
-      --electrico: #F7DC6F;
-      --tierra:  #E0A96D;
-      --roca:    #B8A038;
-      --bicho:   #A8B820;
-      --fantasma:#705898;
-      --acero:   #B8B8D0;
-      --hielo:   #98D8D8;
-      --lucha:   #C03028;
-      --psiquico:#F85888;
-      --dragon:  #7038F8;
-      --siniestro:#705848;
-      --hada:    #EE99AC;
+    /* ── DARK THEME ──────────────────────────── */
+    [data-theme="dark"] {
+      --bg:         #0d0d14;
+      --surface:    #111118;
+      --card-bg:    #13131e;
+      --card-top:   #1a1422;
+      --border:     #2a2a3a;
+      --border-mid: #3a3a5a;
+      --text:       #E8E8F5;
+      --muted:      #5a5a7a;
+      --topbar-bg:  #880000;
+      --topbar-txt: #FFFFFF;
+      --logo-color: #FF3333;
+      --accent:     #FF3333;
+      --accent-glow:rgba(255,51,51,0.2);
+      --btn-bg:     #0d0d1a;
+      --btn-border: #2a2a4a;
+      --btn-color:  #5a5a7a;
+      --scan:       rgba(255,255,255,0.025);
+      --vignette:   rgba(0,0,0,0.55);
+      --header-bg1: #1a1428;
+      --header-bg2: #110e1e;
+      --controls-bg:#0f0f1c;
+      --stat-track: #1a1a2e;
+      --card-num:   #3a3a5a;
+      --card-gen-c: #FF3333;
+      --count-c:    #FF6666;
+      --footer-bg:  #0d0d14;
+      --footer-bd:  #1e1e2e;
+      --gc-green:   #33CC66;
+      --gc-blue:    #3399FF;
+      --gc-teal:    #00BBBB;
+      --ataque-bg:  #0d0d20;
+      --ataque-bd:  #2a2a4a;
+      --ataque-txt: #7070A0;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: #000; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Nunito', sans-serif;
+      font-family: 'VT323', monospace;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
+      transition: background 0.3s, color 0.3s;
     }
 
-    /* Fondo animado con píxeles */
+    /* CRT scanlines */
     body::before {
       content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background-image:
-        radial-gradient(circle at 20% 20%, rgba(233,69,96,0.06) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(79,195,247,0.06) 0%, transparent 40%),
-        repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(255,255,255,0.015) 31px, rgba(255,255,255,0.015) 32px),
-        repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(255,255,255,0.015) 31px, rgba(255,255,255,0.015) 32px);
-      pointer-events: none;
+      position: fixed; inset: 0; z-index: 999; pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        var(--scan) 2px, var(--scan) 4px
+      );
     }
 
-    /* ── HEADER ─────────────────────────────── */
+    /* Vignette */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 998; pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 55%, var(--vignette) 100%);
+    }
+
+    /* ── HEADER ──────────────────────────────── */
     header {
+      background: linear-gradient(180deg, var(--header-bg1) 0%, var(--header-bg2) 100%);
+      border-bottom: 3px solid var(--accent);
       position: relative; z-index: 1;
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
-      border-bottom: 3px solid var(--red);
-      background: linear-gradient(180deg, rgba(233,69,96,0.12) 0%, transparent 100%);
+      padding: 0;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    .logo {
+    .gc-topbar {
+      background: var(--topbar-bg);
+      padding: 0.25rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.3s;
+    }
+
+    .gc-topbar-text {
       font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1rem, 4vw, 1.8rem);
-      color: var(--red);
-      text-shadow: 3px 3px 0 #7a1020, 0 0 30px rgba(233,69,96,0.4);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
+      font-size: 0.42rem; color: var(--topbar-txt);
+      letter-spacing: 0.08em;
     }
 
-    .logo span { color: var(--yellow); }
+    /* Theme toggle button */
+    .theme-toggle {
+      font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
+      background: none; border: 1px solid rgba(255,255,255,0.3);
+      color: var(--topbar-txt); padding: 0.2rem 0.5rem;
+      cursor: pointer; letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(255,255,255,0.15); }
 
-    .subtitle {
-      font-family: 'VT323', monospace;
-      font-size: 1.3rem;
-      color: var(--muted);
-      letter-spacing: 0.2em;
+    .gc-header-inner {
+      padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
     }
 
-    /* ── CONTROLES ───────────────────────────── */
-    .controls {
+    .gc-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.9rem, 3vw, 1.4rem);
+      color: var(--logo-color);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.15), 0 0 20px var(--accent-glow);
+      letter-spacing: 0.08em; line-height: 1.6;
+      transition: color 0.3s;
+    }
+
+    .gc-logo span {
+      display: block; font-size: 0.42rem;
+      color: var(--gc-teal);
+      letter-spacing: 0.22em; margin-top: 0.2rem;
+    }
+
+    .gc-header-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;
+    }
+
+    .gc-count {
+      font-family: 'Press Start 2P', monospace; font-size: 0.42rem;
+      color: var(--count-c);
+    }
+    .gc-count em { color: var(--gc-teal); font-style: normal; }
+
+    .gc-dots { display: flex; gap: 0.4rem; }
+    .gc-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      box-shadow: inset -2px -2px 3px rgba(0,0,0,0.25);
+    }
+
+    /* ── CONTROLS ────────────────────────────── */
+    .gc-controls {
+      background: var(--controls-bg);
+      border-bottom: 2px solid var(--border);
+      padding: 0.8rem 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
       position: relative; z-index: 1;
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      justify-content: center; align-items: center;
-      padding: 1.5rem 2rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .gc-search {
+      display: flex; align-items: center; gap: 0.4rem;
       background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      border: 2px solid var(--border);
+      border-radius: 2px; padding: 0.35rem 0.7rem;
+      transition: border-color 0.2s, background 0.3s;
     }
-
-    .search-box {
-      display: flex; align-items: center; gap: 0.5rem;
-      background: var(--card); border: 2px solid var(--border);
-      border-radius: 8px; padding: 0.5rem 1rem;
-      transition: border-color 0.2s;
-    }
-    .search-box:focus-within { border-color: var(--red); }
-    .search-box input {
+    .gc-search:focus-within { border-color: var(--accent); }
+    .gc-search input {
       background: none; border: none; outline: none;
-      color: var(--text); font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem; width: 200px;
+      color: var(--text); font-family: 'VT323', monospace;
+      font-size: 1.1rem; width: 160px;
+      transition: color 0.3s;
     }
-    .search-box input::placeholder { color: var(--muted); }
+    .gc-search input::placeholder { color: var(--muted); }
 
-    .filter-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .gc-sep { width: 1px; height: 24px; background: var(--border); }
 
-    .filter-btn {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.45rem; padding: 0.5rem 0.8rem;
-      border-radius: 6px; border: 2px solid transparent;
-      cursor: pointer; transition: all 0.15s;
-      background: var(--card); color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      border-color: var(--red); color: var(--text);
-      background: rgba(233,69,96,0.15);
-    }
+    .gc-filter-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
-    .count-label {
-      font-family: 'VT323', monospace;
-      font-size: 1.1rem; color: var(--muted);
-      margin-left: auto;
+    .gc-btn {
+      font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
+      padding: 0.35rem 0.65rem;
+      background: var(--btn-bg);
+      border: 2px solid var(--btn-border);
+      color: var(--btn-color);
+      cursor: pointer; letter-spacing: 0.05em; border-radius: 2px;
+      transition: all 0.15s;
     }
-    .count-label span { color: var(--yellow); }
+    .gc-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .gc-btn.active {
+      background: var(--surface);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
 
     /* ── GRID ────────────────────────────────── */
-    .grid {
+    .gc-grid {
       position: relative; z-index: 1;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 1rem;
+      padding: 1.2rem 1.5rem 3rem;
+      max-width: 1300px; margin: 0 auto;
     }
 
     /* ── CARD ────────────────────────────────── */
-    .card {
-      background: var(--card);
+    .gc-card {
+      background: var(--card-bg);
       border: 2px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-      animation: cardIn 0.4s ease both;
-      position: relative;
+      border-radius: 2px; overflow: hidden;
+      cursor: pointer; position: relative;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s, background 0.3s;
+      animation: gcIn 0.3s ease both;
+    }
+    .gc-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 0 12px var(--accent-glow);
+    }
+    .gc-card.playing {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent), 0 0 20px var(--accent-glow);
+      animation: gcIn 0.3s ease both, gcPulse 0.8s ease infinite alternate;
     }
 
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: var(--red);
-      box-shadow: 0 12px 40px rgba(233,69,96,0.25), 0 0 0 1px rgba(233,69,96,0.2);
-    }
-
-    .card.playing {
-      border-color: var(--yellow);
-      box-shadow: 0 0 0 2px var(--yellow), 0 12px 40px rgba(245,166,35,0.3);
-      animation: pulse 0.6s ease infinite alternate;
-    }
-
-    @keyframes pulse {
-      from { box-shadow: 0 0 0 2px var(--yellow), 0 8px 30px rgba(245,166,35,0.2); }
-      to   { box-shadow: 0 0 0 3px var(--yellow), 0 12px 40px rgba(245,166,35,0.5); }
-    }
-
-    .sound-hint {
-      position: absolute; bottom: 6px; right: 8px;
-      font-size: 0.75rem; opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-
-    .card:hover .sound-hint { opacity: 0.6; }
-    .card.playing .sound-hint { opacity: 1; animation: spin 0.5s linear infinite; }
-
-    @keyframes spin {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(20px); }
+    @keyframes gcIn {
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    .card-header {
-      padding: 1rem 1rem 0.5rem;
-      display: flex; justify-content: space-between; align-items: flex-start;
+    @keyframes gcPulse {
+      from { box-shadow: 0 0 0 1px var(--accent), 0 0 10px var(--accent-glow); }
+      to   { box-shadow: 0 0 0 2px var(--accent), 0 0 25px var(--accent-glow); }
     }
 
-    .card-id {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem; color: var(--muted);
+    .gc-card-bar {
+      background: var(--card-top);
+      border-bottom: 1px solid var(--border);
+      padding: 0.35rem 0.6rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.3s;
+    }
+    .gc-card-num {
+      font-family: 'Press Start 2P', monospace; font-size: 0.42rem;
+      color: var(--card-num);
+    }
+    .gc-card-gen {
+      font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
+      color: var(--card-gen-c);
     }
 
-    .card-gen {
-      font-family: 'VT323', monospace;
-      font-size: 0.9rem; color: var(--muted);
-      background: rgba(255,255,255,0.05);
-      padding: 0.1rem 0.4rem; border-radius: 4px;
-    }
-
-    .card-img {
+    .gc-card-img {
+      background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 65%);
       display: flex; justify-content: center; align-items: center;
-      padding: 0.5rem;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
-      min-height: 110px;
+      padding: 0.8rem 0.4rem 0.5rem; min-height: 105px;
       position: relative;
     }
+    .gc-card-img img {
+      width: 82px; height: 82px;
+      image-rendering: pixelated; image-rendering: crisp-edges;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+      transition: transform 0.2s;
+    }
+    .gc-card:hover .gc-card-img img { transform: scale(1.12); }
 
-    .card-img img {
-      width: 90px; height: 90px;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
-      transition: transform 0.3s;
+    .gc-sound {
+      position: absolute; bottom: 4px; right: 6px;
+      font-size: 0.65rem; opacity: 0; transition: opacity 0.2s;
+    }
+    .gc-card:hover .gc-sound { opacity: 0.4; }
+    .gc-card.playing .gc-sound { opacity: 1; }
+
+    .gc-card-body { padding: 0.6rem 0.7rem 0.8rem; }
+
+    .gc-card-name {
+      font-family: 'Press Start 2P', monospace; font-size: 0.52rem;
+      color: var(--text); margin-bottom: 0.5rem; line-height: 1.6;
+      transition: color 0.3s;
     }
 
-    .card:hover .card-img img {
-      transform: scale(1.15) translateY(-4px);
+    .gc-tipos { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.55rem; }
+    .gc-tipo {
+      font-family: 'Press Start 2P', monospace; font-size: 0.32rem;
+      padding: 0.2rem 0.4rem; color: #fff; font-weight: 700; border-radius: 1px;
     }
 
-    .card-body { padding: 0.8rem 1rem 1rem; }
-
-    .card-name {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.6rem; color: var(--text);
-      margin-bottom: 0.6rem;
-      line-height: 1.5;
+    .gc-stat { margin-bottom: 0.3rem; }
+    .gc-stat-row { display: flex; justify-content: space-between; margin-bottom: 0.18rem; }
+    .gc-stat-lbl {
+      font-family: 'Press Start 2P', monospace; font-size: 0.35rem; color: var(--muted);
+    }
+    .gc-stat-num {
+      font-family: 'Press Start 2P', monospace; font-size: 0.38rem; color: var(--gc-green);
+    }
+    .gc-bar { height: 4px; background: var(--stat-track); border: 1px solid var(--border); }
+    .gc-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gc-teal));
     }
 
-    .tipos { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-
-    .tipo-badge {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.38rem; padding: 0.3rem 0.5rem;
-      border-radius: 4px; text-transform: uppercase;
-      letter-spacing: 0.05em; font-weight: 700;
-      color: #111;
+    .gc-ataques {
+      margin-top: 0.5rem; padding-top: 0.4rem;
+      border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: 0.25rem;
+    }
+    .gc-ataque {
+      font-size: 0.8rem; color: var(--ataque-txt);
+      background: var(--ataque-bg); border: 1px solid var(--ataque-bd);
+      padding: 0.05rem 0.35rem; transition: background 0.3s;
     }
 
-    .stat-row {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 0.35rem;
-    }
-
-    .stat-label {
-      font-family: 'VT323', monospace;
-      font-size: 0.85rem; color: var(--muted);
-    }
-
-    .stat-bar-wrap {
-      flex: 1; height: 6px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 3px; margin: 0 0.5rem;
-      overflow: hidden;
-    }
-
-    .stat-bar {
-      height: 100%; border-radius: 3px;
-      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .stat-value {
-      font-family: 'VT323', monospace;
-      font-size: 0.9rem; color: var(--text);
-      min-width: 22px; text-align: right;
-    }
-
-    .ataques-list {
-      margin-top: 0.6rem;
-      display: flex; flex-wrap: wrap; gap: 0.3rem;
-    }
-
-    .ataque-tag {
-      font-family: 'VT323', monospace;
-      font-size: 0.75rem;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid var(--border);
-      border-radius: 4px; padding: 0.1rem 0.4rem;
-      color: var(--muted);
-    }
-
-    /* ── REGIÓN BANNER ───────────────────────── */
-    .region-label {
+    .gc-region {
       position: absolute; top: 0; right: 0;
-      font-family: 'VT323', monospace; font-size: 0.8rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 0 10px 0 8px;
-      background: rgba(0,0,0,0.4);
-      color: var(--muted);
-      letter-spacing: 0.1em;
+      font-family: 'Press Start 2P', monospace; font-size: 0.32rem;
+      background: rgba(0,0,0,0.08); color: var(--muted);
+      padding: 0.2rem 0.4rem; border-radius: 0 2px 0 3px; letter-spacing: 0.05em;
     }
 
-    /* ── EMPTY STATE ─────────────────────────── */
-    .empty {
+    /* ── EMPTY ───────────────────────────────── */
+    .gc-empty {
       grid-column: 1/-1; text-align: center;
-      padding: 4rem 2rem; color: var(--muted);
+      padding: 4rem; color: var(--muted);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem; line-height: 2.5;
     }
-    .empty .pixel { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; line-height: 2; }
 
     /* ── FOOTER ──────────────────────────────── */
     footer {
       position: relative; z-index: 1;
-      text-align: center; padding: 2rem;
-      border-top: 1px solid var(--border);
-      font-family: 'VT323', monospace;
-      font-size: 1rem; color: var(--muted);
-      letter-spacing: 0.1em;
+      background: var(--footer-bg);
+      border-top: 2px solid var(--footer-bd);
+      padding: 1rem 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      justify-content: space-between; align-items: center;
+      transition: background 0.3s;
     }
+    .gc-footer-left { font-size: 0.95rem; color: var(--muted); }
+    .gc-footer-left a { color: var(--muted); text-decoration: none; }
+    .gc-footer-left a:hover { color: var(--accent); }
 
-    footer a { color: var(--red); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    .gc-footer-team { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .gc-footer-team a {
+      font-family: 'Press Start 2P', monospace; font-size: 0.35rem;
+      color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); padding: 0.25rem 0.5rem;
+      transition: all 0.15s;
+    }
+    .gc-footer-team a:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── RESPONSIVE ──────────────────────────── */
     @media (max-width: 600px) {
-      .grid { padding: 1rem; gap: 1rem; }
-      .controls { flex-direction: column; align-items: stretch; }
-      .count-label { margin: 0; text-align: center; }
+      .gc-grid { padding: 0.8rem; gap: 0.8rem; }
+      .gc-controls { padding: 0.8rem; }
+      .gc-topbar { flex-wrap: wrap; gap: 0.3rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">POKÉDEX <span>▸</span>PokeRealm</div>
-  <div class="subtitle">// Pokémons disponibles en el juego</div>
+  <div class="gc-topbar">
+    <span class="gc-topbar-text">POKÉDEX v1.0 — INSERT CARTRIDGE</span>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">◐ TEMA</button>
+  </div>
+  <div class="gc-header-inner">
+    <div>
+      <div class="gc-logo">
+        POKÉDEX | PokeRealm
+        <span>SELECCIONA TU INICIAL</span>
+      </div>
+    </div>
+    <div class="gc-header-right">
+      <div class="gc-count">MOSTRANDO <em id="count">0</em> POKÉMON</div>
+      <div class="gc-dots">
+        <div class="gc-dot" style="background:#CC0000"></div>
+        <div class="gc-dot" style="background:#FFE000"></div>
+        <div class="gc-dot" style="background:#33CC66"></div>
+        <div class="gc-dot" style="background:#3399FF"></div>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class="controls">
-  <div class="search-box">
+<div class="gc-controls">
+  <div class="gc-search">
     <span>🔍</span>
-    <input type="text" id="search" placeholder="Buscar Pokémon..."/>
+    <input type="text" id="search" placeholder="BUSCAR..."/>
   </div>
-
-  <div class="filter-btns">
-    <button class="filter-btn active" data-filter="todos">TODOS</button>
-    <button class="filter-btn" data-filter="1">GEN I</button>
-    <button class="filter-btn" data-filter="3">GEN III</button>
-    <button class="filter-btn" data-filter="5">GEN V</button>
-    <button class="filter-btn" data-filter="fuego">🔥</button>
-    <button class="filter-btn" data-filter="agua">💧</button>
-    <button class="filter-btn" data-filter="planta">🌿</button>
+  <div class="gc-sep"></div>
+  <div class="gc-filter-row">
+    <button class="gc-btn active" data-filter="todos">TODOS</button>
+    <button class="gc-btn" data-filter="1">GEN I</button>
+    <button class="gc-btn" data-filter="3">GEN III</button>
+    <button class="gc-btn" data-filter="5">GEN V</button>
   </div>
-
-  <div class="count-label">Mostrando <span id="count">0</span> Pokémon</div>
+  <div class="gc-sep"></div>
+  <div class="gc-filter-row">
+    <button class="gc-btn" data-filter="fuego">🔥</button>
+    <button class="gc-btn" data-filter="agua">💧</button>
+    <button class="gc-btn" data-filter="planta">🌿</button>
+  </div>
 </div>
 
-<div class="grid" id="grid"></div>
+<div class="gc-grid" id="grid"></div>
 
 <footer>
-  Sprites: <a href="https://pokeapi.co" target="_blank">PokéAPI</a> &nbsp;·&nbsp;
-  PokeRealm © 2026 &nbsp;·&nbsp;
-  <a href="https://github.com/LyPaw" target="_blank">LyPaw</a> &nbsp;
-  <a href="https://github.com/CodeDiegoF" target="_blank">CodeDiegoF</a> &nbsp;
-  <a href="https://github.com/EvoXgamer-14" target="_blank">EvoXgamer</a> &nbsp;
-  <a href="https://github.com/FranJFM" target="_blank">FranJFM</a>
+  <div class="gc-footer-left">
+    SPRITES: <a href="https://pokeapi.co" target="_blank">POKEAPI.CO</a>
+    &nbsp;·&nbsp; PokeRealm © 2026
+  </div>
+  <div class="gc-footer-team">
+    <a href="https://github.com/LyPaw" target="_blank">LyPaw</a>
+    <a href="https://github.com/CodeDiegoF" target="_blank">CodeDiegoF</a>
+    <a href="https://github.com/EvoXgamer-14" target="_blank">EvoXgamer</a>
+    <a href="https://github.com/FranJFM" target="_blank">FranJFM</a>
+  </div>
 </footer>
 
 <script>
+  // ── Theme toggle ─────────────────────────────
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeToggle').textContent = isDark ? '◐ TEMA' : '◑ TEMA';
+    localStorage.setItem('pk-theme', isDark ? 'light' : 'dark');
+  }
+
+  // Restore saved theme
+  const saved = localStorage.getItem('pk-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    if (saved === 'dark') document.getElementById('themeToggle').textContent = '◑ TEMA';
+  }
+
+  // ── Pokémon data ─────────────────────────────
   const SPRITE_URL = id =>
     `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-
   const CRY_URL = id =>
     `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
 
@@ -383,7 +477,7 @@
     if (currentAudio) {
       currentAudio.pause();
       currentAudio.currentTime = 0;
-      document.querySelectorAll('.card.playing').forEach(c => c.classList.remove('playing'));
+      document.querySelectorAll('.gc-card.playing').forEach(c => c.classList.remove('playing'));
     }
     const audio = new Audio(CRY_URL(id));
     currentAudio = audio;
@@ -393,16 +487,11 @@
   }
 
   const TIPO_COLORS = {
-    fuego: '#FF6B35', agua: '#4FC3F7', planta: '#66BB6A',
-    veneno: '#CE93D8', normal: '#A8A878', electrico: '#F7DC6F',
-    tierra: '#E0A96D', roca: '#B8A038', bicho: '#A8B820',
-    fantasma: '#705898', acero: '#B8B8D0', hielo: '#98D8D8',
-    lucha: '#C03028', psiquico: '#F85888', dragon: '#7038F8',
-    siniestro: '#705848', hada: '#EE99AC',
+    fuego:'#e05010', agua:'#2288CC', planta:'#338833', veneno:'#8844AA',
+    normal:'#888860', electrico:'#BB9900', tierra:'#AA7740', roca:'#887720',
+    bicho:'#667700', fantasma:'#553377', acero:'#7788AA', hielo:'#5599AA',
+    lucha:'#993322', psiquico:'#CC3366', dragon:'#5522CC', siniestro:'#554433', hada:'#BB5577',
   };
-
-  const STAT_COLORS = ps =>
-    ps >= 60 ? '#4cd964' : ps >= 40 ? '#f5a623' : '#e94560';
 
   let allPokemons = [];
   let currentFilter = 'todos';
@@ -410,12 +499,12 @@
 
   async function loadPokemons() {
     try {
-      const res  = await fetch('pokemons.json');
+      const res = await fetch('pokemons.json');
       allPokemons = await res.json();
       render();
     } catch (e) {
       document.getElementById('grid').innerHTML =
-        '<div class="empty"><div class="pixel">Error cargando datos.<br>Asegúrate de que pokemons.json existe.</div></div>';
+        '<div class="gc-empty">ERROR: NO SE PUDO CARGAR<br>pokemons.json</div>';
     }
   }
 
@@ -435,61 +524,57 @@
     document.getElementById('count').textContent = filtered.length;
 
     if (!filtered.length) {
-      grid.innerHTML = '<div class="empty"><div class="pixel">No se encontraron<br>Pokémon.</div></div>';
+      grid.innerHTML = '<div class="gc-empty">NO SE ENCONTRARON POKÉMON</div>';
       return;
     }
 
     grid.innerHTML = filtered.map((p, i) => {
       const tiposBadges = p.tipo.map(t =>
-        `<span class="tipo-badge" style="background:${TIPO_COLORS[t] || '#888'}">${t}</span>`
+        `<span class="gc-tipo" style="background:${TIPO_COLORS[t] || '#888'}">${t.toUpperCase()}</span>`
       ).join('');
 
       const ataquesTags = (p.ataques || []).map(a =>
-        `<span class="ataque-tag">${a}</span>`
+        `<span class="gc-ataque">${a}</span>`
       ).join('');
 
-      const psPercent = Math.min((p.ps / 100) * 100, 100);
-      const psColor   = STAT_COLORS(p.ps);
-
       return `
-        <div class="card" style="animation-delay:${i * 0.05}s" onclick="playSound(${p.id}, this)">
-          <div class="region-label">${p.region || ''}</div>
-          <div class="card-header">
-            <span class="card-id">#${String(p.id).padStart(3,'0')}</span>
-            <span class="card-gen">GEN ${p.generacion}</span>
+        <div class="gc-card" style="animation-delay:${i * 0.04}s" onclick="playSound(${p.id}, this)">
+          <div class="gc-region">${p.region || ''}</div>
+          <div class="gc-card-bar">
+            <span class="gc-card-num">NO.${String(p.id).padStart(3,'0')}</span>
+            <span class="gc-card-gen">GEN ${p.generacion}</span>
           </div>
-          <div class="card-img">
+          <div class="gc-card-img">
             <img src="${SPRITE_URL(p.id)}" alt="${p.nombre}"
                  onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'"/>
-            <div class="sound-hint">🔊</div>
+            <div class="gc-sound">🔊</div>
           </div>
-          <div class="card-body">
-            <div class="card-name">${p.nombre}</div>
-            <div class="tipos">${tiposBadges}</div>
-            <div class="stat-row">
-              <span class="stat-label">PS</span>
-              <div class="stat-bar-wrap">
-                <div class="stat-bar" style="width:${psPercent}%; background:${psColor}"></div>
+          <div class="gc-card-body">
+            <div class="gc-card-name">${p.nombre}</div>
+            <div class="gc-tipos">${tiposBadges}</div>
+            <div class="gc-stat">
+              <div class="gc-stat-row">
+                <span class="gc-stat-lbl">PS</span>
+                <span class="gc-stat-num">${p.ps}</span>
               </div>
-              <span class="stat-value">${p.ps}</span>
+              <div class="gc-bar"><div class="gc-bar-fill" style="width:${Math.min(p.ps,100)}%"></div></div>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">NIV</span>
-              <div class="stat-bar-wrap">
-                <div class="stat-bar" style="width:${p.nivel}%; background:#4fc3f7"></div>
+            <div class="gc-stat">
+              <div class="gc-stat-row">
+                <span class="gc-stat-lbl">NIV</span>
+                <span class="gc-stat-num">${p.nivel}</span>
               </div>
-              <span class="stat-value">${p.nivel}</span>
+              <div class="gc-bar"><div class="gc-bar-fill" style="width:${Math.min(p.nivel,100)}%"></div></div>
             </div>
-            <div class="ataques-list">${ataquesTags}</div>
+            <div class="gc-ataques">${ataquesTags}</div>
           </div>
         </div>`;
     }).join('');
   }
 
-  // ── Filtros ──────────────────────────────
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  document.querySelectorAll('.gc-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.gc-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = btn.dataset.filter;
       render();
