@@ -20,6 +20,16 @@
     "ataques": ["Ascuas"]
   },
   {
+    "id": 6,
+    "nombre": "Prueba",
+    "tipo": ["fuego"],
+    "generacion": 1,
+    "region": "Kanto",
+    "ps": 100,
+    "nivel": 50,
+    "ataques": ["Ascuas","Lanzallamas"]
+  },
+  {
     "id": 7,
     "nombre": "Squirtle",
     "tipo": ["agua"],
