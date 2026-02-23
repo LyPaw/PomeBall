@@ -1074,14 +1074,19 @@
     }).join('');
   }
 
-  // ── Event listeners de filtros (selección múltiple) ──
+  // ── Event listeners de filtros ──────────────
+  // GEN: máximo 1 seleccionada (toggle)
   document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(btn => {
     btn.addEventListener('click', () => {
       const gen = parseInt(btn.dataset.filter.split(':')[1]);
       if (activeGens.has(gen)) {
-        activeGens.delete(gen);
+        // Toggle off
+        activeGens.clear();
         btn.classList.remove('active');
       } else {
+        // Deseleccionar la anterior y seleccionar esta
+        activeGens.clear();
+        document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(b => b.classList.remove('active'));
         activeGens.add(gen);
         btn.classList.add('active');
       }
@@ -1089,13 +1094,21 @@
     });
   });
 
+  // TIPO: máximo 2 seleccionados (toggle, si ya hay 2 y pulsas uno nuevo sustituye el más antiguo)
   document.querySelectorAll('.gc-tipo-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const tipo = btn.dataset.filter.split(':')[1];
       if (activeTipos.has(tipo)) {
+        // Toggle off
         activeTipos.delete(tipo);
         btn.classList.remove('active');
       } else {
+        if (activeTipos.size >= 2) {
+          // Quitar el primero que se añadió
+          const primero = activeTipos.values().next().value;
+          activeTipos.delete(primero);
+          document.querySelector(`.gc-tipo-btn[data-filter="tipo:${primero}"]`)?.classList.remove('active');
+        }
         activeTipos.add(tipo);
         btn.classList.add('active');
       }
