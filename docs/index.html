@@ -351,22 +351,8 @@
       padding: 0.25rem 0.55rem; color: #fff; font-weight: 700; border-radius: 1px;
     }
 
-    .gc-stat { margin-bottom: 0.4rem; }
-    .gc-stat-row { display: flex; justify-content: space-between; margin-bottom: 0.2rem; }
-    .gc-stat-lbl {
-      font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--muted);
-    }
-    .gc-stat-num {
-      font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: var(--gc-green);
-    }
-    .gc-bar { height: 5px; background: var(--stat-track); border: 1px solid var(--border); }
-    .gc-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--gc-teal));
-    }
-
     .gc-ataques {
-      margin-top: 0.6rem; padding-top: 0.5rem;
+      padding-top: 0.5rem;
       border-top: 1px solid var(--border);
       display: flex; flex-wrap: wrap; gap: 0.3rem;
     }
@@ -1029,9 +1015,6 @@
         `<span class="gc-ataque">${a}</span>`
       ).join('');
 
-      const psVal  = p.stats ? p.stats.ps        : (p.ps    || 0);
-      const velVal = p.stats ? p.stats.velocidad  : (p.nivel || 0);
-
       return `
         <div class="gc-card" style="animation-delay:${i * 0.04}s" onclick="openModal(${p.id})">
           <div class="gc-card-bar">
@@ -1046,20 +1029,6 @@
           <div class="gc-card-body">
             <div class="gc-card-name">${p.nombre}</div>
             <div class="gc-tipos">${tiposBadges}</div>
-            <div class="gc-stat">
-              <div class="gc-stat-row">
-                <span class="gc-stat-lbl">PS</span>
-                <span class="gc-stat-num">${psVal}</span>
-              </div>
-              <div class="gc-bar"><div class="gc-bar-fill" style="width:${Math.min((psVal/255)*100,100)}%"></div></div>
-            </div>
-            <div class="gc-stat">
-              <div class="gc-stat-row">
-                <span class="gc-stat-lbl">VEL</span>
-                <span class="gc-stat-num">${velVal}</span>
-              </div>
-              <div class="gc-bar"><div class="gc-bar-fill" style="width:${Math.min((velVal/255)*100,100)}%"></div></div>
-            </div>
             <div class="gc-ataques">${ataquesTags}</div>
           </div>
           <div class="gc-region">${p.region || ''}</div>
