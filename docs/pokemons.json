@@ -108,5 +108,14 @@
     "region": "Alola",
     "ataques": ["Puntada Sombría"],
     "stats": {"ps": 78, "ataque": 107, "defensa": 75, "atesp": 100, "defesp": 100, "velocidad": 70}
+  },
+    {
+    "id": 768,
+    "nombre": "Golisopod",
+    "tipo": ["agua", "bicho"],
+    "generacion": 7,
+    "region": "Alola",
+    "ataques": ["Acua Jet"],
+    "stats": {"ps": 75, "ataque": 125, "defensa": 140, "atesp": 60, "defesp": 90, "velocidad": 40}
   }
 ]
