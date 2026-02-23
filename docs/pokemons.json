@@ -108,5 +108,15 @@
     "ps": 55,
     "nivel": 1,
     "ataques": ["Burbuja"]
-  }
+  },
+   {
+    "id": 724,
+    "nombre": "Decidueye",
+    "tipo": ["Planta","Fantasma"],
+    "generacion": 7,
+    "region": "Alola",
+    "ps": 78,
+    "nivel": 50,
+    "ataques": ["Puntada Sombría"]
+  },
 ]
