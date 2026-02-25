@@ -888,10 +888,6 @@
             <span class="modal-ficha-key">GEN</span>
             <span class="modal-ficha-val" id="modalGen" style="color:var(--accent)"></span>
           </div>
-           <!--<div class="modal-ficha-row">
-            <span class="modal-ficha-key">HABILIDAD</span>
-            <span class="modal-ficha-val" id="modalHabilidad" style="color:var(--gc-teal)"></span>
-          </div>-->
         </div>
       </div>
 
@@ -913,7 +909,6 @@
               <div class="modal-section-dot"></div>
               <span class="modal-section-title">ESTADÍSTICAS BASE</span>
             </div>
-            <!-- 6 stats se renderizan dinámicamente -->
             <div id="modalStats"></div>
             <div class="modal-ataques-section">
               <div class="modal-section-hdr" style="margin-bottom:0.5rem">
@@ -924,7 +919,7 @@
             </div>
           </div>
 
-          <!-- Perfil (datos editables desde código) -->
+          <!-- Perfil -->
           <div class="modal-perfil-panel">
             <div class="modal-section-hdr">
               <div class="modal-section-dot"></div>
@@ -966,7 +961,7 @@
 
     <!-- Pie HUD -->
     <div class="modal-footer">
-      <span class="modal-footer-hint">POKÉREALM — POKÉDEX SYSTEM v1.0</span>
+      <span class="modal-footer-hint">POMEBALL — POKÉDEX SYSTEM v1.0</span>
       <div class="modal-footer-keys">
         <span class="modal-key">A SELECCIONAR</span>
         <span class="modal-key">B VOLVER</span>
@@ -979,7 +974,7 @@
 
 <footer>
   <div class="gc-footer-left">
-    SPRITES: <a href="https://pokeapi.co" target="_blank">POKEAPI.CO · POKÉMON SHOWDOWN</a>
+    SPRITES: <a href="https://pokeapi.co" target="_blank">POKEAPI.CO · POKEMON SHOWDOWN</a>
     &nbsp;·&nbsp; PomeBall © 2026
   </div>
   <div class="gc-footer-team">
@@ -1113,8 +1108,8 @@
   let allPokemons = [];
   let currentSearch   = '';
   let currentSearchId = '';
-  let activeGens   = new Set(); // generaciones activas (vacío = todas)
-  let activeTipos  = new Set(); // tipos activos (vacío = todos)
+  let activeGens   = new Set();
+  let activeTipos  = new Set();
 
   async function loadPokemons() {
     try {
@@ -1139,7 +1134,6 @@
       return matchSearch && matchId && matchGen && matchTipo;
     });
 
-    // Actualizar contador
     document.getElementById('count').textContent = filtered.length;
 
     if (!filtered.length) {
@@ -1176,23 +1170,19 @@
         </div>`;
     }).join('');
 
-    // Aplicar sprites con fallback en cascada
     grid.querySelectorAll('img[data-id]').forEach(img => {
       setSpriteWithFallback(img, parseInt(img.dataset.id));
     });
   }
 
   // ── Event listeners de filtros ──────────────
-  // GEN: máximo 1 seleccionada (toggle)
   document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(btn => {
     btn.addEventListener('click', () => {
       const gen = parseInt(btn.dataset.filter.split(':')[1]);
       if (activeGens.has(gen)) {
-        // Toggle off
         activeGens.clear();
         btn.classList.remove('active');
       } else {
-        // Deseleccionar la anterior y seleccionar esta
         activeGens.clear();
         document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(b => b.classList.remove('active'));
         activeGens.add(gen);
@@ -1202,17 +1192,14 @@
     });
   });
 
-  // TIPO: máximo 2 seleccionados (toggle, si ya hay 2 y pulsas uno nuevo sustituye el más antiguo)
   document.querySelectorAll('.gc-tipo-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const tipo = btn.dataset.filter.split(':')[1];
       if (activeTipos.has(tipo)) {
-        // Toggle off
         activeTipos.delete(tipo);
         btn.classList.remove('active');
       } else {
         if (activeTipos.size >= 2) {
-          // Quitar el primero que se añadió
           const primero = activeTipos.values().next().value;
           activeTipos.delete(primero);
           document.querySelector(`.gc-tipo-btn[data-filter="tipo:${primero}"]`)?.classList.remove('active');
@@ -1234,9 +1221,9 @@
     render();
   });
 
-  // ── Perfil por Pokémon (editar aquí) ───────────────
-  // Campos: altura, peso, especie, descripcion
-  // Si un campo está vacío mostrará "Pendiente de añadir"
+  // ══════════════════════════════════════════════
+  // PERFILES — altura, peso, especie, descripción
+  // ══════════════════════════════════════════════
   const PERFILES = {
     1: {
       altura:      '0,7 m',
@@ -1268,12 +1255,24 @@
       especie:     'Pokémon Tortuga',
       descripcion: 'Se oculta en el agua para cazar a sus presas. Su larga cola peluda es símbolo de longevidad y lo hace muy popular entre la gente mayor.',
     },
-94: {
-    altura:      '1,5 m',
-    peso:        '40,5 kg',
-    especie:     'Pokémon Sombra',
-    descripcion: 'Se esconde en las sombras y absorbe el calor de su entorno, bajando la temperatura a su alrededor. En noches de luna nueva, imita la sombra de las personas y se ríe en silencio mientras observa desde la oscuridad.'
-   },
+    94: {
+      altura:      '1,5 m',
+      peso:        '40,5 kg',
+      especie:     'Pokémon Sombra',
+      descripcion: 'Se esconde en las sombras y absorbe el calor de su entorno, bajando la temperatura a su alrededor. En noches de luna nueva, imita la sombra de las personas y se ríe en silencio mientras observa desde la oscuridad.',
+    },
+    132: {
+      altura:      '0,3 m',
+      peso:        '4,0 kg',
+      especie:     'Pokémon Transformación',
+      descripcion: 'Puede transformarse en cualquier cosa. Cuando duerme, vuelve a su forma original.',
+    },
+    133: {
+      altura:      '0,3 m',
+      peso:        '6,5 kg',
+      especie:     'Pokémon Evolución',
+      descripcion: 'Su composición genética es irregular. Se dice que es capaz de evolucionar hacia cualquier tipo de Pokémon.',
+    },
     252: {
       altura:      '0,5 m',
       peso:        '5,0 kg',
@@ -1291,6 +1290,30 @@
       peso:        '7,6 kg',
       especie:     'Pokémon Pez Lodo',
       descripcion: 'La aleta de su cabeza detecta cambios en el agua. Puede mover rocas enormes con sus patas.',
+    },
+    289: {
+      altura:      '2,0 m',
+      peso:        '130,5 kg',
+      especie:     'Pokémon Vago',
+      descripcion: 'El Pokémon más poderoso en estado de reposo. Cuando se activa, ningún ser vivo puede igualar su fuerza.',
+    },
+    306: {
+      altura:      '2,1 m',
+      peso:        '360,0 kg',
+      especie:     'Pokémon Coraza Hierro',
+      descripcion: 'Su armadura de acero puede aguantar cualquier ataque. Aplasta a sus rivales con su enorme peso.',
+    },
+    399: {
+      altura:      '0,5 m',
+      peso:        '20,0 kg',
+      especie:     'Pokémon Diente Grande',
+      descripcion: 'Se caracteriza por sus enormes dientes delanteros. A pesar de que se le rompen con frecuencia, le vuelven a crecer enseguida.',
+    },
+    445: {
+      altura:      '1,9 m',
+      peso:        '95,0 kg',
+      especie:     'Pokémon Tiburón Tierra',
+      descripcion: 'Vuela a 120 km/h bajo tierra. La aleta de su cabeza actúa como una hélice para perforar el suelo.',
     },
     495: {
       altura:      '0,6 m',
@@ -1310,32 +1333,57 @@
       especie:     'Pokémon Nutria Mar',
       descripcion: 'El escalchop de su vientre es un arma y escudo a la vez. Lo lanza con precisión en combate.',
     },
+    559: {
+      altura:      '0,6 m',
+      peso:        '11,8 kg',
+      especie:     'Pokémon Pantalones Caídos',
+      descripcion: 'Usa sus pantalones caídos para intimidar a los rivales. Endurece su piel para resistir los golpes.',
+    },
+    567: {
+      altura:      '1,4 m',
+      peso:        '32,0 kg',
+      especie:     'Pokémon Primordial',
+      descripcion: 'Aunque sus alas son rudimentarias, compensa su falta de vuelo con una velocidad devastadora en tierra. Se dice que tiene el espíritu combativo más feroz de todos los Pokémon fósil.',
+    },
+    612: {
+      altura:      '1,8 m',
+      peso:        '105,5 kg',
+      especie:     'Pokémon Colmillo Hacha',
+      descripcion: 'Sus colmillos son tan afilados que pueden cortar acero. Cuando lucha con toda su fuerza, emite un aullido ensordecedor.',
+    },
     724: {
       altura:      '1,6 m',
       peso:        '36,6 kg',
       especie:     'Pokémon Pluma Flecha',
       descripcion: 'Dispara plumas a modo de flechas con una precisión capaz de acertar a un guijarro a 100 metros. Se mueve sin ser detectado y tiende emboscadas en una décima de segundo.',
     },
+    768: {
+      altura:      '2,1 m',
+      peso:        '108,0 kg',
+      especie:     'Pokémon Insecto Litoral',
+      descripcion: 'Su dura armadura resiste cualquier golpe. Cuando cae en batalla, se convierte en un ser completamente distinto y desborda una energía oscura y feroz.',
+    },
   };
 
-  // ── Curiosidades por Pokémon (editar aquí) ──────
-  // Formato: { id: [ { icon: '🌿', texto: '...' }, ... ] }
+  // ══════════════════════════════════════════════
+  // CURIOSIDADES
+  // ══════════════════════════════════════════════
   const CURIOSIDADES = {
-    1:  [ // Bulbasaur
+    1: [ // Bulbasaur
       { icon: '', texto: 'Es el único inicial de Gen I que es de doble tipo desde el principio: Planta y Veneno.' },
       { icon: '', texto: 'Lleva una semilla en el lomo desde que nace. Nadie sabe exactamente qué hay dentro.' },
       { icon: '', texto: 'Su nombre combina "bulb" (bulbo en inglés) y "saur" (del griego sauros, lagarto).' },
     ],
-    4:  [ // Charmander
+    4: [ // Charmander
       { icon: '', texto: 'La llama de su cola indica su estado de salud. Si se apaga, Charmander perece.' },
       { icon: '', texto: 'Cuando llueve, sale vapor de la punta de su cola al contacto con el agua.' },
       { icon: '', texto: 'Es el inicial más popular de Gen I según encuestas oficiales de The Pokémon Company.' },
     ],
-    6:  [ // Charizard (Prueba)
+    6: [ // Charizard
       { icon: '', texto: 'Puede alcanzar temperaturas de llama de más de 1400 °C, suficiente para fundir roca.' },
       { icon: '', texto: 'Vuela tan alto que el aire se vuelve gélido, pero su llama nunca se apaga.' },
     ],
-    7:  [ // Squirtle
+    7: [ // Squirtle
       { icon: '', texto: 'Su caparazón no solo sirve de protección, también minimiza la resistencia del agua al nadar.' },
       { icon: '', texto: 'En el anime, el "Escuadrón Squirtle" llevaba gafas de sol y actuaba como bomberos.' },
       { icon: '', texto: 'Puede retraer sus extremidades dentro del caparazón y girar como una bola de agua.' },
@@ -1344,6 +1392,21 @@
       { icon: '', texto: 'Se dice que puede llegar a vivir 10.000 años. Los más ancianos tienen algas sobre el caparazón.' },
       { icon: '', texto: 'Los arañazos de su caparazón son prueba de los combates que ha tenido y de lo buen guerrero que es.' },
       { icon: '', texto: 'Usa su peluda cola para almacenar aire y poder bucear durante más tiempo bajo el agua.' },
+    ],
+    94: [ // Gengar
+      { icon: '', texto: 'Se esconde en las sombras de las habitaciones esperando a que bajen las temperaturas para manifestarse.' },
+      { icon: '', texto: 'Según la Pokédex, puede ser la sombra de alguien que quedó atrapado intentando atrapar a Clefable.' },
+      { icon: '', texto: 'Es uno de los Pokémon originales del equipo de Ash en el anime, aunque tardó décadas en conseguirlo.' },
+    ],
+    132: [ // Ditto
+      { icon: '', texto: 'Puede transformarse en cualquier Pokémon, objeto o incluso persona que haya visto.' },
+      { icon: '', texto: 'Existe la teoría de que Ditto es un experimento fallido de clonación de Mew, ya que comparten el mismo peso y la misma paleta de colores en su forma shiny.' },
+      { icon: '', texto: 'Es el único Pokémon que puede criar con casi cualquier otro, siendo indispensable en la cría competitiva.' },
+    ],
+    133: [ // Eevee
+      { icon: '', texto: 'Tiene el mayor número de evoluciones de todos los Pokémon: actualmente puede evolucionar en 8 formas distintas.' },
+      { icon: '', texto: 'Su inestabilidad genética le permite adaptarse a casi cualquier entorno, lo que explica la diversidad de sus evoluciones.' },
+      { icon: '', texto: 'Es la mascota oficial del protagonista en Pokémon Let\'s Go Eevee, donde no evoluciona y adquiere movimientos únicos.' },
     ],
     252: [ // Treecko
       { icon: '', texto: 'Las almohadillas de sus pies le permiten escalar paredes verticales sin esfuerzo.' },
@@ -1360,6 +1423,26 @@
       { icon: '', texto: 'A pesar de su pequeño tamaño, puede mover rocas más grandes que él con sus extremidades.' },
       { icon: '', texto: 'Respira tanto por branquias como por pulmones, siendo igual de ágil en tierra y agua.' },
     ],
+    289: [ // Slaking
+      { icon: '', texto: 'Tiene las estadísticas base totales más altas de todos los Pokémon no legendarios, con 670 puntos.' },
+      { icon: '', texto: 'Su habilidad "Flojera" le impide atacar cada dos turnos, compensando así su poder descomunal.' },
+      { icon: '', texto: 'Pasa la mayor parte del día tumbado sin moverse. Come la hierba que tiene a su alcance sin ni siquiera levantarse.' },
+    ],
+    306: [ // Aggron
+      { icon: '', texto: 'Considera suya la montaña donde habita y la defiende con ferocidad de cualquier intruso.' },
+      { icon: '', texto: 'Cuando se daña su hábitat por desastres naturales, excava él mismo para restaurarlo.' },
+      { icon: '', texto: 'Sus cuernos pueden perforar acero y su peso lo convierte en uno de los Pokémon más difíciles de derribar.' },
+    ],
+    399: [ // Bidoof
+      { icon: '', texto: 'Sus incisivos no dejan de crecer, por lo que roe constantemente árboles y piedras para desgastarlos.' },
+      { icon: '', texto: 'A pesar de su fama de Pokémon débil, en la comunidad se le venera de forma irónica como "el dios Bidoof".' },
+      { icon: '', texto: 'Construye sus madrigueras junto a ríos con ramas y barro, de forma muy similar a los castores.' },
+    ],
+    445: [ // Garchomp
+      { icon: '', texto: 'Puede volar a la velocidad de un avión a reacción plegando sus aletas y perforando el aire.' },
+      { icon: '', texto: 'La campeona Cynthia, considerada por muchos la rival más difícil de toda la saga, lo usa como su Pokémon estrella.' },
+      { icon: '', texto: 'Sus escamas tienen una textura similar al papel de lija, capaz de desgarrar la piel al contacto.' },
+    ],
     495: [ // Snivy
       { icon: '', texto: 'Realiza la fotosíntesis con su cola. Cuanto más sol recibe, más ágil y poderoso se vuelve.' },
       { icon: '', texto: 'Tiene una mirada de superioridad característica. Se dice que ignora a los entrenadores que no respeta.' },
@@ -1375,10 +1458,30 @@
       { icon: '', texto: 'Puede desprenderse del escalchop en combate y lanzarlo a alta velocidad como un frisbee.' },
       { icon: '', texto: 'Aunque es de tipo Agua, le da miedo mojarse las orejas y siempre las protege en la lluvia.' },
     ],
+    559: [ // Scraggy
+      { icon: '', texto: 'La piel de su vientre es extremadamente elástica y la usa como escudo subiéndosela hasta la cara.' },
+      { icon: '', texto: 'Desafía a cualquier Pokémon con el que cruza la mirada, sin importar la diferencia de tamaño.' },
+      { icon: '', texto: 'Su tipo Siniestro/Lucha lo convierte en uno de los pocos Pokémon inmunes a los ataques Psíquico.' },
+    ],
+    567: [ // Archeops
+      { icon: '', texto: 'Es un Pokémon fósil revivido que existió hace más de 100 millones de años.' },
+      { icon: '', texto: 'Se considera el antepasado de todos los Pokémon Volador, pero paradójicamente es mejor corriendo que volando.' },
+      { icon: '', texto: 'Tiene el ataque base más alto de todos los Pokémon fósil, pero su habilidad "Miedoso" lo penaliza cuando pierde vida.' },
+    ],
+    612: [ // Haxorus
+      { icon: '', texto: 'Sus colmillos en forma de hacha pueden cortar acero y permanecen afilados incluso tras los combates más brutales.' },
+      { icon: '', texto: 'A pesar de su apariencia feroz, es un Pokémon de naturaleza tranquila que solo ataca cuando se amenaza su territorio.' },
+      { icon: '', texto: 'Su cuerpo está recubierto de una armadura natural tan dura que la mayoría de ataques simplemente rebotan.' },
+    ],
     724: [ // Decidueye
       { icon: '', texto: 'En una décima de segundo arranca una pluma de sus alas y la dispara como flecha hacia el objetivo.' },
       { icon: '', texto: 'Su puntería le permite acertar a un guijarro a 100 metros de distancia apuntando a los puntos vitales.' },
       { icon: '', texto: 'Es el único inicial que cambia su tipo secundario al evolucionar: pasa de Planta/Volador a Planta/Fantasma.' },
+    ],
+    768: [ // Golisopod
+      { icon: '', texto: 'Su armadura natural es más dura que cualquier metal conocido y puede resistir explosiones a quemarropa.' },
+      { icon: '', texto: 'Medita en silencio en el fondo del mar durante días. Cuando despierta, su poder de combate es absoluto.' },
+      { icon: '', texto: 'En el anime, es el Pokémon insignia de Gladio, quien lo usa junto a su habilidad "Retirada de Emergencia" como táctica de combate.' },
     ],
   };
 
@@ -1431,15 +1534,12 @@
     if (!p) return;
     currentModalId = id;
 
-    // Sonido
     if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
     const audio = new Audio(CRY_URL(id));
     currentAudio = audio;
     audio.play().catch(() => {});
 
-    // Rellenar modal
     document.getElementById('modalBarTitle').textContent = `INFO. POKÉMON — ${p.nombre.toUpperCase()}`;
-    // Reset shiny del modal
     modalIsShiny = false;
     document.getElementById('modalShinyBtn').classList.remove('active');
     document.getElementById('modalSprite').closest('.modal-sprite-wrap').classList.remove('shiny');
@@ -1452,10 +1552,8 @@
     document.getElementById('modalRegion').textContent = p.region || '—';
     document.getElementById('modalGen').textContent = `GEN ${p.generacion}`;
 
-    // 6 stats
     renderStats(p.stats || null);
 
-    // Perfil desde PERFILES[id] o placeholders
     const perf = PERFILES[p.id] || {};
     const setField = (id, val, placeholder) => {
       const el = document.getElementById(id);
@@ -1467,17 +1565,14 @@
     setField('modalEspecie',     perf.especie,     'Pendiente de añadir');
     setField('modalDescripcion', perf.descripcion, 'Sin descripción registrada todavía.');
 
-    // Tipos
     document.getElementById('modalTipos').innerHTML = p.tipo.map(t =>
       `<span class="modal-tipo" style="background:${TIPO_COLORS[t] || '#888'}">${t.toUpperCase()}</span>`
     ).join('');
 
-    // Ataques
     document.getElementById('modalAtaques').innerHTML = (p.ataques || []).map(a =>
       `<span class="modal-ataque">${a}</span>`
     ).join('');
 
-    // Curiosidades desde código
     const curiosidades = CURIOSIDADES[id] || [];
     const container = document.getElementById('modalCuriosidades');
     if (curiosidades.length === 0) {
@@ -1491,11 +1586,9 @@
       ).join('');
     }
 
-    // Abrir
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
 
   // ── Shiny en modal ────────────────────────────
   let modalIsShiny = false;
@@ -1517,6 +1610,7 @@
       setSpriteWithFallback(img, currentModalId);
     }
   }
+
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
@@ -1527,7 +1621,6 @@
     if (e.target === document.getElementById('modalOverlay')) closeModal();
   }
 
-  // Cerrar con Escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
   });
