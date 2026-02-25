@@ -521,9 +521,39 @@
         radial-gradient(circle at 50% 55%, var(--accent-glow) 0%, transparent 68%),
         var(--card-bg);
       display: flex; justify-content: center; align-items: center;
+      flex-direction: column; gap: 0.8rem;
       padding: 1.5rem 0 1rem;
       border-bottom: 2px solid var(--border);
       min-height: 200px;
+      position: relative;
+    }
+    .modal-shiny-btn {
+      font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
+      background: var(--btn-bg);
+      border: 2px solid var(--btn-border);
+      color: var(--btn-color);
+      padding: 0.4rem 0.8rem;
+      cursor: pointer; letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .modal-shiny-btn:hover {
+      border-color: gold; color: goldenrod;
+    }
+    .modal-shiny-btn.active {
+      background: var(--surface);
+      border-color: gold;
+      color: goldenrod;
+      box-shadow: 0 0 10px rgba(255,215,0,0.4);
+      animation: modalShinyPulse 1.4s ease infinite alternate;
+    }
+    @keyframes modalShinyPulse {
+      from { box-shadow: 0 0 6px rgba(255,215,0,0.3); }
+      to   { box-shadow: 0 0 18px rgba(255,215,0,0.7); }
+    }
+    .modal-sprite-wrap.shiny {
+      background:
+        radial-gradient(circle at 50% 55%, rgba(255,215,0,0.22) 0%, transparent 68%),
+        var(--card-bg);
     }
     .modal-sprite {
       width: 170px; height: 170px;
@@ -839,6 +869,7 @@
       <div class="modal-left">
         <div class="modal-sprite-wrap">
           <img class="modal-sprite" id="modalSprite" src="" alt=""/>
+          <button class="modal-shiny-btn" id="modalShinyBtn" title="Ver shiny" onclick="toggleModalShiny()">✨ SHINY</button>
         </div>
         <div class="modal-ficha">
           <div class="modal-ficha-row">
@@ -1102,7 +1133,7 @@
 
     const filtered = allPokemons.filter(p => {
       const matchSearch = !q || p.nombre.toLowerCase().includes(q);
-      const matchId     = !currentSearchId || String(p.id).includes(currentSearchId);
+      const matchId     = !currentSearchId || p.id === parseInt(currentSearchId);
       const matchGen    = activeGens.size  === 0 || activeGens.has(p.generacion);
       const matchTipo   = activeTipos.size === 0 || p.tipo.some(t => activeTipos.has(t));
       return matchSearch && matchId && matchGen && matchTipo;
@@ -1408,6 +1439,11 @@
 
     // Rellenar modal
     document.getElementById('modalBarTitle').textContent = `INFO. POKÉMON — ${p.nombre.toUpperCase()}`;
+    // Reset shiny del modal
+    modalIsShiny = false;
+    document.getElementById('modalShinyBtn').classList.remove('active');
+    document.getElementById('modalSprite').closest('.modal-sprite-wrap').classList.remove('shiny');
+    document.getElementById('modalShinyBtn').title = 'Ver shiny';
     setSpriteWithFallback(document.getElementById('modalSprite'), p.id);
     document.getElementById('modalSprite').alt = p.nombre;
     document.getElementById('modalNum').textContent = `NO.${String(p.id).padStart(3,'0')}`;
@@ -1460,6 +1496,27 @@
     document.body.style.overflow = 'hidden';
   }
 
+
+  // ── Shiny en modal ────────────────────────────
+  let modalIsShiny = false;
+
+  function toggleModalShiny() {
+    const btn  = document.getElementById('modalShinyBtn');
+    const img  = document.getElementById('modalSprite');
+    const wrap = img.closest('.modal-sprite-wrap');
+    modalIsShiny = !modalIsShiny;
+    if (modalIsShiny) {
+      btn.classList.add('active');
+      wrap.classList.add('shiny');
+      btn.title = 'Ver normal';
+      setShinyWithFallback(img, currentModalId);
+    } else {
+      btn.classList.remove('active');
+      wrap.classList.remove('shiny');
+      btn.title = 'Ver shiny';
+      setSpriteWithFallback(img, currentModalId);
+    }
+  }
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
