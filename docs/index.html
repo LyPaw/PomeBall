@@ -344,6 +344,29 @@
     }
     .gc-card:hover .gc-sound { opacity: 0.4; }
     .gc-card.playing .gc-sound { opacity: 1; }
+    /* ── Botón shiny ─────────────────────────── */
+    .gc-shiny-btn {
+      position: absolute; top: 5px; right: 6px;
+      background: none; border: none; cursor: pointer;
+      font-size: 0.8rem; opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      line-height: 1; padding: 2px;
+      filter: grayscale(0.4);
+      z-index: 2;
+    }
+    .gc-card:hover .gc-shiny-btn { opacity: 0.75; }
+    .gc-shiny-btn.active {
+      opacity: 1 !important;
+      filter: none;
+      animation: shinyPulse 1.4s ease infinite alternate;
+    }
+    @keyframes shinyPulse {
+      from { transform: scale(1);    filter: drop-shadow(0 0 3px gold); }
+      to   { transform: scale(1.3);  filter: drop-shadow(0 0 10px gold); }
+    }
+    .gc-card.shiny .gc-card-img {
+      background: radial-gradient(circle at center, rgba(255,215,0,0.2) 0%, transparent 65%);
+    }
 
     .gc-card-body { padding: 0.8rem 0.9rem 1rem; }
 
@@ -741,6 +764,12 @@
     <input type="text" id="search" placeholder="BUSCAR..."/>
   </div>
   <div class="gc-sep"></div>
+  <!-- Filtro por ID -->
+  <div class="gc-search">
+    <span style="font-family:'Press Start 2P',monospace;font-size:0.55rem;color:var(--muted)">#</span>
+    <input type="number" id="searchId" placeholder="ID..." min="1" style="width:70px"/>
+  </div>
+  <div class="gc-sep"></div>
 
   <!-- Filtros por generación (multi-select) -->
   <div class="gc-filter-group">
@@ -946,7 +975,7 @@
     if (saved === 'dark') document.getElementById('themeToggle').textContent = '◑ TEMA';
   }
 
-  // Mapa id → nombre-showdown (minúsculas, sin tildes, formato Showdown)
+  // ── Mapa id → nombre Showdown ────────────────
   const SHOWDOWN_NAMES = {
     1: 'bulbasaur', 4: 'charmander', 6: 'charizard',
     7: 'squirtle', 8: 'wartortle', 94: 'gengar',
@@ -959,41 +988,70 @@
     724: 'decidueye', 768: 'golisopod'
   };
 
-  // Fuentes en cascada
+  // ── Sprites normales en cascada ───────────────
   const SPRITE_SHOWDOWN = id => {
-    const name = SHOWDOWN_NAMES[id];
-    return name
-      ? `https://play.pokemonshowdown.com/sprites/ani/${name}.gif`
-      : null;
+    const n = SHOWDOWN_NAMES[id];
+    return n ? `https://play.pokemonshowdown.com/sprites/ani/${n}.gif` : null;
   };
   const SPRITE_BW  = id =>
     `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
   const SPRITE_PNG = id =>
     `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-  function SPRITE_URL(id) {
-    return SPRITE_SHOWDOWN(id) || SPRITE_BW(id);
-  }
+  function SPRITE_URL(id) { return SPRITE_SHOWDOWN(id) || SPRITE_BW(id); }
 
   function setSpriteWithFallback(imgEl, id) {
-    const showdown = SPRITE_SHOWDOWN(id);
-    const bw       = SPRITE_BW(id);
-    const png      = SPRITE_PNG(id);
-    if (showdown) {
-      imgEl.src = showdown;
+    const sd = SPRITE_SHOWDOWN(id), bw = SPRITE_BW(id), png = SPRITE_PNG(id);
+    if (sd) {
+      imgEl.src = sd;
       imgEl.onerror = function() {
         this.src = bw;
-        this.onerror = function() {
-          this.src = png;
-          this.onerror = null;
-        };
+        this.onerror = function() { this.src = png; this.onerror = null; };
       };
     } else {
       imgEl.src = bw;
+      imgEl.onerror = function() { this.src = png; this.onerror = null; };
+    }
+  }
+
+  // ── Sprites shiny en cascada ──────────────────
+  const SPRITE_SHINY_SD  = id => {
+    const n = SHOWDOWN_NAMES[id];
+    return n ? `https://play.pokemonshowdown.com/sprites/ani-shiny/${n}.gif` : null;
+  };
+  const SPRITE_SHINY_BW  = id =>
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${id}.gif`;
+  const SPRITE_SHINY_PNG = id =>
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`;
+
+  function setShinyWithFallback(imgEl, id) {
+    const sd = SPRITE_SHINY_SD(id), bw = SPRITE_SHINY_BW(id), png = SPRITE_SHINY_PNG(id);
+    if (sd) {
+      imgEl.src = sd;
       imgEl.onerror = function() {
-        this.src = png;
-        this.onerror = null;
+        this.src = bw;
+        this.onerror = function() { this.src = png; this.onerror = null; };
       };
+    } else {
+      imgEl.src = bw;
+      imgEl.onerror = function() { this.src = png; this.onerror = null; };
+    }
+  }
+
+  function toggleShiny(btn, id) {
+    const card  = btn.closest('.gc-card');
+    const img   = card.querySelector('img[data-id]');
+    const isShiny = btn.classList.contains('active');
+    if (isShiny) {
+      btn.classList.remove('active');
+      card.classList.remove('shiny');
+      btn.title = 'Ver shiny';
+      setSpriteWithFallback(img, id);
+    } else {
+      btn.classList.add('active');
+      card.classList.add('shiny');
+      btn.title = 'Ver normal';
+      setShinyWithFallback(img, id);
     }
   }
   const CRY_URL = id =>
@@ -1022,7 +1080,8 @@
   };
 
   let allPokemons = [];
-  let currentSearch = '';
+  let currentSearch   = '';
+  let currentSearchId = '';
   let activeGens   = new Set(); // generaciones activas (vacío = todas)
   let activeTipos  = new Set(); // tipos activos (vacío = todos)
 
@@ -1043,9 +1102,10 @@
 
     const filtered = allPokemons.filter(p => {
       const matchSearch = !q || p.nombre.toLowerCase().includes(q);
+      const matchId     = !currentSearchId || String(p.id).includes(currentSearchId);
       const matchGen    = activeGens.size  === 0 || activeGens.has(p.generacion);
       const matchTipo   = activeTipos.size === 0 || p.tipo.some(t => activeTipos.has(t));
-      return matchSearch && matchGen && matchTipo;
+      return matchSearch && matchId && matchGen && matchTipo;
     });
 
     // Actualizar contador
@@ -1072,8 +1132,8 @@
             <span class="gc-card-gen">GEN ${p.generacion}</span>
           </div>
           <div class="gc-card-img">
-            <img data-id="${p.id}" alt="${p.nombre}"
-                 src="${SPRITE_URL(p.id)}"/>
+            <img data-id="${p.id}" alt="${p.nombre}" src=""/>
+            <button class="gc-shiny-btn" title="Ver shiny" onclick="event.stopPropagation();toggleShiny(this,${p.id})">✨</button>
             <div class="gc-sound">🔊</div>
           </div>
           <div class="gc-card-body">
@@ -1085,7 +1145,7 @@
         </div>`;
     }).join('');
 
-    // Aplicar fallback en cascada a cada sprite de card
+    // Aplicar sprites con fallback en cascada
     grid.querySelectorAll('img[data-id]').forEach(img => {
       setSpriteWithFallback(img, parseInt(img.dataset.id));
     });
@@ -1135,6 +1195,11 @@
 
   document.getElementById('search').addEventListener('input', e => {
     currentSearch = e.target.value;
+    render();
+  });
+
+  document.getElementById('searchId').addEventListener('input', e => {
+    currentSearchId = e.target.value.trim();
     render();
   });
 
