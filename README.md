@@ -54,7 +54,7 @@
 
 <div align="center">
 
-# 🎮 Proyecto Pokémon
+# Proyecto Pokémon
 
 *Un juego Pokémon desarrollado en Java, con transición a JavaFX*
 
@@ -68,13 +68,13 @@
 
 ---
 
-## 📖 Descripción
+## Descripción
 
 **Proyecto Pokémon** es un juego por consola desarrollado en Java puro, actualmente en transición hacia una interfaz gráfica con **JavaFX**. El proyecto simula mecánicas clásicas de la saga Pokémon: elección de Pokémon inicial, sistema de ataques con PP, gestión del equipo del entrenador, inventario de ítems y captura de Pokémon salvajes.
 
 ---
 
-## 🏗️ Estructura del proyecto
+## Estructura del proyecto
 
 ```
 PokemonProject/
@@ -98,7 +98,7 @@ PokemonProject/
 
 ---
 
-## 👾 Pokémon disponibles
+## Pokémon disponibles
 ![001](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/001.gif)
 ![002](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/002.gif)
 ![003](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/003.gif)
@@ -111,7 +111,7 @@ PokemonProject/
 
 ---
 
-## 👥 Equipo
+## Equipo
 
 <div align="center">
 <table>
