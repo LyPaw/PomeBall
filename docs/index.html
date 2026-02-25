@@ -1087,85 +1087,145 @@
   // Campos: altura, peso, especie, descripcion
   // Si un campo está vacío mostrará "Pendiente de añadir"
   const PERFILES = {
-    1: {
-      altura:      '0,7 m',
-      peso:        '6,9 kg',
-      especie:     'Pokémon Semilla',
-      descripcion: 'Nació con una semilla en el lomo. La semilla crece poco a poco y absorbe la energía solar.',
-    },
-    4: {
-      altura:      '0,6 m',
-      peso:        '8,5 kg',
-      especie:     'Pokémon Lagarto',
-      descripcion: 'La llama de su cola indica su estado de ánimo. Arde con fuerza cuando está lleno de energía.',
-    },
-    6: {
-      altura:      '1,7 m',
-      peso:        '90,5 kg',
-      especie:     'Pokémon Llama',
-      descripcion: 'Escupe fuego de tal intensidad que puede fundir roca. Conocido por su temperamento feroz.',
-    },
-    7: {
-      altura:      '0,5 m',
-      peso:        '9,0 kg',
-      especie:     'Pokémon Tortuga',
-      descripcion: 'Su caparazón es extremadamente duro. Cuando retrae su cuerpo, puede rodar a gran velocidad.',
-    },
-    8: {
-      altura:      '1,0 m',
-      peso:        '22,5 kg',
-      especie:     'Pokémon Tortuga',
-      descripcion: 'Se oculta en el agua para cazar a sus presas. Su larga cola peluda es símbolo de longevidad y lo hace muy popular entre la gente mayor.',
-    },
-94: {
+  1: {
+    altura:      '0,7 m',
+    peso:        '6,9 kg',
+    especie:     'Pokémon Semilla',
+    descripcion: 'Nació con una semilla en el lomo. La semilla crece poco a poco y absorbe la energía solar.',
+  },
+  4: {
+    altura:      '0,6 m',
+    peso:        '8,5 kg',
+    especie:     'Pokémon Lagarto',
+    descripcion: 'La llama de su cola indica su estado de ánimo. Arde con fuerza cuando está lleno de energía.',
+  },
+  6: {
+    altura:      '1,7 m',
+    peso:        '90,5 kg',
+    especie:     'Pokémon Llama',
+    descripcion: 'Escupe fuego de tal intensidad que puede fundir roca. Conocido por su temperamento feroz.',
+  },
+  7: {
+    altura:      '0,5 m',
+    peso:        '9,0 kg',
+    especie:     'Pokémon Tortuga',
+    descripcion: 'Su caparazón es extremadamente duro. Cuando retrae su cuerpo, puede rodar a gran velocidad.',
+  },
+  8: {
+    altura:      '1,0 m',
+    peso:        '22,5 kg',
+    especie:     'Pokémon Tortuga',
+    descripcion: 'Se oculta en el agua para cazar a sus presas. Su larga cola peluda es símbolo de longevidad y lo hace muy popular entre la gente mayor.',
+  },
+  94: {
     altura:      '1,5 m',
     peso:        '40,5 kg',
     especie:     'Pokémon Sombra',
-    descripcion: 'Se esconde en las sombras y absorbe el calor de su entorno, bajando la temperatura a su alrededor. En noches de luna nueva, imita la sombra de las personas y se ríe en silencio mientras observa desde la oscuridad.'
-   },
-    252: {
-      altura:      '0,5 m',
-      peso:        '5,0 kg',
-      especie:     'Pokémon Madera',
-      descripcion: 'Vive en lo alto de los árboles. Nunca retrocede, por débil que sea el rival.',
-    },
-    255: {
-      altura:      '0,4 m',
-      peso:        '2,5 kg',
-      especie:     'Pokémon Pollito',
-      descripcion: 'Tiene una bola de fuego de 1000 °C en su estómago. Sus abrazos son cálidos y reconfortantes.',
-    },
-    258: {
-      altura:      '0,4 m',
-      peso:        '7,6 kg',
-      especie:     'Pokémon Pez Lodo',
-      descripcion: 'La aleta de su cabeza detecta cambios en el agua. Puede mover rocas enormes con sus patas.',
-    },
-    495: {
-      altura:      '0,6 m',
-      peso:        '8,1 kg',
-      especie:     'Pokémon Serpiente',
-      descripcion: 'Realiza la fotosíntesis con su cola. Cuanto más sol recibe, más rápido y ágil se vuelve.',
-    },
-    498: {
-      altura:      '0,5 m',
-      peso:        '9,9 kg',
-      especie:     'Pokémon Cerdito',
-      descripcion: 'Lanza bolas de fuego por la nariz. Su cola en espiral arde cuando usa sus ataques más fuertes.',
-    },
-    501: {
-      altura:      '0,5 m',
-      peso:        '5,9 kg',
-      especie:     'Pokémon Nutria Mar',
-      descripcion: 'El escalchop de su vientre es un arma y escudo a la vez. Lo lanza con precisión en combate.',
-    },
-    724: {
-      altura:      '1,6 m',
-      peso:        '36,6 kg',
-      especie:     'Pokémon Pluma Flecha',
-      descripcion: 'Dispara plumas a modo de flechas con una precisión capaz de acertar a un guijarro a 100 metros. Se mueve sin ser detectado y tiende emboscadas en una décima de segundo.',
-    },
-  };
+    descripcion: 'Se esconde en las sombras y absorbe el calor de su entorno, bajando la temperatura a su alrededor. En noches de luna nueva, imita la sombra de las personas y se ríe en silencio mientras observa desde la oscuridad.',
+  },
+  132: {
+    altura:      '0,3 m',
+    peso:        '4,0 kg',
+    especie:     'Pokémon Transformación',
+    descripcion: 'Puede transformarse en cualquier cosa. Cuando duerme, vuelve a su forma original.',
+  },
+  133: {
+    altura:      '0,3 m',
+    peso:        '6,5 kg',
+    especie:     'Pokémon Evolución',
+    descripcion: 'Su composición genética es irregular. Se dice que es capaz de evolucionar hacia cualquier tipo de Pokémon.',
+  },
+  252: {
+    altura:      '0,5 m',
+    peso:        '5,0 kg',
+    especie:     'Pokémon Madera',
+    descripcion: 'Vive en lo alto de los árboles. Nunca retrocede, por débil que sea el rival.',
+  },
+  255: {
+    altura:      '0,4 m',
+    peso:        '2,5 kg',
+    especie:     'Pokémon Pollito',
+    descripcion: 'Tiene una bola de fuego de 1000 °C en su estómago. Sus abrazos son cálidos y reconfortantes.',
+  },
+  258: {
+    altura:      '0,4 m',
+    peso:        '7,6 kg',
+    especie:     'Pokémon Pez Lodo',
+    descripcion: 'La aleta de su cabeza detecta cambios en el agua. Puede mover rocas enormes con sus patas.',
+  },
+  289: {
+    altura:      '2,0 m',
+    peso:        '130,5 kg',
+    especie:     'Pokémon Vago',
+    descripcion: 'El Pokémon más poderoso en estado de reposo. Cuando se activa, ningún ser vivo puede igualar su fuerza.',
+  },
+  306: {
+    altura:      '2,1 m',
+    peso:        '360,0 kg',
+    especie:     'Pokémon Coraza Hierro',
+    descripcion: 'Su armadura de acero puede aguantar cualquier ataque. Aplasta a sus rivales con su enorme peso.',
+  },
+  399: {
+    altura:      '0,5 m',
+    peso:        '20,0 kg',
+    especie:     'Pokémon Diente Grande',
+    descripcion: 'Se caracteriza por sus enormes dientes delanteros. A pesar de que se le rompen con frecuencia, le vuelven a crecer enseguida.',
+  },
+  495: {
+    altura:      '0,6 m',
+    peso:        '8,1 kg',
+    especie:     'Pokémon Serpiente',
+    descripcion: 'Realiza la fotosíntesis con su cola. Cuanto más sol recibe, más rápido y ágil se vuelve.',
+  },
+  498: {
+    altura:      '0,5 m',
+    peso:        '9,9 kg',
+    especie:     'Pokémon Cerdito',
+    descripcion: 'Lanza bolas de fuego por la nariz. Su cola en espiral arde cuando usa sus ataques más fuertes.',
+  },
+  501: {
+    altura:      '0,5 m',
+    peso:        '5,9 kg',
+    especie:     'Pokémon Nutria Mar',
+    descripcion: 'El escalchop de su vientre es un arma y escudo a la vez. Lo lanza con precisión en combate.',
+  },
+  559: {
+    altura:      '0,6 m',
+    peso:        '11,8 kg',
+    especie:     'Pokémon Pantalones Caídos',
+    descripcion: 'Usa sus pantalones caídos para intimidar a los rivales. Endurece su piel para resistir los golpes.',
+  },
+  567: {
+    altura:      '1,4 m',
+    peso:        '32,0 kg',
+    especie:     'Pokémon Primordial',
+    descripcion: 'Aunque sus alas son rudimentarias, compensa su falta de vuelo con una velocidad devastadora en tierra. Se dice que tiene el espíritu combativo más feroz de todos los Pokémon fósil.',
+  },
+  445: {
+    altura:      '1,9 m',
+    peso:        '95,0 kg',
+    especie:     'Pokémon Tiburón Tierra',
+    descripcion: 'Vuela a 120 km/h bajo tierra. La aleta de su cabeza actúa como una hélice para perforar el suelo.',
+  },
+  612: {
+    altura:      '1,8 m',
+    peso:        '105,5 kg',
+    especie:     'Pokémon Colmillo Hacha',
+    descripcion: 'Sus colmillos son tan afilados que pueden cortar acero. Cuando lucha con toda su fuerza, emite un aullido ensordecedor.',
+  },
+  724: {
+    altura:      '1,6 m',
+    peso:        '36,6 kg',
+    especie:     'Pokémon Pluma Flecha',
+    descripcion: 'Dispara plumas a modo de flechas con una precisión capaz de acertar a un guijarro a 100 metros. Se mueve sin ser detectado y tiende emboscadas en una décima de segundo.',
+  },
+  768: {
+    altura:      '2,1 m',
+    peso:        '108,0 kg',
+    especie:     'Pokémon Insecto Litoral',
+    descripcion: 'Su dura armadura resiste cualquier golpe. Cuando cae en batalla, se convierte en un ser completamente distinto y desborda una energía oscura y feroz.',
+  },
+};
 
   // ── Curiosidades por Pokémon (editar aquí) ──────
   // Formato: { id: [ { icon: '🌿', texto: '...' }, ... ] }
