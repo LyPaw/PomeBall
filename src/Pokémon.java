@@ -48,11 +48,19 @@ public class Pokémon {
 
     @Override
     public String toString() {
-        return "|" + nombre;
+        return nombre + " (Nº" + id + ")";
     }
 
-    public String mostrarAtaques(){
-        return ataques.toString();
+    public String mostrarAtaques() {
+        if (ataques.isEmpty()) return "Sin ataques";
+        StringBuilder sb = new StringBuilder();
+        for (Ataque a : ataques) {
+            sb.append("• ").append(a.nombre)
+              .append(" [").append(a.tipo).append("]")
+              .append(" — Potencia: ").append(a.potencia)
+              .append(", Precisión: ").append(a.precision).append("\n");
+        }
+        return sb.toString().trim();
     }
 
 }
