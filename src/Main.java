@@ -8,7 +8,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -234,25 +240,47 @@ public class Main extends Application {
      */
     private void mostrarSeleccionInicial(ArrayList<Pokémon> pokemons) {
         root.getChildren().clear();
+
+        // ── CAPA 1: imagen de fondo ──────────────────────────────────────────
+        // Cambia el nombre del archivo aquí si lo renombras
+        ImageView fondoView = new ImageView();
+        fondoView.setPreserveRatio(false);
+        fondoView.setFitWidth(900);
+        fondoView.setFitHeight(700);
+        try {
+            fondoView.setImage(new Image(getClass().getResource("/fondoSeleccion.png").toExternalForm(), true));
+        } catch (Exception e) {
+            System.out.println("No se encontró fondoSeleccion.png en resources/");
+        }
+
+        // ── CAPA 2: contenido encima del fondo ──────────────────────────────
+        VBox contenido = new VBox(20);
+        contenido.setAlignment(Pos.CENTER);
+        contenido.setPadding(new Insets(30));
+        // Oscurecimiento semitransparente para que el texto sea legible
+        // Cambia el 0.45 para más oscuro (cerca de 1.0) o más claro (cerca de 0.0)
+        contenido.setStyle("-fx-background-color: rgba(0,0,0,0.45);");
+
         Label label = new Label("Elige tu inicial:");
         label.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
-        root.getChildren().add(label);
 
         HBox container = new HBox(20);
         container.setAlignment(Pos.CENTER);
-
         for (Pokémon p : pokemons) {
-            // DELEGACIÓN: Crear botón con imagen usando TarjetaPokemon
             Button btn = TarjetaPokemon.crearBotonSeleccion(p);
             btn.setOnAction(e -> mostrarDetallePokemon(p));
             container.getChildren().add(btn);
         }
-        root.getChildren().add(container);
-        
+
         Button btnVolver = new Button("Volver a elegir generación");
         btnVolver.setStyle("-fx-background-color: #555; -fx-text-fill: white;");
         btnVolver.setOnAction(e -> mostrarSeleccionGeneracion());
-        root.getChildren().add(btnVolver);
+
+        contenido.getChildren().addAll(label, container, btnVolver);
+
+        // ── StackPane: apila las dos capas ──────────────────────────────────
+        StackPane stack = new StackPane(fondoView, contenido);
+        root.getChildren().add(stack);
     }
 
     /**

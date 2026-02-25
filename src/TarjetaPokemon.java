@@ -39,7 +39,7 @@ public class TarjetaPokemon {
         tarjeta.setPrefWidth(220);
         
         // 1. Imagen del Pokémon (120px)
-        ImageView img = crearImagen(p.getId(), 120);
+        ImageView img = crearImagenAltaCalidad(p.getId(), 120);
         
         // 2. Nombre
         Label nombre = new Label(p.getNombre());
@@ -121,19 +121,24 @@ public class TarjetaPokemon {
      */
     public static Button crearBotonSeleccion(Pokémon p) {
         Button btn = new Button();
-        btn.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: #222; -fx-text-fill: white; -fx-border-color: #444;");
-        
-        VBox content = new VBox(5);
+        btn.setStyle(
+            "-fx-font-size: 14px; -fx-font-weight: bold;" +
+            "-fx-background-color: #222; -fx-text-fill: white;" +
+            "-fx-border-color: #444; -fx-border-radius: 10;" +
+            "-fx-background-radius: 10; -fx-padding: 15 20;"
+        );
+
+        VBox content = new VBox(8);
         content.setAlignment(Pos.CENTER);
-        
-        ImageView img = crearImagen(p.getId(), 80);
-        
+
+        // GIF animado Gen 5 — carga síncrona para que se anime
+        ImageView img = crearImagenAnimada(p.getId(), 100);
+
         Label lblNombre = new Label(p.getNombre());
-        lblNombre.setStyle("-fx-text-fill: white;");
-        
+        lblNombre.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
+
         content.getChildren().addAll(img, lblNombre);
         btn.setGraphic(content);
-        
         return btn;
     }
     
@@ -146,20 +151,68 @@ public class TarjetaPokemon {
      * @return ImageView configurado.
      */
     public static ImageView crearImagen(int id, double size) {
+        return crearImagenAltaCalidad(id, size);
+    }
+
+    /**
+     * PNG alta resolución (~475×475px) desde HybridShivam/Pokemon.
+     * Fallback: PokeAPI official-artwork.
+     * Usa background loading (true) porque es PNG — no afecta animación.
+     */
+    public static ImageView crearImagenAltaCalidad(int id, double size) {
         ImageView img = new ImageView();
+        img.setFitHeight(size);
+        img.setFitWidth(size);
+        img.setPreserveRatio(true);
+        img.setSmooth(true);
+
+        String idPadded = String.format("%03d", id);
+        String urlHQ = "https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/" + idPadded + ".png";
+
         try {
-            String url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
-            // Si la imagen es grande, intentamos usar el arte oficial de mayor calidad
-            if (size > 100) {
-                url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + id + ".png";
+            Image hqImage = new Image(urlHQ, size, size, true, true, true);
+            hqImage.errorProperty().addListener((obs, wasError, isError) -> {
+                if (isError) {
+                    try {
+                        String fallback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + id + ".png";
+                        img.setImage(new Image(fallback, size, size, true, true, true));
+                    } catch (Exception ignored) {}
+                }
+            });
+            img.setImage(hqImage);
+        } catch (Exception ignored) {}
+
+        return img;
+    }
+
+    /**
+     * GIF animado Gen 5 (Black/White).
+     * ⚠ Carga SÍNCRONA obligatoria — new Image(url) sin flags — para que JavaFX anime el GIF.
+     * Con background loading (true) solo se ve el primer frame estático.
+     */
+    public static ImageView crearImagenAnimada(int id, double size) {
+        ImageView img = new ImageView();
+        img.setFitHeight(size);
+        img.setFitWidth(size);
+        img.setPreserveRatio(true);
+        img.setSmooth(false);
+
+        String gifUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/" + id + ".gif";
+
+        try {
+            Image gifImage = new Image(gifUrl); // Síncrono = animación activa
+            if (!gifImage.isError()) {
+                img.setImage(gifImage);
+                return img;
             }
-            // 'true' en el constructor de Image habilita la carga en segundo plano (background loading)
-            img.setImage(new Image(url, true));
-            img.setFitHeight(size);
-            img.setFitWidth(size);
-        } catch (Exception e) { 
-            // Si falla, devolvemos una imagen vacía para no romper la UI
-        }
+        } catch (Exception ignored) {}
+
+        // Fallback PNG estático
+        try {
+            String fallback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+            img.setImage(new Image(fallback, size, size, true, true, true));
+        } catch (Exception ignored) {}
+
         return img;
     }
 }
