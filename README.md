@@ -105,7 +105,22 @@ PokemonProject/
 ![004](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/004.gif)
 ![005](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/005.gif)
 ![006](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/006.gif)
-
+![007](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/007.gif)
+![008](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/008.gif)
+![009](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/009.gif)
+![010](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/010.gif)
+![011](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/011.gif)
+![012](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/012.gif)
+![013](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/013.gif)
+![014](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/014.gif)
+![015](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/015.gif)
+![016](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/016.gif)
+![017](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/017.gif)
+![018](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/018.gif)
+![019](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/019.gif)
+![020](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/020.gif)
+![021](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/021.gif)
+![022](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/022.gif)
 
 > 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PokeRealm) para ver los datos.
 
