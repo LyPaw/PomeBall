@@ -62,7 +62,7 @@
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk&logoColor=white)
 ![JavaFX](https://img.shields.io/badge/JavaFX-23-blue?logo=java&logoColor=white)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow)
-[![Pokédex Web](https://img.shields.io/badge/Pok%C3%A9dex-Ver%20web-%23e94560?style=flat&logo=github)](https://LyPaw.github.io/PokeRealm)
+[![Pokédex Web](https://img.shields.io/badge/Pok%C3%A9dex-Ver%20web-%23e94560?style=flat&logo=github)](https://LyPaw.github.io/PomeBall)
 
 </div>
 
