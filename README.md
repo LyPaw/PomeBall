@@ -128,7 +128,7 @@ PokemonProject/
       <td>017</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/017.gif" width="95"/></td>
       <td>018</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/018.gif" width="95"/></td>
       <td>019</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/019.gif" width="64"/></td>
-      <td>020</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/020.gif" width="94"/></td>
+      <td>020</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/020.gif" width="85"/></td>
     </tr>
      <tr>
       <td>021</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/021.gif" width="50"/></td>
