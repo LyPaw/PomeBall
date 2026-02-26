@@ -1269,12 +1269,18 @@
 
   async function loadPokemons() {
     try {
-      const res = await fetch('pokemons.json');
-      allPokemons = await res.json();
+      const [pokemonsRes, perfilesRes, curiosidadesRes] = await Promise.all([
+        fetch('pokemons.json'),
+        fetch('perfiles.json'),
+        fetch('curiosidades.json'),
+      ]);
+      allPokemons  = await pokemonsRes.json();
+      PERFILES     = await perfilesRes.json();
+      CURIOSIDADES = await curiosidadesRes.json();
       render();
     } catch (e) {
       document.getElementById('grid').innerHTML =
-        '<div class="gc-empty">ERROR: NO SE PUDO CARGAR<br>pokemons.json</div>';
+        '<div class="gc-empty">ERROR: NO SE PUDO CARGAR<br>pokemons.json / perfiles.json / curiosidades.json</div>';
     }
   }
 
@@ -1378,267 +1384,11 @@
   });
 
   // ══════════════════════════════════════════════
-  // PERFILES — altura, peso, especie, descripción
+  // PERFILES y CURIOSIDADES — cargados desde JSON
   // ══════════════════════════════════════════════
-  const PERFILES = {
-    1: {
-      altura:      '0,7 m',
-      peso:        '6,9 kg',
-      especie:     'Pokémon Semilla',
-      descripcion: 'Nació con una semilla en el lomo. La semilla crece poco a poco y absorbe la energía solar.',
-    },
-    4: {
-      altura:      '0,6 m',
-      peso:        '8,5 kg',
-      especie:     'Pokémon Lagarto',
-      descripcion: 'La llama de su cola indica su estado de ánimo. Arde con fuerza cuando está lleno de energía.',
-    },
-    6: {
-      altura:      '1,7 m',
-      peso:        '90,5 kg',
-      especie:     'Pokémon Llama',
-      descripcion: 'Escupe fuego de tal intensidad que puede fundir roca. Conocido por su temperamento feroz.',
-    },
-    7: {
-      altura:      '0,5 m',
-      peso:        '9,0 kg',
-      especie:     'Pokémon Tortuga',
-      descripcion: 'Su caparazón es extremadamente duro. Cuando retrae su cuerpo, puede rodar a gran velocidad.',
-    },
-    8: {
-      altura:      '1,0 m',
-      peso:        '22,5 kg',
-      especie:     'Pokémon Tortuga',
-      descripcion: 'Se oculta en el agua para cazar a sus presas. Su larga cola peluda es símbolo de longevidad y lo hace muy popular entre la gente mayor.',
-    },
-    94: {
-      altura:      '1,5 m',
-      peso:        '40,5 kg',
-      especie:     'Pokémon Sombra',
-      descripcion: 'Se esconde en las sombras y absorbe el calor de su entorno, bajando la temperatura a su alrededor. En noches de luna nueva, imita la sombra de las personas y se ríe en silencio mientras observa desde la oscuridad.',
-    },
-    132: {
-      altura:      '0,3 m',
-      peso:        '4,0 kg',
-      especie:     'Pokémon Transformación',
-      descripcion: 'Puede transformarse en cualquier cosa. Cuando duerme, vuelve a su forma original.',
-    },
-    133: {
-      altura:      '0,3 m',
-      peso:        '6,5 kg',
-      especie:     'Pokémon Evolución',
-      descripcion: 'Su composición genética es irregular. Se dice que es capaz de evolucionar hacia cualquier tipo de Pokémon.',
-    },
-    252: {
-      altura:      '0,5 m',
-      peso:        '5,0 kg',
-      especie:     'Pokémon Madera',
-      descripcion: 'Vive en lo alto de los árboles. Nunca retrocede, por débil que sea el rival.',
-    },
-    255: {
-      altura:      '0,4 m',
-      peso:        '2,5 kg',
-      especie:     'Pokémon Pollito',
-      descripcion: 'Tiene una bola de fuego de 1000 °C en su estómago. Sus abrazos son cálidos y reconfortantes.',
-    },
-    258: {
-      altura:      '0,4 m',
-      peso:        '7,6 kg',
-      especie:     'Pokémon Pez Lodo',
-      descripcion: 'La aleta de su cabeza detecta cambios en el agua. Puede mover rocas enormes con sus patas.',
-    },
-    289: {
-      altura:      '2,0 m',
-      peso:        '130,5 kg',
-      especie:     'Pokémon Vago',
-      descripcion: 'El Pokémon más poderoso en estado de reposo. Cuando se activa, ningún ser vivo puede igualar su fuerza.',
-    },
-    306: {
-      altura:      '2,1 m',
-      peso:        '360,0 kg',
-      especie:     'Pokémon Coraza Hierro',
-      descripcion: 'Su armadura de acero puede aguantar cualquier ataque. Aplasta a sus rivales con su enorme peso.',
-    },
-    399: {
-      altura:      '0,5 m',
-      peso:        '20,0 kg',
-      especie:     'Pokémon Diente Grande',
-      descripcion: 'Se caracteriza por sus enormes dientes delanteros. A pesar de que se le rompen con frecuencia, le vuelven a crecer enseguida.',
-    },
-    445: {
-      altura:      '1,9 m',
-      peso:        '95,0 kg',
-      especie:     'Pokémon Tiburón Tierra',
-      descripcion: 'Vuela a 120 km/h bajo tierra. La aleta de su cabeza actúa como una hélice para perforar el suelo.',
-    },
-    495: {
-      altura:      '0,6 m',
-      peso:        '8,1 kg',
-      especie:     'Pokémon Serpiente',
-      descripcion: 'Realiza la fotosíntesis con su cola. Cuanto más sol recibe, más rápido y ágil se vuelve.',
-    },
-    498: {
-      altura:      '0,5 m',
-      peso:        '9,9 kg',
-      especie:     'Pokémon Cerdito',
-      descripcion: 'Lanza bolas de fuego por la nariz. Su cola en espiral arde cuando usa sus ataques más fuertes.',
-    },
-    501: {
-      altura:      '0,5 m',
-      peso:        '5,9 kg',
-      especie:     'Pokémon Nutria Mar',
-      descripcion: 'El escalchop de su vientre es un arma y escudo a la vez. Lo lanza con precisión en combate.',
-    },
-    559: {
-      altura:      '0,6 m',
-      peso:        '11,8 kg',
-      especie:     'Pokémon Pantalones Caídos',
-      descripcion: 'Usa sus pantalones caídos para intimidar a los rivales. Endurece su piel para resistir los golpes.',
-    },
-    567: {
-      altura:      '1,4 m',
-      peso:        '32,0 kg',
-      especie:     'Pokémon Primordial',
-      descripcion: 'Aunque sus alas son rudimentarias, compensa su falta de vuelo con una velocidad devastadora en tierra. Se dice que tiene el espíritu combativo más feroz de todos los Pokémon fósil.',
-    },
-    612: {
-      altura:      '1,8 m',
-      peso:        '105,5 kg',
-      especie:     'Pokémon Colmillo Hacha',
-      descripcion: 'Sus colmillos son tan afilados que pueden cortar acero. Cuando lucha con toda su fuerza, emite un aullido ensordecedor.',
-    },
-    724: {
-      altura:      '1,6 m',
-      peso:        '36,6 kg',
-      especie:     'Pokémon Pluma Flecha',
-      descripcion: 'Dispara plumas a modo de flechas con una precisión capaz de acertar a un guijarro a 100 metros. Se mueve sin ser detectado y tiende emboscadas en una décima de segundo.',
-    },
-    768: {
-      altura:      '2,1 m',
-      peso:        '108,0 kg',
-      especie:     'Pokémon Insecto Litoral',
-      descripcion: 'Su dura armadura resiste cualquier golpe. Cuando cae en batalla, se convierte en un ser completamente distinto y desborda una energía oscura y feroz.',
-    },
-  };
+  let PERFILES = {};
+  let CURIOSIDADES = {};
 
-  // ══════════════════════════════════════════════
-  // CURIOSIDADES
-  // ══════════════════════════════════════════════
-  const CURIOSIDADES = {
-    1: [ // Bulbasaur
-      { icon: '', texto: 'Es el único inicial de Gen I que es de doble tipo desde el principio: Planta y Veneno.' },
-      { icon: '', texto: 'Lleva una semilla en el lomo desde que nace. Nadie sabe exactamente qué hay dentro.' },
-      { icon: '', texto: 'Su nombre combina "bulb" (bulbo en inglés) y "saur" (del griego sauros, lagarto).' },
-    ],
-    4: [ // Charmander
-      { icon: '', texto: 'La llama de su cola indica su estado de salud. Si se apaga, Charmander perece.' },
-      { icon: '', texto: 'Cuando llueve, sale vapor de la punta de su cola al contacto con el agua.' },
-      { icon: '', texto: 'Es el inicial más popular de Gen I según encuestas oficiales de The Pokémon Company.' },
-    ],
-    6: [ // Charizard
-      { icon: '', texto: 'Puede alcanzar temperaturas de llama de más de 1400 °C, suficiente para fundir roca.' },
-      { icon: '', texto: 'Vuela tan alto que el aire se vuelve gélido, pero su llama nunca se apaga.' },
-    ],
-    7: [ // Squirtle
-      { icon: '', texto: 'Su caparazón no solo sirve de protección, también minimiza la resistencia del agua al nadar.' },
-      { icon: '', texto: 'En el anime, el "Escuadrón Squirtle" llevaba gafas de sol y actuaba como bomberos.' },
-      { icon: '', texto: 'Puede retraer sus extremidades dentro del caparazón y girar como una bola de agua.' },
-    ],
-    8: [ // Wartortle
-      { icon: '', texto: 'Se dice que puede llegar a vivir 10.000 años. Los más ancianos tienen algas sobre el caparazón.' },
-      { icon: '', texto: 'Los arañazos de su caparazón son prueba de los combates que ha tenido y de lo buen guerrero que es.' },
-      { icon: '', texto: 'Usa su peluda cola para almacenar aire y poder bucear durante más tiempo bajo el agua.' },
-    ],
-    94: [ // Gengar
-      { icon: '', texto: 'Se esconde en las sombras de las habitaciones esperando a que bajen las temperaturas para manifestarse.' },
-      { icon: '', texto: 'Según la Pokédex, puede ser la sombra de alguien que quedó atrapado intentando atrapar a Clefable.' },
-      { icon: '', texto: 'Es uno de los Pokémon originales del equipo de Ash en el anime, aunque tardó décadas en conseguirlo.' },
-    ],
-    132: [ // Ditto
-      { icon: '', texto: 'Puede transformarse en cualquier Pokémon, objeto o incluso persona que haya visto.' },
-      { icon: '', texto: 'Existe la teoría de que Ditto es un experimento fallido de clonación de Mew, ya que comparten el mismo peso y la misma paleta de colores en su forma shiny.' },
-      { icon: '', texto: 'Es el único Pokémon que puede criar con casi cualquier otro, siendo indispensable en la cría competitiva.' },
-    ],
-    133: [ // Eevee
-      { icon: '', texto: 'Tiene el mayor número de evoluciones de todos los Pokémon: actualmente puede evolucionar en 8 formas distintas.' },
-      { icon: '', texto: 'Su inestabilidad genética le permite adaptarse a casi cualquier entorno, lo que explica la diversidad de sus evoluciones.' },
-      { icon: '', texto: 'Es la mascota oficial del protagonista en Pokémon Let\'s Go Eevee, donde no evoluciona y adquiere movimientos únicos.' },
-    ],
-    252: [ // Treecko
-      { icon: '', texto: 'Las almohadillas de sus pies le permiten escalar paredes verticales sin esfuerzo.' },
-      { icon: '', texto: 'Defiende su árbol natal hasta el último aliento. Su valentía es legendaria entre los Pokémon de Hoenn.' },
-      { icon: '', texto: 'Nunca aparta la mirada del enemigo, ni siquiera en situaciones de peligro extremo.' },
-    ],
-    255: [ // Torchic
-      { icon: '', texto: 'Almacena una llama de 1000 °C en su estómago con la que expulsa bolas de fuego.' },
-      { icon: '', texto: 'No puede ver bien en la oscuridad, pero su cuerpo irradia calor para orientarse.' },
-      { icon: '', texto: 'Le encanta acurrucarse junto a sus entrenadores. Su cuerpo siempre está caliente al tacto.' },
-    ],
-    258: [ // Mudkip
-      { icon: '', texto: 'La aleta de su cabeza actúa como radar, detectando flujos de agua y cambios en el terreno.' },
-      { icon: '', texto: 'A pesar de su pequeño tamaño, puede mover rocas más grandes que él con sus extremidades.' },
-      { icon: '', texto: 'Respira tanto por branquias como por pulmones, siendo igual de ágil en tierra y agua.' },
-    ],
-    289: [ // Slaking
-      { icon: '', texto: 'Tiene las estadísticas base totales más altas de todos los Pokémon no legendarios, con 670 puntos.' },
-      { icon: '', texto: 'Su habilidad "Flojera" le impide atacar cada dos turnos, compensando así su poder descomunal.' },
-      { icon: '', texto: 'Pasa la mayor parte del día tumbado sin moverse. Come la hierba que tiene a su alcance sin ni siquiera levantarse.' },
-    ],
-    306: [ // Aggron
-      { icon: '', texto: 'Considera suya la montaña donde habita y la defiende con ferocidad de cualquier intruso.' },
-      { icon: '', texto: 'Cuando se daña su hábitat por desastres naturales, excava él mismo para restaurarlo.' },
-      { icon: '', texto: 'Sus cuernos pueden perforar acero y su peso lo convierte en uno de los Pokémon más difíciles de derribar.' },
-    ],
-    399: [ // Bidoof
-      { icon: '', texto: 'Sus incisivos no dejan de crecer, por lo que roe constantemente árboles y piedras para desgastarlos.' },
-      { icon: '', texto: 'A pesar de su fama de Pokémon débil, en la comunidad se le venera de forma irónica como "el dios Bidoof".' },
-      { icon: '', texto: 'Construye sus madrigueras junto a ríos con ramas y barro, de forma muy similar a los castores.' },
-    ],
-    445: [ // Garchomp
-      { icon: '', texto: 'Puede volar a la velocidad de un avión a reacción plegando sus aletas y perforando el aire.' },
-      { icon: '', texto: 'La campeona Cynthia, considerada por muchos la rival más difícil de toda la saga, lo usa como su Pokémon estrella.' },
-      { icon: '', texto: 'Sus escamas tienen una textura similar al papel de lija, capaz de desgarrar la piel al contacto.' },
-    ],
-    495: [ // Snivy
-      { icon: '', texto: 'Realiza la fotosíntesis con su cola. Cuanto más sol recibe, más ágil y poderoso se vuelve.' },
-      { icon: '', texto: 'Tiene una mirada de superioridad característica. Se dice que ignora a los entrenadores que no respeta.' },
-      { icon: '', texto: 'Cuando está en plena forma, sus movimientos son tan rápidos que apenas se pueden seguir con la vista.' },
-    ],
-    498: [ // Tepig
-      { icon: '', texto: 'Lanza bolas de fuego por la nariz. Cuando está resfriado, solo sale humo negro.' },
-      { icon: '', texto: 'Su cola en espiral se calienta cuando está a punto de usar sus ataques más poderosos.' },
-      { icon: '', texto: 'Es extremadamente afectuoso con su entrenador y suele seguirle a todas partes.' },
-    ],
-    501: [ // Oshawott
-      { icon: '', texto: 'El "escalchop" de su vientre es en realidad una concha de mar que usa como arma y escudo.' },
-      { icon: '', texto: 'Puede desprenderse del escalchop en combate y lanzarlo a alta velocidad como un frisbee.' },
-      { icon: '', texto: 'Aunque es de tipo Agua, le da miedo mojarse las orejas y siempre las protege en la lluvia.' },
-    ],
-    559: [ // Scraggy
-      { icon: '', texto: 'La piel de su vientre es extremadamente elástica y la usa como escudo subiéndosela hasta la cara.' },
-      { icon: '', texto: 'Desafía a cualquier Pokémon con el que cruza la mirada, sin importar la diferencia de tamaño.' },
-      { icon: '', texto: 'Su tipo Siniestro/Lucha lo convierte en uno de los pocos Pokémon inmunes a los ataques Psíquico.' },
-    ],
-    567: [ // Archeops
-      { icon: '', texto: 'Es un Pokémon fósil revivido que existió hace más de 100 millones de años.' },
-      { icon: '', texto: 'Se considera el antepasado de todos los Pokémon Volador, pero paradójicamente es mejor corriendo que volando.' },
-      { icon: '', texto: 'Tiene el ataque base más alto de todos los Pokémon fósil, pero su habilidad "Miedoso" lo penaliza cuando pierde vida.' },
-    ],
-    612: [ // Haxorus
-      { icon: '', texto: 'Sus colmillos en forma de hacha pueden cortar acero y permanecen afilados incluso tras los combates más brutales.' },
-      { icon: '', texto: 'A pesar de su apariencia feroz, es un Pokémon de naturaleza tranquila que solo ataca cuando se amenaza su territorio.' },
-      { icon: '', texto: 'Su cuerpo está recubierto de una armadura natural tan dura que la mayoría de ataques simplemente rebotan.' },
-    ],
-    724: [ // Decidueye
-      { icon: '', texto: 'En una décima de segundo arranca una pluma de sus alas y la dispara como flecha hacia el objetivo.' },
-      { icon: '', texto: 'Su puntería le permite acertar a un guijarro a 100 metros de distancia apuntando a los puntos vitales.' },
-      { icon: '', texto: 'Es el único inicial que cambia su tipo secundario al evolucionar: pasa de Planta/Volador a Planta/Fantasma.' },
-    ],
-    768: [ // Golisopod
-      { icon: '', texto: 'Su armadura natural es más dura que cualquier metal conocido y puede resistir explosiones a quemarropa.' },
-      { icon: '', texto: 'Medita en silencio en el fondo del mar durante días. Cuando despierta, su poder de combate es absoluto.' },
-      { icon: '', texto: 'En el anime, es el Pokémon insignia de Gladio, quien lo usa junto a su habilidad "Retirada de Emergencia" como táctica de combate.' },
-    ],
   };
 
   // ── Stats helpers ─────────────────────────────
@@ -1714,7 +1464,7 @@
 
     renderStats(p.stats || null);
 
-    const perf = PERFILES[p.id] || {};
+    const perf = PERFILES[String(p.id)] || {};
     const setField = (id, val, placeholder) => {
       const el = document.getElementById(id);
       if (val) { el.textContent = val; el.className = 'modal-perfil-value'; }
@@ -1733,7 +1483,7 @@
       `<span class="modal-ataque">${a}</span>`
     ).join('');
 
-    const curiosidades = CURIOSIDADES[id] || [];
+    const curiosidades = CURIOSIDADES[String(id)] || [];
     const container = document.getElementById('modalCuriosidades');
     if (curiosidades.length === 0) {
       container.innerHTML = '<div class="modal-no-curiosidades">Sin datos curiosos registrados todavía.</div>';
