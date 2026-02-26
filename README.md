@@ -122,7 +122,7 @@ PokemonProject/
 ![021](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/021.gif)
 ![022](https://raw.githubusercontent.com/LyPaw/PokeRealm/main/docs/spriteV/022.gif)
 
-> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PokeRealm) para ver los datos.
+> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PomeBall) para ver los datos.
 
 ---
 
