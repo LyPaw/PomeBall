@@ -820,18 +820,15 @@
 
     .sv-cell {
       display: flex; flex-direction: column; align-items: center;
-      padding: 1.8rem 1rem 1.2rem;
+      padding: 2rem 1rem 1.8rem;
       border-right: 2px solid var(--border);
-      border-bottom: 2px solid var(--border);
     }
-    .sv-cell:nth-child(2n) { border-right: none; }
-    .sv-cell:nth-child(3),
-    .sv-cell:nth-child(4) { border-bottom: none; }
+    .sv-cell:nth-child(2) { border-right: none; }
 
     .sv-cell-label {
-      font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
+      font-family: 'Press Start 2P', monospace; font-size: 0.45rem;
       color: var(--muted); letter-spacing: 0.08em;
-      margin-bottom: 1.2rem; text-align: center;
+      margin-bottom: 1.4rem; text-align: center;
     }
     .sv-shiny-cell .sv-cell-label { color: goldenrod; }
 
@@ -840,7 +837,9 @@
       border: 2px solid var(--border);
       display: flex; justify-content: center; align-items: center;
       width: 220px; height: 220px;
-      position: relative;
+    }
+    .sv-img-wrap-lg {
+      width: 300px; height: 300px;
     }
     .sv-img-wrap-shiny {
       background: radial-gradient(circle at center, rgba(255,215,0,0.15) 0%, transparent 65%);
@@ -855,6 +854,9 @@
       transition: transform 0.25s;
     }
     .sv-img:hover { transform: scale(1.1); }
+    .sv-img-lg {
+      width: 240px; height: 240px;
+    }
 
     .sv-footer {
       height: 38px;
@@ -1110,27 +1112,15 @@
     </div>
     <div class="sv-grid">
       <div class="sv-cell">
-        <div class="sv-cell-label">NORMAL · FRENTE</div>
-        <div class="sv-img-wrap">
-          <img class="sv-img" id="svFront" src="" alt="Frente normal"/>
-        </div>
-      </div>
-      <div class="sv-cell">
-        <div class="sv-cell-label">NORMAL · ESPALDA</div>
-        <div class="sv-img-wrap">
-          <img class="sv-img" id="svBack" src="" alt="Espalda normal"/>
+        <div class="sv-cell-label">NORMAL</div>
+        <div class="sv-img-wrap sv-img-wrap-lg">
+          <img class="sv-img sv-img-lg" id="svFront" src="" alt="Frente normal"/>
         </div>
       </div>
       <div class="sv-cell sv-shiny-cell">
-        <div class="sv-cell-label">✨ SHINY · FRENTE</div>
-        <div class="sv-img-wrap sv-img-wrap-shiny">
-          <img class="sv-img" id="svShinyFront" src="" alt="Frente shiny"/>
-        </div>
-      </div>
-      <div class="sv-cell sv-shiny-cell">
-        <div class="sv-cell-label">✨ SHINY · ESPALDA</div>
-        <div class="sv-img-wrap sv-img-wrap-shiny">
-          <img class="sv-img" id="svShinyBack" src="" alt="Espalda shiny"/>
+        <div class="sv-cell-label">✨ SHINY</div>
+        <div class="sv-img-wrap sv-img-wrap-shiny sv-img-wrap-lg">
+          <img class="sv-img sv-img-lg" id="svShinyFront" src="" alt="Frente shiny"/>
         </div>
       </div>
     </div>
@@ -1530,11 +1520,6 @@
   }
 
   // ── Sprite Viewer ─────────────────────────────
-  const SPRITE_BACK_NORMAL = id =>
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${id}.png`;
-  const SPRITE_BACK_SHINY = id =>
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${id}.png`;
-
   function openSpriteViewer() {
     if (!currentModalId) return;
     const p = allPokemons.find(x => x.id === currentModalId);
@@ -1542,23 +1527,8 @@
 
     document.getElementById('svPokeName').textContent = p ? p.nombre.toUpperCase() : `#${id}`;
 
-    // Frente normal
-    const front = document.getElementById('svFront');
-    setSpriteWithFallback(front, id);
-
-    // Espalda normal
-    const back = document.getElementById('svBack');
-    back.src = SPRITE_BACK_NORMAL(id);
-    back.onerror = function() { this.src = SPRITE_PNG(id); this.onerror = null; };
-
-    // Frente shiny
-    const shinyFront = document.getElementById('svShinyFront');
-    setShinyWithFallback(shinyFront, id);
-
-    // Espalda shiny
-    const shinyBack = document.getElementById('svShinyBack');
-    shinyBack.src = SPRITE_BACK_SHINY(id);
-    shinyBack.onerror = function() { this.src = SPRITE_SHINY_PNG(id); this.onerror = null; };
+    setSpriteWithFallback(document.getElementById('svFront'), id);
+    setShinyWithFallback(document.getElementById('svShinyFront'), id);
 
     document.getElementById('svOverlay').classList.add('open');
   }
