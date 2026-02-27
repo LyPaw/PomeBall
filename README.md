@@ -135,8 +135,8 @@ Pon el movil en **horizontal**.
       <td>021</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/021.gif" width="50"/></td>
       <td>022</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/022.gif" width="100"/></td>
       <td>023</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/023.gif" width="50"/></td>
-      <td>024</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/024.gif" width="140"/></td>
-      <td>025</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/025.gif" width="50"/></td>
+      <td>024</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/024.gif" width="100"/></td>
+      <td>025</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/025.gif" width="87"/></td>
     </tr>
      <tr>
       <td>026</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/026.gif" width="50"/></td>
