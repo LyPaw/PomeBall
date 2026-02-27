@@ -338,10 +338,7 @@
     }
     .gc-card:hover .gc-card-img img { transform: scale(1.12); }
 
-    /* ── Charizard más grande en la card ── */
-    .gc-card[data-pkid="6"] .gc-card-img img {
-      width: 120px; height: 120px;
-    }
+    /* tamaños custom por ID se aplican via JS desde sprite_sizes.json */
 
     .gc-sound {
       position: absolute; bottom: 4px; right: 6px;
@@ -569,10 +566,7 @@
     }
     .modal-sprite:hover { transform: scale(1.07); }
 
-    /* ── Charizard más grande en el modal ── */
-    #modalSprite[data-pkid="6"] {
-      width: 210px; height: 210px;
-    }
+    /* tamaños custom modal se aplican via JS desde sprite_sizes.json */
 
     /* Tabla ficha */
     .modal-ficha { padding: 0.2rem 0; }
@@ -1263,16 +1257,20 @@
   let activeGens   = new Set();
   let activeTipos  = new Set();
 
+  let SPRITE_SIZES = {};
+
   async function loadPokemons() {
     try {
-      const [pokemonsRes, perfilesRes, curiosidadesRes] = await Promise.all([
+      const [pokemonsRes, perfilesRes, curiosidadesRes, sizesRes] = await Promise.all([
         fetch('pokemons.json'),
         fetch('perfiles.json'),
         fetch('curiosidades.json'),
+        fetch('sprite_sizes.json'),
       ]);
       allPokemons  = await pokemonsRes.json();
       PERFILES     = await perfilesRes.json();
       CURIOSIDADES = await curiosidadesRes.json();
+      SPRITE_SIZES = await sizesRes.json();
       render();
     } catch (e) {
       document.getElementById('grid').innerHTML =
@@ -1335,6 +1333,12 @@
     grid.querySelectorAll('img[data-id]').forEach(img => {
       const id     = parseInt(img.dataset.id);
       const nombre = img.dataset.nombre || img.alt;
+      // Aplicar tamaño custom si existe en sprite_sizes.json
+      const sizes = SPRITE_SIZES[String(id)];
+      if (sizes && sizes.card) {
+        img.style.width  = sizes.card + 'px';
+        img.style.height = sizes.card + 'px';
+      }
       setSpriteWithFallback(img, id, nombre);
     });
   }
@@ -1456,6 +1460,15 @@
     const spriteEl = document.getElementById('modalSprite');
     spriteEl.dataset.pkid = id;
     spriteEl.alt = p.nombre;
+    // Aplicar tamaño custom modal si existe en sprite_sizes.json
+    const customSizes = SPRITE_SIZES[String(id)];
+    if (customSizes && customSizes.modal) {
+      spriteEl.style.width  = customSizes.modal + 'px';
+      spriteEl.style.height = customSizes.modal + 'px';
+    } else {
+      spriteEl.style.width  = '170px';
+      spriteEl.style.height = '170px';
+    }
     setSpriteWithFallback(spriteEl, p.id, p.nombre);
 
     document.getElementById('modalNum').textContent = `NO.${String(p.id).padStart(3,'0')}`;
