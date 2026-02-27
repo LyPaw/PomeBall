@@ -323,11 +323,16 @@
       color: var(--card-gen-c);
     }
 
+    /* ── Layout fijo: imagen 70%, texto 30% ── */
+    .gc-card {
+      display: flex; flex-direction: column;
+    }
     .gc-card-img {
       background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 65%);
       display: flex; justify-content: center; align-items: center;
-      padding: 1rem 0.5rem 0.6rem; min-height: 140px;
       position: relative;
+      flex: 0 0 160px;   /* altura fija para la zona de imagen */
+      overflow: hidden;
     }
     .gc-card-img img {
       width: 96px; height: 96px;
@@ -335,6 +340,7 @@
       image-rendering: pixelated; image-rendering: crisp-edges;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       transition: transform 0.2s;
+      max-width: 100%; max-height: 100%;  /* nunca desborda la zona */
     }
     .gc-card:hover .gc-card-img img { transform: scale(1.12); }
 
@@ -370,7 +376,7 @@
       background: radial-gradient(circle at center, rgba(255,215,0,0.2) 0%, transparent 65%);
     }
 
-    .gc-card-body { padding: 0.8rem 0.9rem 1rem; }
+    .gc-card-body { padding: 0.8rem 0.9rem 1rem; flex: 1; }
 
     .gc-card-name {
       font-family: 'Press Start 2P', monospace; font-size: 0.65rem;
@@ -1336,8 +1342,11 @@
       // Aplicar tamaño custom si existe en sprite_sizes.json
       const sizes = SPRITE_SIZES[String(id)];
       if (sizes && sizes.card) {
-        img.style.width  = sizes.card + 'px';
-        img.style.height = sizes.card + 'px';
+        img.style.width   = sizes.card + 'px';
+        img.style.height  = sizes.card + 'px';
+        // Ajustar la zona contenedora para que la imagen quepa sin empujar el texto
+        const zone = img.closest('.gc-card-img');
+        if (zone) zone.style.flex = `0 0 ${sizes.card + 20}px`;
       }
       setSpriteWithFallback(img, id, nombre);
     });
