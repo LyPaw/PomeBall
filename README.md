@@ -54,13 +54,14 @@
 
 <div align="center">
 
-# Proyecto Pokémon
+# PomeBall Pokédex
 
-*Un juego Pokémon desarrollado en Java, con transición a JavaFX*
+*Una Pokédex web interactiva con sprites animados, filtros y datos completos*
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc/4.0/)
-![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk&logoColor=white)
-![JavaFX](https://img.shields.io/badge/JavaFX-23-blue?logo=java&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow)
 [![Pokédex Web](https://img.shields.io/badge/Pok%C3%A9dex-Ver%20web-%23e94560?style=flat&logo=github)](https://LyPaw.github.io/PomeBall)
 
@@ -70,36 +71,27 @@
 
 ## Descripción
 
-**Proyecto Pokémon** es un juego por consola desarrollado en Java puro, actualmente en transición hacia una interfaz gráfica con **JavaFX**. El proyecto simula mecánicas clásicas de la saga Pokémon: elección de Pokémon inicial, sistema de ataques con PP, gestión del equipo del entrenador, inventario de ítems y captura de Pokémon salvajes.
+**PomeBall Pokédex** es una Pokédex web estática desarrollada con HTML, CSS y JavaScript puro. Permite explorar los Pokémon disponibles con sus sprites animados, estadísticas, tipos, ataques, perfiles y curiosidades. Incluye filtros por generación y tipo, búsqueda por nombre o número, modo shiny, tema claro/oscuro y un diseño retro inspirado en las Game Boy.
 
 ---
 
 ## Estructura del proyecto
 
 ```
-PokemonProject/
-├── src/
-│   ├── MainApp.java           ← Punto de entrada JavaFX
-│   ├── Pokémon.java           ← Modelo base de Pokémon
-│   ├── Ataque.java            ← Sistema de ataques y PP
-│   ├── Entrenador.java        ← Lógica del entrenador
-│   ├── EquipoPokemon.java     ← Gestión del equipo (máx. 6)
-│   ├── Inventario.java        ← Inventario de ítems
-│   ├── Item.java              ← Modelo de ítem
-│   ├── Pokeball.java          ← Lógica de captura
-│   ├── CreadorPokemons.java   ← Inicialización de Pokémon por generación
-│   ├── TipoPokemon.java       ← Enum de tipos
-│   ├── TipoItem.java          ← Enum de tipos de ítem
-│   └── Generacion.java        ← Enum de generaciones
+PomeBall/
 └── docs/
-    ├── index.html             ← Pokédex web (GitHub Pages)
-    └── pokemons.json          ← Datos de Pokémon disponibles
+    ├── index.html          ← Pokédex web (GitHub Pages)
+    ├── pokemons.json       ← Datos de Pokémon disponibles
+    ├── perfiles.json       ← Altura, peso, especie y descripción
+    ├── curiosidades.json   ← Datos curiosos por Pokémon
+    ├── sprite_sizes.json   ← Tamaños personalizados de sprites
+    └── spriteV/            ← Sprites animados (.gif) y recursos visuales
 ```
 
 ---
 
 ## Pokémon disponibles
-Pon el movil en **horizontal**.
+Pon el móvil en **horizontal**.
 
 <table>
   <tbody>
@@ -183,7 +175,7 @@ Pon el movil en **horizontal**.
   </tbody>
 </table>
 
-> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PomeBall) para ver los datos.
+> 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PomeBall) para ver todos los datos.
 
 ---
 
@@ -235,15 +227,20 @@ Pon el movil en **horizontal**.
 
 ## 📋 Roadmap
 
-- [x] Modelo base de Pokémon, Ataque y Entrenador
-- [x] Sistema de generaciones y selección de inicial
-- [x] Sistema de PP en ataques
-- [x] Inventario y captura de Pokémon
-- [x] Pokédex web con GitHub Pages
-- [ ] Interfaz gráfica con JavaFX
-- [ ] Pantalla de selección de Pokémon inicial
-- [ ] Sistema de combate por turnos
-- [ ] Mapa y navegación entre zonas
+- [x] Pokédex web desplegada en GitHub Pages
+- [x] Sprites animados con fallback a imagen estática
+- [x] Modo shiny en modal de detalle
+- [x] Filtros por generación y tipo (hasta 2 tipos simultáneos)
+- [x] Búsqueda por nombre y número
+- [x] Perfiles: altura, peso, especie y descripción
+- [x] Curiosidades por Pokémon
+- [x] Estadísticas base con barras animadas
+- [x] Tema claro / oscuro
+- [x] Sonido de grito al abrir cada Pokémon
+- [ ] Ampliar el Pokédex con más Pokémon y generaciones
+- [ ] Añadir cadenas de evolución en el modal
+- [ ] Comparador de estadísticas entre dos Pokémon
+- [ ] Sección de información sobre ataques
 
 ---
 
