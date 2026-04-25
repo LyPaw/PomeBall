@@ -90,90 +90,158 @@ PomeBall/
 
 ---
 
-## Pokémon disponibles
-Pon el móvil en **horizontal**.
+## 🔍 Pokémon Disponibles
 
-<table>
-  <tbody>
-    <tr>
-      <td>001</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/001.gif" width="80"/></td>
-      <td>002</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/002.gif" width="80"/></td>
-      <td>003</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/003.gif" width="80"/></td>
-      <td>004</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/004.gif" width="80"/></td>
-      <td>005</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/005.gif" width="80"/></td>   
-    </tr>
-    <tr>
-      <td>006</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/006.gif" width="80"/></td>
-      <td>007</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/007.gif" width="80"/></td>
-      <td>008</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/008.gif" width="80"/></td>
-      <td>009</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/009.gif" width="80"/></td>
-      <td>010</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/010.gif" width="80"/></td>
-    </tr>
-    <tr>
-      <td>011</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/011.gif" width="80"/></td>
-      <td>012</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/012.gif" width="80"/></td>
-      <td>013</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/013.gif" width="80"/></td>
-      <td>014</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/014.gif" width="80"/></td>
-      <td>015</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/015.gif" width="80"/></td>
-    </tr>
-    <tr>
-      <td>016</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/016.gif" width="80"/></td>
-      <td>017</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/017.gif" width="80"/></td>
-      <td>018</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/018.gif" width="80"/></td>
-      <td>019</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/019.gif" width="80"/></td>
-      <td>020</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/020.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>021</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/021.gif" width="80"/></td>
-      <td>022</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/022.gif" width="80"/></td>
-      <td>023</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/023.gif" width="80"/></td>
-      <td>024</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/024.gif" width="80"/></td>
-      <td>025</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/025.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>026</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/026.gif" width="80"/></td>
-      <td>027</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/027.gif" width="80"/></td>
-      <td>028</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/028.gif" width="80"/></td>
-      <td>029</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/029.gif" width="80"/></td>
-      <td>030</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/030.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>031</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/031.gif" width="80"/></td>
-      <td>032</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/032.gif" width="80"/></td>
-      <td>033</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/033.gif" width="80"/></td>
-      <td>034</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/034.gif" width="80"/></td>
-      <td>035</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/035.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>036</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/036.gif" width="80"/></td>
-      <td>037</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/037.gif" width="80"/></td>
-      <td>038</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/038.gif" width="80"/></td>
-      <td>039</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/039.gif" width="80"/></td>
-      <td>040</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/040.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>041</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/041.gif" width="80"/></td>
-      <td>042</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/042.gif" width="80"/></td>
-      <td>043</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/043.gif" width="80"/></td>
-      <td>044</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/044.gif" width="80"/></td>
-      <td>045</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/045.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>046</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/046.gif" width="80"/></td>
-      <td>047</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/047.gif" width="80"/></td>
-      <td>048</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/048.gif" width="80"/></td>
-      <td>049</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/049.gif" width="80"/></td>
-      <td>050</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/050.gif" width="80"/></td>
-    </tr>
-     <tr>
-      <td>051</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/051.gif" width="80"/></td>
-      <td>052</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/052.gif" width="80"/></td>
-      <td>053</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/053.gif" width="80"/></td>
-      <td>054</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/054.gif" width="80"/></td>
-      <td>055</td><td><img src="https://raw.githubusercontent.com/LyPaw/PomeBall/main/docs/spriteV/055.gif" width="80"/></td>
-    </tr>
-  </tbody>
-</table>
+Esta sección detalla los registros desde Kanto hasta los inicios de Hoenn (#001 - #300). Para ver sprites animados y datos técnicos, visita la [Pokédex Web](https://LyPaw.github.io/PomeBall).
+
+---
+
+### 🌿 Generación I (Kanto)
+
+| Nº | Nombre | Tipo(s) |
+| :--- | :--- | :--- |
+| 001-003 | **Bulbasaur / Ivysaur / Venusaur** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 004-006 | **Charmander / Charmeleon / Charizard** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 007-009 | **Squirtle / Wartortle / Blastoise** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 010-012 | **Caterpie / Metapod / Butterfree** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 013-015 | **Weedle / Kakuna / Beedrill** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 016-018 | **Pidgey / Pidgeotto / Pidgeot** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 019-020 | **Rattata / Raticate** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 021-022 | **Spearow / Fearow** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 023-024 | **Ekans / Arbok** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 025-026 | **Pikachu / Raichu** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 027-028 | **Sandshrew / Sandslash** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 029-034 | **Línea Nidoran / Queen / King** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 035-036 | **Clefairy / Clefable** | ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 037-038 | **Vulpix / Ninetales** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 039-040 | **Jigglypuff / Wigglytuff** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 041-042 | **Zubat / Golbat** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 043-045 | **Oddish / Gloom / Vileplume** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 046-047 | **Paras / Parasect** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 048-049 | **Venonat / Venomoth** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 050-051 | **Diglett / Dugtrio** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 052-053 | **Meowth / Persian** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 054-055 | **Psyduck / Golduck** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 056-057 | **Mankey / Primeape** | ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 058-059 | **Growlithe / Arcanine** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 060-062 | **Poliwag / Poliwhirl / Poliwrath** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 063-065 | **Abra / Kadabra / Alakazam** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 066-068 | **Machop / Machoke / Machamp** | ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 069-071 | **Bellsprout / Weepinbell / Victreebel** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 072-073 | **Tentacool / Tentacruel** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 074-076 | **Geodude / Graveler / Golem** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 077-078 | **Ponyta / Rapidash** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 079-080 | **Slowpoke / Slowbro** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 081-082 | **Magnemite / Magneton** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) ![Acero](https://img.shields.io/badge/Acero-B7B7CE?style=flat-square) |
+| 083 | **Farfetch'd** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 084-085 | **Doduo / Dodrio** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 086-087 | **Seel / Dewgong** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) |
+| 088-089 | **Grimer / Muk** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 090-091 | **Shellder / Cloyster** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) |
+| 092-094 | **Gastly / Haunter / Gengar** | ![Fantasma](https://img.shields.io/badge/Fantasma-705746?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 095 | **Onix** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 096-097 | **Drowzee / Hypno** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 098-099 | **Krabby / Kingler** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 100-101 | **Voltorb / Electrode** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 102-103 | **Exeggcute / Exeggutor** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 104-105 | **Cubone / Marowak** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 106-107 | **Hitmonlee / Hitmonchan** | ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 108 | **Lickitung** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 109-110 | **Koffing / Weezing** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 111-112 | **Rhyhorn / Rhydon** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) |
+| 113 | **Chansey** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 114 | **Tangela** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 115 | **Kangaskhan** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 116-117 | **Horsea / Seadra** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 118-119 | **Goldeen / Seaking** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 120-121 | **Staryu / Starmie** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 122 | **Mr. Mime** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 123 | **Scyther** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 124 | **Jynx** | ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 125 | **Electabuzz** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 126 | **Magmar** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 127 | **Pinsir** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) |
+| 128 | **Tauros** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 129-130 | **Magikarp / Gyarados** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 131 | **Lapras** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) |
+| 132 | **Ditto** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 133-136 | **Eevee & Evoluciones** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 137 | **Porygon** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 138-141 | **Omanyte / Kabuto Lines** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 142 | **Aerodactyl** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 143 | **Snorlax** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 144-146 | **Aves Legendarias** | ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 147-149 | **Dratini / Dragonair / Dragonite** | ![Dragón](https://img.shields.io/badge/Dragón-6F35FC?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 150-151 | **Mewtwo / Mew** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+
+---
+
+### 🌊 Generación II (Johto)
+
+| Nº | Nombre | Tipo(s) |
+| :--- | :--- | :--- |
+| 152-154 | **Chikorita / Bayleef / Meganium** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 155-157 | **Cyndaquil / Quilava / Typhlosion** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 158-160 | **Totodile / Croconaw / Feraligatr** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 161-164 | **Sentret / Hoothoot Lines** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 165-168 | **Ledyba / Spinarak Lines** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 169 | **Crobat** | ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 170-171 | **Chinchou / Lanturn** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 172-176 | **Pichu / Cleffa / Igglybuff / Togepi** | ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 177-178 | **Natu / Xatu** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 179-181 | **Mareep / Flaaffy / Ampharos** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) |
+| 182 | **Bellossom** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 183-184 | **Marill / Azumarill** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 185 | **Sudowoodo** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) |
+| 187-189 | **Hoppip / Skiploom / Jumpluff** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 190 | **Aipom** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 191-192 | **Sunkern / Sunflora** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 193 | **Yanma** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 194-195 | **Wooper / Quagsire** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 196-197 | **Espeon / Umbreon** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) |
+| 198-199 | **Murkrow / Slowking** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) |
+| 201 | **Unown** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 202 | **Wobbuffet** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 203 | **Girafarig** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) |
+| 204-205 | **Pineco / Forretress** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Acero](https://img.shields.io/badge/Acero-B7B7CE?style=flat-square) |
+| 206 | **Dunsparce** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 207-208 | **Gligar / Steelix** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) ![Acero](https://img.shields.io/badge/Acero-B7B7CE?style=flat-square) |
+| 209-210 | **Snubbull / Granbull** | ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 211-213 | **Qwilfish / Scizor / Shuckle** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Acero](https://img.shields.io/badge/Acero-B7B7CE?style=flat-square) |
+| 214 | **Heracross** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 215-217 | **Sneasel / Teddiursa / Ursaring** | ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) |
+| 218-219 | **Slugma / Magcargo** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) |
+| 220-221 | **Swinub / Piloswine** | ![Hielo](https://img.shields.io/badge/Hielo-96D9D6?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 222-224 | **Corsola / Remoraid / Octillery** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 225-227 | **Delibird / Mantine / Skarmory** | ![Acero](https://img.shields.io/badge/Acero-B7B7CE?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 228-230 | **Houndour / Houndoom / Kingdra** | ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+| 231-233 | **Phanpy / Donphan / Porygon2** | ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 234-235 | **Stantler / Smeargle** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 236-240 | **Tyrogue / Hitmontop / Babys** | ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 241-242 | **Miltank / Blissey** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 243-245 | **Bestias Legendarias** | ![Eléctrico](https://img.shields.io/badge/Eléctrico-F7D02C?style=flat-square) ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) |
+| 246-248 | **Larvitar / Pupitar / Tyranitar** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) |
+| 249-251 | **Lugia / Ho-Oh / Celebi** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) |
+
+---
+
+### 🏜️ Generación III (Hoenn)
+
+| Nº | Nombre | Tipo(s) |
+| :--- | :--- | :--- |
+| 252-254 | **Treecko / Grovyle / Sceptile** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 255-257 | **Torchic / Combusken / Blaziken** | ![Fuego](https://img.shields.io/badge/Fuego-EE8130?style=flat-square) ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 258-260 | **Mudkip / Marshtomp / Swampert** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Tierra](https://img.shields.io/badge/Tierra-E2BF65?style=flat-square) |
+| 261-264 | **Poochyena / Zigzagoon Lines** | ![Siniestro](https://img.shields.io/badge/Siniestro-705746?style=flat-square) ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 265-269 | **Wurmple / Cascoon / Dustox Lines** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Veneno](https://img.shields.io/badge/Veneno-A33EA1?style=flat-square) |
+| 270-275 | **Lotad / Seedot Lines** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) |
+| 276-279 | **Taillow / Wingull Lines** | ![Agua](https://img.shields.io/badge/Agua-6390F0?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 280-282 | **Ralts / Kirlia / Gardevoir** | ![Psíquico](https://img.shields.io/badge/Psíquico-F95587?style=flat-square) ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 283-284 | **Surskit / Masquerain** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Volador](https://img.shields.io/badge/Volador-A98FF3?style=flat-square) |
+| 285-286 | **Shroomish / Breloom** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 287-289 | **Slakoth / Vigoroth / Slaking** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 290-292 | **Nincada / Ninjask / Shedinja** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Fantasma](https://img.shields.io/badge/Fantasma-705746?style=flat-square) |
+| 293-295 | **Whismur / Loudred / Exploud** | ![Normal](https://img.shields.io/badge/Norm
 
 > 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PomeBall) para ver todos los datos.
 
