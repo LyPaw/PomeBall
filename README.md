@@ -241,7 +241,11 @@ Esta sección detalla los registros desde Kanto hasta los inicios de Hoenn (#001
 | 285-286 | **Shroomish / Breloom** | ![Planta](https://img.shields.io/badge/Planta-7AC74C?style=flat-square) ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
 | 287-289 | **Slakoth / Vigoroth / Slaking** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
 | 290-292 | **Nincada / Ninjask / Shedinja** | ![Bicho](https://img.shields.io/badge/Bicho-A6B91A?style=flat-square) ![Fantasma](https://img.shields.io/badge/Fantasma-705746?style=flat-square) |
-| 293-295 | **Whismur / Loudred / Exploud** | ![Normal](https://img.shields.io/badge/Norm
+| 293-295 | **Whismur / Loudred / Exploud** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
+| 296-297 | **Makuhita / Hariyama** | ![Lucha](https://img.shields.io/badge/Lucha-C22E28?style=flat-square) |
+| 298 | **Azurill** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) ![Hada](https://img.shields.io/badge/Hada-D685AD?style=flat-square) |
+| 299 | **Nosepass** | ![Roca](https://img.shields.io/badge/Roca-B6A136?style=flat-square) |
+| 300 | **Skitty** | ![Normal](https://img.shields.io/badge/Normal-A8A77A?style=flat-square) |
 
 > 🌐 Consulta la [Pokédex web](https://LyPaw.github.io/PomeBall) para ver todos los datos.
 
