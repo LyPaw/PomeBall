@@ -51,7 +51,17 @@ const SPRITE_SHINY_SD  = nombre => `https://play.pokemonshowdown.com/sprites/ani
 const SPRITE_SHINY_BW  = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${id}.gif`;
 const SPRITE_SHINY_PNG = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`;
 
-/** Carga sprite normal con fallback: Showdown → BW animated → PNG estático */
+// Pokéball SVG como fallback (data URI)
+const POKEBALL_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="white" stroke="%23333" stroke-width="3"/>
+    <path d="M 2 50 A 48 48 0 0 1 98 50" fill="%23CC0000" stroke="%23333" stroke-width="3"/>
+    <circle cx="50" cy="50" r="16" fill="white" stroke="%23333" stroke-width="3"/>
+    <circle cx="50" cy="50" r="8" fill="white" stroke="%23333" stroke-width="2"/>
+  </svg>
+`)}`;
+
+/** Carga sprite normal con fallback: Showdown → BW animated → PNG estático → Pokéball */
 function setSpriteWithFallback(imgEl, id, nombre, loaderEl) {
   const pokeName = nombre || imgEl.alt || String(id);
   if (loaderEl) loaderEl.classList.add('visible');
@@ -69,6 +79,36 @@ function setSpriteWithFallback(imgEl, id, nombre, loaderEl) {
     this.onerror = function () {
       this.onerror = null;
       this.src = SPRITE_PNG(id);
+      this.onerror = function () {
+        this.onerror = null;
+        this.src = POKEBALL_SVG;
+      };
+    };
+  };
+}
+
+/** Carga sprite shiny con fallback: Showdown shiny → BW shiny → PNG shiny estático → Pokéball */
+function setShinyWithFallback(imgEl, id, nombre, loaderEl) {
+  const pokeName = nombre || imgEl.alt || String(id);
+  if (loaderEl) loaderEl.classList.add('visible');
+  imgEl.classList.add('loading');
+
+  imgEl.onload = () => {
+    imgEl.classList.remove('loading');
+    if (loaderEl) loaderEl.classList.remove('visible');
+    imgEl.onload = null;
+  };
+  imgEl.src = SPRITE_SHINY_SD(pokeName);
+  imgEl.onerror = function () {
+    this.onerror = null;
+    this.src = SPRITE_SHINY_BW(id);
+    this.onerror = function () {
+      this.onerror = null;
+      this.src = SPRITE_SHINY_PNG(id);
+      this.onerror = function () {
+        this.onerror = null;
+        this.src = POKEBALL_SVG;
+      };
     };
   };
 }
