@@ -1056,6 +1056,7 @@
 {"id":1022,"nombre":"Raging Bolt","tipo":["eléctrico","dragón"],"generacion":9,"region":"Paldea","ataques":["Trueno","Garra Dragón"],"stats":{"ps":125,"ataque":73,"defensa":91,"atesp":137,"defesp":89,"velocidad":75}},
 {"id":1023,"nombre":"Iron Boulder","tipo":["roca","psíquico"],"generacion":9,"region":"Paldea","ataques":["Psíquico","Golpe Roca"],"stats":{"ps":90,"ataque":120,"defensa":80,"atesp":68,"defesp":108,"velocidad":124}},
 {"id":1024,"nombre":"Iron Crown","tipo":["acero","psíquico"],"generacion":9,"region":"Paldea","ataques":["Psíquico","Cola Férrea"],"stats":{"ps":90,"ataque":72,"defensa":100,"atesp":122,"defesp":108,"velocidad":98}},
-{"id":1025,"nombre":"Terapagos","tipo":["normal"],"generacion":9,"region":"Paldea","ataques":["Terremoto","Rayo Solar"],"stats":{"ps":90,"ataque":65,"defensa":85,"atesp":65,"defesp":85,"velocidad":60}}
+{"id":1025,"nombre":"Terapagos","tipo":["normal"],"generacion":9,"region":"Paldea","ataques":["Terremoto","Rayo Solar"],"stats":{"ps":90,"ataque":65,"defensa":85,"atesp":65,"defesp":85,"velocidad":60}},
+{"id":10079,"nombre":"Mega-Prueba","tipo":["normal"],"generacion":9,"region":"Paldea","ataques":["Terremoto","Rayo Solar"],"stats":{"ps":90,"ataque":65,"defensa":85,"atesp":65,"defesp":85,"velocidad":60}}
 ]
 }
