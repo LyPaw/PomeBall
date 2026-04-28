@@ -913,16 +913,14 @@
 {"id":897,"nombre":"Spectrier","tipo":["fantasma"],"generacion":8,"region":"Galar","ataques":["Bola Sombra","Cuerpo Sombrío"],"stats":{"ps":100,"ataque":65,"defensa":60,"atesp":145,"defesp":80,"velocidad":130}},
 {"id":898,"nombre":"Calyrex","tipo":["psíquico","planta"],"generacion":8,"region":"Galar","ataques":["Psíquico","Rayo Solar"],"stats":{"ps":100,"ataque":80,"defensa":80,"atesp":80,"defesp":80,"velocidad":80}},
 {"id":899,"nombre":"Wyrdeer","tipo":["normal","psíquico"],"generacion":8,"region":"Galar","ataques":["Psíquico","Hiperrayo"],"stats":{"ps":103,"ataque":105,"defensa":72,"atesp":105,"defesp":75,"velocidad":65}},
-{"id":900,"nombre":"Kleavor","tipo":["bicho","roca"],"generacion":8,"region":"Galar","ataques":["Golpe Roca","Tijera X"],"stats":{"ps":70,"ataque":135,"defensa":95,"atesp":45,"defesp":70,"velocidad":85}}
-],
-"generacion_9": [
-{ "id": 899, "nombre": "Wyrdeer", "tipo": ["normal", "psíquico"], "generacion": 9, "region": "Hisui", "ataques": ["Psíquico", "Hiperrayo"], "stats": { "ps": 103, "ataque": 105, "defensa": 72, "atesp": 105, "defesp": 75, "velocidad": 65 }},
-{ "id": 900, "nombre": "Kleavor", "tipo": ["bicho", "roca"], "generacion": 9, "region": "Hisui", "ataques": ["Golpe Roca", "Tijera X"], "stats": { "ps": 70, "ataque": 135, "defensa": 95, "atesp": 45, "defesp": 70, "velocidad": 85 }},
+{"id":900,"nombre":"Kleavor","tipo":["bicho","roca"],"generacion":8,"region":"Galar","ataques":["Golpe Roca","Tijera X"],"stats":{"ps":70,"ataque":135,"defensa":95,"atesp":45,"defesp":70,"velocidad":85}},
 { "id": 901, "nombre": "Ursaluna", "tipo": ["normal", "tierra"], "generacion": 9, "region": "Hisui", "ataques": ["Terremoto", "Golpe Cuerpo"], "stats": { "ps": 130, "ataque": 140, "defensa": 105, "atesp": 45, "defesp": 80, "velocidad": 50 }},
 { "id": 902, "nombre": "Basculegion", "tipo": ["agua", "fantasma"], "generacion": 9, "region": "Hisui", "ataques": ["Hidrobomba", "Bola Sombra"], "stats": { "ps": 120, "ataque": 112, "defensa": 65, "atesp": 80, "defesp": 75, "velocidad": 78 }},
 { "id": 903, "nombre": "Sneasler", "tipo": ["lucha", "veneno"], "generacion": 9, "region": "Hisui", "ataques": ["Golpe Cruzado", "Garra Umbra"], "stats": { "ps": 80, "ataque": 130, "defensa": 60, "atesp": 40, "defesp": 80, "velocidad": 120 }},
 { "id": 904, "nombre": "Overqwil", "tipo": ["siniestro", "veneno"], "generacion": 9, "region": "Hisui", "ataques": ["Bomba Veneno", "Mordisco"], "stats": { "ps": 85, "ataque": 115, "defensa": 95, "atesp": 65, "defesp": 65, "velocidad": 85 }},
-{ "id": 905, "nombre": "Enamorus", "tipo": ["hada", "volador"], "generacion": 9, "region": "Hisui", "ataques": ["Viento Feérico", "Vuelo"], "stats": { "ps": 74, "ataque": 115, "defensa": 70, "atesp": 135, "defesp": 80, "velocidad": 106 }},
+{ "id": 905, "nombre": "Enamorus", "tipo": ["hada", "volador"], "generacion": 9, "region": "Hisui", "ataques": ["Viento Feérico", "Vuelo"], "stats": { "ps": 74, "ataque": 115, "defensa": 70, "atesp": 135, "defesp": 80, "velocidad": 106 }}
+],
+"generacion_9": [
 { "id": 906, "nombre": "Sprigatito", "tipo": ["planta"], "generacion": 9, "region": "Paldea", "ataques": ["Látigo Cepa", "Arañazo"], "stats": { "ps": 40, "ataque": 61, "defensa": 54, "atesp": 45, "defesp": 45, "velocidad": 65 }},
 { "id": 907, "nombre": "Floragato", "tipo": ["planta"], "generacion": 9, "region": "Paldea", "ataques": ["Hoja Afilada", "Golpe Aéreo"], "stats": { "ps": 61, "ataque": 80, "defensa": 63, "atesp": 60, "defesp": 63, "velocidad": 83 }},
 { "id": 908, "nombre": "Meowscarada", "tipo": ["planta", "siniestro"], "generacion": 9, "region": "Paldea", "ataques": ["Flor de Umbra", "Garra Umbra"], "stats": { "ps": 76, "ataque": 110, "defensa": 70, "atesp": 81, "defesp": 70, "velocidad": 123 }},
