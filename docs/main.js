@@ -236,7 +236,7 @@ function render() {
     ).join('');
 
     // Nombre escapado para uso seguro en atributo onclick
-    const nombreEscaped = p.nombre.replace(/'/g, "\\'");
+    const nombreEscaped = (p.nombre_forma || p.nombre).replace(/'/g, "\\'");
 
     return `
       <div class="gc-card" data-pkid="${p.id}" style="animation-delay:${i * 0.04}s" onclick="openModal(${p.id})">
@@ -245,8 +245,8 @@ function render() {
           <span class="gc-card-gen">GEN ${p.generacion}</span>
         </div>
         <div class="gc-card-img">
-          <img data-id="${p.id}" data-nombre="${p.nombre}" alt="${p.nombre}" src=""/>
-          <button class="gc-shiny-btn" title="Ver shiny" onclick="event.stopPropagation();toggleShiny(this,${p.id},'${nombreEscaped}')">✨</button>
+          <img data-id="${p.id}" data-nombre="${p.nombre_forma || p.nombre}" alt="${p.nombre_forma || p.nombre}" src=""/>
+          <button class="gc-shiny-btn" title="Ver shiny" onclick="event.stopPropagation();toggleShiny(this,${p.base_id || p.id},'${nombreEscaped}')">✨</button>
           <div class="gc-sound">🔊</div>
         </div>
         <div class="gc-card-body">
@@ -260,16 +260,18 @@ function render() {
 
   // Cargar sprites para todos los Pokémon del grid
   grid.querySelectorAll('img[data-id]').forEach(img => {
-    const id     = parseInt(img.dataset.id);
-    const nombre = img.dataset.nombre || img.alt;
+    const rawId     = parseInt(img.dataset.id);
+    const poke      = allPokemons.find(x => x.id === rawId) || {};
+    const spriteId  = poke.base_id || rawId;
+    const nombre    = poke.nombre_forma || poke.nombre || img.dataset.nombre || img.alt;
 
-    // Aplicar tamaño custom si existe en sprite_sizes.json
-    const sizes = SPRITE_SIZES[String(id)];
+    // Aplicar tamaño custom si existe en sprite_sizes.json (chequear tanto variant como base)
+    const sizes = SPRITE_SIZES[String(rawId)] || SPRITE_SIZES[String(spriteId)];
     if (sizes && sizes.card) {
       img.style.width  = sizes.card + 'px';
       img.style.height = sizes.card + 'px';
     }
-    setSpriteWithFallback(img, id, nombre);
+    setSpriteWithFallback(img, spriteId, nombre);
   });
 }
 
@@ -380,12 +382,13 @@ function openModal(id) {
   const p = allPokemons.find(x => x.id === id);
   if (!p) return;
 
-  currentModalId   = id;
-  currentModalName = p.nombre;
+  currentModalId      = id;
+  currentModalBaseId  = p.base_id || id;
+  currentModalName    = p.nombre_forma || p.nombre;
 
-  // Reproducir grito
+  // Reproducir grito (usar base_id para archivos de audio)
   if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-  const audio = new Audio(CRY_URL(id));
+  const audio = new Audio(CRY_URL(currentModalBaseId));
   currentAudio = audio;
   audio.play().catch(() => {});
 
@@ -413,7 +416,7 @@ function openModal(id) {
     spriteEl.style.width  = '170px';
     spriteEl.style.height = '170px';
   }
-  setSpriteWithFallback(spriteEl, p.id, p.nombre, document.getElementById('modalLoader'));
+  setSpriteWithFallback(spriteEl, currentModalBaseId, currentModalName, document.getElementById('modalLoader'));
 
   // Datos básicos
   document.getElementById('modalNum').textContent       = `NO.${String(p.id).padStart(3, '0')}`;
@@ -502,18 +505,18 @@ function closeModalOutside(e) {
 function openSpriteViewer() {
   if (!currentModalId) return;
   const p  = allPokemons.find(x => x.id === currentModalId);
-  const id = currentModalId;
+  const baseId = currentModalBaseId || currentModalId;
 
-  document.getElementById('svPokeName').textContent = p ? p.nombre.toUpperCase() : `#${id}`;
+  document.getElementById('svPokeName').textContent = p ? (p.nombre_forma || p.nombre).toUpperCase() : `#${baseId}`;
 
   setSpriteWithFallback(
     document.getElementById('svFront'),
-    id, p ? p.nombre : '',
+    baseId, p ? (p.nombre_forma || p.nombre) : '',
     document.getElementById('svFrontLoader')
   );
   setShinyWithFallback(
     document.getElementById('svShinyFront'),
-    id, p ? p.nombre : '',
+    baseId, p ? (p.nombre_forma || p.nombre) : '',
     document.getElementById('svShinyLoader')
   );
 
