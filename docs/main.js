@@ -1,75 +1,177 @@
 /* ══════════════════════════════════════════════════════
-PomeBall — Lógica principal v3.0 (CORREGIDA + SPRITES ANIMADOS)
+   PomeBall — Lógica principal
+   Autor: LyPaw
+   Separado en archivo externo para mejor mantenimiento
 ══════════════════════════════════════════════════════ */
-
-// Pokéball SVG en Base64 para fallback
-const POKEBALL_SVG = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0OCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJNMCA1MCBhNTAgNTAgMCAwIDAgMTAwIDBaIiBmaWxsPSIjZmYwMDAwIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMTIiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNiIgZmlsbD0iIzMzMyIvPjwvc3ZnPg==`;
-
-// Mapeo de nombres para URLs de Showdown (normalización)
-const NAME_TO_SHOWDOWN = {
-  "Nidoran♀": "nidoran-f", "Nidoran♂": "nidoran-m",
-  "Farfetch'd": "farfetchd", "Mr. Mime": "mr-mime", "Mime Jr.": "mime-jr",
-  "Tipo: Null": "type-null", "Sirfetch'd": "sirfetchd", "Mr. Rime": "mr-rime",
-  "Tapu Koko": "tapu-koko", "Tapu Lele": "tapu-lele", "Tapu Bulu": "tapu-bulu",
-  "Tapu Fini": "tapu-fini", "Type: Null": "type-null"
-};
-
-function toShowdownName(name) {
-  if (NAME_TO_SHOWDOWN[name]) return NAME_TO_SHOWDOWN[name];
-  // Formas variantes: extraer nombre base antes del paréntesis
-  const baseName = name.split(' (')[0].toLowerCase()
-    .replace(/[^a-z0-9]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-  return baseName || 'missingno';
-}
 
 // ══════════════════════════════════════════════════════
 // TEMA (claro / oscuro)
 // ══════════════════════════════════════════════════════
+
 function toggleTheme() {
-  const html = document.documentElement;
+  const html   = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
   html.setAttribute('data-theme', isDark ? 'light' : 'dark');
   document.getElementById('themeToggle').textContent = isDark ? '◐ TEMA' : '◑ TEMA';
   localStorage.setItem('pk-theme', isDark ? 'light' : 'dark');
 }
 
-// Inicializar tema guardado
-document.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('pk-theme');
-  if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const toggleBtn = document.getElementById('themeToggle');
-    if (toggleBtn && savedTheme === 'dark') {
-      toggleBtn.textContent = '◑ TEMA';
-    }
-  }
-  loadPokemons();
-});
-
-// ══════════════════════════════════════════════════════
-// HELPERS DE DATOS (Limpieza de espacios en claves JSON)
-// ══════════════════════════════════════════════════════
-function cleanKeys(obj) {
-  if (typeof obj !== 'object' || obj === null) return obj;
-  if (Array.isArray(obj)) return obj.map(cleanKeys);
-  return Object.fromEntries(
-    Object.entries(obj).map(([k, v]) => [k.trim(), cleanKeys(v)])
-  );
+// Aplicar tema guardado al cargar
+const savedTheme = localStorage.getItem('pk-theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (savedTheme === 'dark') document.getElementById('themeToggle').textContent = '◑ TEMA';
 }
 
 // ══════════════════════════════════════════════════════
-// CARGA DE DATOS
+// SPRITES — URLs y carga con fallback
 // ══════════════════════════════════════════════════════
-let allPokemons = [];
-let PERFILES = {};
-let CURIOSIDADES = {};
-let SPRITE_SIZES = {};
-let currentSearch = '';
+
+/**
+ * Convierte el nombre de un Pokémon al slug de Pokémon Showdown.
+ * Ej: "Farfetch'd" → "farfetchd"  |  "Nidoran♀" → "nidoranf"
+ */
+function toShowdownName(nombre) {
+  return nombre
+    .toLowerCase()
+    .normalize('NFD')               // descompone caracteres con tilde (é → e + ́)
+    .replace(/[\u0300-\u036f]/g, '') // elimina los diacríticos
+    .replace(/♀/g, 'f')             // símbolo femenino → f
+    .replace(/♂/g, 'm')             // símbolo masculino → m
+    .replace(/[^a-z0-9-]/g, '');     // elimina todo lo que no sea letra/número
+}
+
+// URLs de sprites normales — prioridad: Showdown animated GIF → BW animated GIF → PNG estático
+const SPRITE_SHOWDOWN  = nombre => `https://play.pokemonshowdown.com/sprites/ani/${toShowdownName(nombre)}.gif`;
+const SPRITE_BW        = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
+const SPRITE_PNG       = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+// URLs de sprites shiny
+const SPRITE_SHINY_SD  = nombre => `https://play.pokemonshowdown.com/sprites/ani-shiny/${toShowdownName(nombre)}.gif`;
+const SPRITE_SHINY_BW  = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/${id}.gif`;
+const SPRITE_SHINY_PNG = id     => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`;
+
+/** Carga sprite normal con fallback: Showdown → BW animated → PNG estático */
+function setSpriteWithFallback(imgEl, id, nombre, loaderEl) {
+  const pokeName = nombre || imgEl.alt || String(id);
+  if (loaderEl) loaderEl.classList.add('visible');
+  imgEl.classList.add('loading');
+
+  imgEl.onload = () => {
+    imgEl.classList.remove('loading');
+    if (loaderEl) loaderEl.classList.remove('visible');
+    imgEl.onload = null;
+  };
+  imgEl.src = SPRITE_SHOWDOWN(pokeName);
+  imgEl.onerror = function () {
+    this.onerror = null;
+    this.src = SPRITE_BW(id);
+    this.onerror = function () {
+      this.onerror = null;
+      this.src = SPRITE_PNG(id);
+    };
+  };
+}
+
+/** Carga sprite shiny con fallback: Showdown shiny → BW shiny → PNG shiny estático */
+function setShinyWithFallback(imgEl, id, nombre, loaderEl) {
+  const pokeName = nombre || imgEl.alt || String(id);
+  if (loaderEl) loaderEl.classList.add('visible');
+  imgEl.classList.add('loading');
+
+  imgEl.onload = () => {
+    imgEl.classList.remove('loading');
+    if (loaderEl) loaderEl.classList.remove('visible');
+    imgEl.onload = null;
+  };
+  imgEl.src = SPRITE_SHINY_SD(pokeName);
+  imgEl.onerror = function () {
+    this.onerror = null;
+    this.src = SPRITE_SHINY_BW(id);
+    this.onerror = function () {
+      this.onerror = null;
+      this.src = SPRITE_SHINY_PNG(id);
+    };
+  };
+}
+
+/** Alterna entre sprite normal y shiny en la card */
+function toggleShiny(btn, id, nombre) {
+  const card    = btn.closest('.gc-card');
+  const img     = card.querySelector('img[data-id]');
+  const isShiny = btn.classList.contains('active');
+
+  if (isShiny) {
+    btn.classList.remove('active');
+    card.classList.remove('shiny');
+    btn.title = 'Ver shiny';
+    setSpriteWithFallback(img, id, nombre);
+  } else {
+    btn.classList.add('active');
+    card.classList.add('shiny');
+    btn.title = 'Ver normal';
+    setShinyWithFallback(img, id, nombre);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// SONIDO — Gritos de Pokémon
+// ══════════════════════════════════════════════════════
+
+const CRY_URL = id =>
+  `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+
+let currentAudio = null;
+
+function playSound(id, cardEl) {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    document.querySelectorAll('.gc-card.playing').forEach(c => c.classList.remove('playing'));
+  }
+  const audio = new Audio(CRY_URL(id));
+  currentAudio = audio;
+  cardEl.classList.add('playing');
+  audio.play().catch(() => {});
+  audio.onended = () => cardEl.classList.remove('playing');
+}
+
+// ══════════════════════════════════════════════════════
+// DATOS ESTÁTICOS
+// ══════════════════════════════════════════════════════
+
+const TIPO_COLORS = {
+  fuego:'#e05010',     agua:'#2288CC',       planta:'#338833',
+  veneno:'#8844AA',    normal:'#888860',      electrico:'#BB9900',
+  'eléctrico':'#BB9900', tierra:'#AA7740',    roca:'#887720',
+  bicho:'#667700',     fantasma:'#553377',    acero:'#7788AA',
+  hielo:'#5599AA',     lucha:'#993322',       psiquico:'#CC3366',
+  'psíquico':'#CC3366', 'dragón':'#5522CC',  siniestro:'#554433',
+  hada:'#BB5577',
+};
+
+const MAX_STAT = 255;
+const STAT_LABELS = {
+  ps:'PS', ataque:'ATAQUE', defensa:'DEFENSA',
+  atesp:'AT.ESP', defesp:'DEF.ESP', velocidad:'VELOCIDAD',
+};
+
+// ══════════════════════════════════════════════════════
+// ESTADO DE LA APLICACIÓN
+// ══════════════════════════════════════════════════════
+
+let allPokemons    = [];
+let PERFILES       = {};
+let CURIOSIDADES   = {};
+let SPRITE_SIZES   = {};
+let currentSearch   = '';
 let currentSearchId = '';
-let activeGens = new Set();
-let activeTipos = new Set();
+let activeGens      = new Set();
+let activeTipos     = new Set();
+
+// ══════════════════════════════════════════════════════
+// CARGA DE DATOS (JSON)
+// ══════════════════════════════════════════════════════
 
 async function loadPokemons() {
   try {
@@ -79,575 +181,364 @@ async function loadPokemons() {
       fetch('curiosidades.json'),
     ]);
 
+    // Soporta tanto array plano como { generacion_1: [...], generacion_2: [...], ... }
     const pokemonsData = await pokemonsRes.json();
-    // Aplanar y limpiar datos de todas las generaciones
-    const rawList = Array.isArray(pokemonsData) 
-      ? pokemonsData 
+    allPokemons = Array.isArray(pokemonsData)
+      ? pokemonsData
       : Object.values(pokemonsData).flat();
-    allPokemons = rawList.map(cleanKeys).filter(p => p.id && p.nombre);
 
-    PERFILES = cleanKeys(await perfilesRes.json());
-    CURIOSIDADES = cleanKeys(await curiosidadesRes.json());
+    PERFILES     = await perfilesRes.json();
+    CURIOSIDADES = await curiosidadesRes.json();
 
-    // Cargar tamaños custom de sprites (opcional)
+    // sprite_sizes.json es opcional — no bloquea la carga si no existe
     try {
       const sizesRes = await fetch('sprite_sizes.json');
-      if (sizesRes.ok) SPRITE_SIZES = cleanKeys(await sizesRes.json());
-    } catch (_) { /* Ignorar si no existe */ }
+      if (sizesRes.ok) SPRITE_SIZES = await sizesRes.json();
+    } catch (_) { /* archivo no disponible, se ignora */ }
 
     render();
-    setupEventListeners();
   } catch (e) {
-    console.error("❌ Error cargando datos:", e);
-    const grid = document.getElementById('grid');
-    if (grid) {
-      grid.innerHTML = `
-        <div class="gc-empty">
-          <p>⚠️ ERROR AL CARGAR DATOS</p>
-          <p>Revisa que tus archivos JSON estén bien formados.</p>
-          <p><small>${e.message}</small></p>
-        </div>`;
-    }
+    document.getElementById('grid').innerHTML =
+      '<div class="gc-empty">ERROR: NO SE PUDO CARGAR<br>pokemons.json / perfiles.json / curiosidades.json</div>';
   }
 }
 
 // ══════════════════════════════════════════════════════
-// SISTEMA DE SPRITES ANIMADOS EN CASCADA
+// RENDER — Genera las cards del grid
 // ══════════════════════════════════════════════════════
-function getShowdownUrl(name, isShiny) {
-  const sdName = toShowdownName(name);
-  const suffix = isShiny ? '-shiny' : '';
-  return `https://play.pokemonshowdown.com/sprites/ani${suffix}/${sdName}.gif`;
-}
 
-function getPokeapiAnimatedUrl(id, isShiny) {
-  // PokéAPI sprites animados (formato .gif)
-  const suffix = isShiny ? '/shiny' : '';
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon${suffix}/versions/generation-v/black-white/animated/${id}.gif`;
-}
-
-function getPokeapiStaticUrl(id, isShiny) {
-  const suffix = isShiny ? '/shiny' : '';
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon${suffix}/${id}.png`;
-}
-
-function setSpriteAnimated(img, id, name, isShiny, size = 96) {
-  img.classList.add('loading');
-  img.style.opacity = '0.5';
-  
-  let attempts = 0;
-  const tryNext = () => {
-    attempts++;
-    switch(attempts) {
-      case 1:
-        // 1. Showdown animado (prioridad)
-        img.src = getShowdownUrl(name, isShiny);
-        break;
-      case 2:
-        // 2. PokéAPI animado (Gen 5+)
-        img.src = getPokeapiAnimatedUrl(id, isShiny);
-        break;
-      case 3:
-        // 3. PokéAPI estático
-        img.src = getPokeapiStaticUrl(id, isShiny);
-        break;
-      default:
-        // 4. Fallback final: Pokéball
-        img.onerror = null;
-        img.onload = null;
-        img.classList.remove('loading');
-        img.style.opacity = '1';
-        img.src = POKEBALL_SVG;
-        img.style.filter = 'grayscale(0.3) brightness(0.9)';
-        img.alt = 'Sprite no disponible';
-    }
-  };
-
-  img.onload = () => {
-    img.classList.remove('loading');
-    img.style.opacity = '1';
-    img.style.filter = '';
-    // Ajustar tamaño si es necesario
-    if (size && size !== 96) {
-      img.style.width = size + 'px';
-      img.style.height = size + 'px';
-    }
-  };
-
-  img.onerror = tryNext;
-  
-  // Iniciar carga
-  tryNext();
-}
-
-// ══════════════════════════════════════════════════════
-// COLORES DE TIPOS
-// ══════════════════════════════════════════════════════
-const TIPO_COLORS = {
-  fuego:'#e05010', agua:'#2288CC', planta:'#338833', veneno:'#8844AA', normal:'#888860',
-  electrico:'#BB9900', 'eléctrico':'#BB9900', tierra:'#AA7740', roca:'#887720',
-  bicho:'#667700', fantasma:'#553377', acero:'#7788AA', hielo:'#5599AA',
-  lucha:'#993322', psiquico:'#CC3366', 'psíquico':'#CC3366', 'dragón':'#5522CC',
-  siniestro:'#554433', hada:'#BB5577', volador:'#6699FF',
-};
-
-// ══════════════════════════════════════════════════════
-// RENDER PRINCIPAL
-// ══════════════════════════════════════════════════════
 function render() {
   const grid = document.getElementById('grid');
-  if (!grid) return;
-  
-  const q = currentSearch.toLowerCase();
-  
+  const q    = currentSearch.toLowerCase();
+
   const filtered = allPokemons.filter(p => {
     const matchSearch = !q || p.nombre.toLowerCase().includes(q);
-    const matchId = !currentSearchId || p.id === parseInt(currentSearchId);
-    const matchGen = activeGens.size === 0 || activeGens.has(p.generacion);
-    const matchTipo = activeTipos.size === 0 || p.tipo?.some(t => activeTipos.has(t));
+    const matchId     = !currentSearchId || p.id === parseInt(currentSearchId);
+    const matchGen    = activeGens.size  === 0 || activeGens.has(p.generacion);
+    const matchTipo   = activeTipos.size === 0 || p.tipo.some(t => activeTipos.has(t));
     return matchSearch && matchId && matchGen && matchTipo;
   });
 
-  // Actualizar contador
-  const countEl = document.getElementById('count');
-  if (countEl) countEl.textContent = filtered.length;
+  document.getElementById('count').textContent = filtered.length;
 
   if (!filtered.length) {
-    grid.innerHTML = '<div class="gc-empty">🔍 NO SE ENCONTRARON POKÉMON</div>';
+    grid.innerHTML = '<div class="gc-empty">NO SE ENCONTRARON POKÉMON</div>';
     return;
   }
 
-  let html = '';
-  let separatorAdded = false;
-
-  filtered.forEach((p, i) => {
-    // Separador gráfico para formas/variantes (IDs > 10000)
-    if (!separatorAdded && p.id > 10000) {
-      html += `
-        <div class="gc-separator" style="grid-column:1/-1;margin:1rem 0;">
-          <span class="gc-separator-line"></span>
-          <span class="gc-separator-text">✨ FORMAS Y VARIANTES ✨</span>
-          <span class="gc-separator-line"></span>
-        </div>`;
-      separatorAdded = true;
-    }
-
-    const tiposBadges = (p.tipo || []).map(t => 
+  grid.innerHTML = filtered.map((p, i) => {
+    const tiposBadges = p.tipo.map(t =>
       `<span class="gc-tipo" style="background:${TIPO_COLORS[t] || '#888'}">${t.toUpperCase()}</span>`
     ).join('');
 
-    const ataquesTags = (p.ataques || []).slice(0, 3).map(a => 
+    const ataquesTags = (p.ataques || []).map(a =>
       `<span class="gc-ataque">${a}</span>`
     ).join('');
-    
-    const nombreEscaped = (p.nombre || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    const regionText = p.region ? `📍 ${p.region}` : '';
 
-    html += `
-      <article class="gc-card" data-pkid="${p.id}" tabindex="0" 
-               style="animation-delay:${(i % 20) * 0.03}s"
-               onclick="openModal(${p.id})"
-               onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${p.id})">
-        <header class="gc-card-bar">
-          <span class="gc-card-num">NO.${String(p.id).padStart(4,'0')}</span>
-          <span class="gc-card-gen">GEN ${p.generacion}</span>
-        </header>
-        <figure class="gc-card-img">
-          <img data-id="${p.id}" alt="${p.nombre}" src="" loading="lazy" />
-          <button class="gc-shiny-btn" title="Alternar Shiny ✨" 
-                  onclick="event.stopPropagation();toggleShiny(${p.id},'${nombreEscaped}')">✨</button>
-          <figcaption class="gc-sound" title="Reproducir grito">🔊</figcaption>
-        </figure>
-        <div class="gc-card-body">
-          <h3 class="gc-card-name">${p.nombre}</h3>
-          <div class="gc-tipos">${tiposBadges}</div>
-          <div class="gc-ataques">${ataquesTags || '<span class="gc-ataque">—</span>'}</div>
-        </div>
-        <footer class="gc-region">${regionText}</footer>
-      </article>`;
-  });
+    // Nombre escapado para uso seguro en atributo onclick
+    const spriteName = p.variante ? `${p.nombre}-${p.variante}` : p.nombre; const nombreEscaped = spriteName.replace(/'/g, "\\'");
 
-  grid.innerHTML = html;
-
-  // Cargar sprites animados tras inyectar HTML
-  grid.querySelectorAll('img[data-id]').forEach(img => {
-    const id = parseInt(img.dataset.id);
-    const pokemon = allPokemons.find(x => x.id === id);
-    const nombre = pokemon?.nombre || '';
-    
-    // Aplicar tamaño custom si existe
-    const sizes = SPRITE_SIZES[String(id)];
-    const size = sizes?.card || 96;
-    
-    setSpriteAnimated(img, id, nombre, false, size);
-  });
-}
-
-// ══════════════════════════════════════════════════════
-// EVENT LISTENERS
-// ══════════════════════════════════════════════════════
-function setupEventListeners() {
-  // Filtros de generación
-  document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const gen = parseInt(btn.dataset.filter.split(':')[1]);
-      if (activeGens.has(gen)) {
-        activeGens.delete(gen);
-        btn.classList.remove('active');
-      } else {
-        activeGens.clear();
-        document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(b => b.classList.remove('active'));
-        activeGens.add(gen);
-        btn.classList.add('active');
-      }
-      render();
-    });
-  });
-
-  // Filtros de tipo
-  document.querySelectorAll('.gc-tipo-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const tipo = btn.dataset.filter?.split(':')[1];
-      if (!tipo) return;
-      
-      if (activeTipos.has(tipo)) {
-        activeTipos.delete(tipo);
-        btn.classList.remove('active');
-      } else {
-        // Máximo 2 tipos seleccionados
-        if (activeTipos.size >= 2) {
-          const primero = activeTipos.values().next().value;
-          activeTipos.delete(primero);
-          document.querySelector(`.gc-tipo-btn[data-filter="tipo:${primero}"]`)?.classList.remove('active');
-        }
-        activeTipos.add(tipo);
-        btn.classList.add('active');
-      }
-      render();
-    });
-  });
-
-  // Búsqueda por nombre
-  const searchInput = document.getElementById('search');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      currentSearch = e.target.value;
-      render();
-    });
-  }
-
-  // Búsqueda por ID
-  const searchIdInput = document.getElementById('searchId');
-  if (searchIdInput) {
-    searchIdInput.addEventListener('input', (e) => {
-      currentSearchId = e.target.value.trim();
-      render();
-    });
-  }
-
-  // Toggle tema
-  const themeBtn = document.getElementById('themeToggle');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', toggleTheme);
-  }
-
-  // Cerrar modal con ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-}
-
-// ══════════════════════════════════════════════════════
-// MODAL COMPLETO
-// ══════════════════════════════════════════════════════
-let currentModalId = null;
-let currentAudio = null;
-
-function openModal(id) {
-  const p = allPokemons.find(x => x.id === id);
-  if (!p) return;
-  
-  currentModalId = p.id;
-  const modal = document.getElementById('modal');
-  if (!modal) return;
-
-  // Reproducir grito (con manejo de errores)
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  try {
-    currentAudio = new Audio(`https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${p.id}.ogg`);
-    currentAudio.volume = 0.3;
-    currentAudio.play().catch(() => {});
-  } catch(_) {}
-
-  // Rellenar datos del modal
-  const perfil = PERFILES[String(p.id)] || {};
-  const curiosidades = CURIOSIDADES[String(p.id)] || [];
-  
-  // Stats
-  const stats = p.stats || {};
-  const statLabels = {ps:'PS', ataque:'ATQ', defensa:'DEF', atesp:'AT.E', defesp:'DE.E', velocidad:'VEL'};
-  const statsHtml = Object.entries(stats).map(([key, val]) => {
-    const label = statLabels[key] || key;
-    const pct = Math.min(100, (val / 200) * 100);
-    const cls = val >= 120 ? 'stat-great' : val >= 90 ? 'stat-high' : val >= 60 ? 'stat-mid' : 'stat-low';
     return `
-      <div class="modal-stat">
-        <div class="modal-stat-row">
-          <span class="modal-stat-lbl">${label}</span>
-          <span class="modal-stat-num">${val}</span>
+      <div class="gc-card" data-pkid="${p.id}" style="animation-delay:${i * 0.04}s" onclick="openModal(${p.id}, '${p.variante || \"\"}')">
+        <div class="gc-card-bar">
+          <span class="gc-card-num">NO.${String(p.id).padStart(3,'0')}</span>
+          <span class="gc-card-gen">GEN ${p.generacion}</span>
         </div>
-        <div class="modal-stat-bar-wrap">
-          <div class="modal-stat-bar-fill ${cls}" style="width:${pct}%"></div>
+        <div class="gc-card-img">
+          <img data-id="${p.id}" data-nombre="${p.variante ? p.nombre + '-' + p.variante : p.nombre}" alt="${p.nombre}" src=""/>
+          <button class="gc-shiny-btn" title="Ver shiny" onclick="event.stopPropagation();toggleShiny(this,${p.id},'${nombreEscaped}')">✨</button>
+          <div class="gc-sound">🔊</div>
         </div>
+        <div class="gc-card-body">
+          <div class="gc-card-name">${p.nombre}</div>
+          <div class="gc-tipos">${tiposBadges}</div>
+          <div class="gc-ataques">${ataquesTags}</div>
+        </div>
+        <div class="gc-region">${p.region || ''}</div>
       </div>`;
   }).join('');
-  
-  const totalStats = Object.values(stats).reduce((a,b) => a + (b||0), 0);
 
-  // Tipos
-  const tiposModal = (p.tipo || []).map(t => 
-    `<span class="modal-tipo" style="background:${TIPO_COLORS[t]||'#888'}">${t.toUpperCase()}</span>`
-  ).join('') || '<span class="modal-tipo">—</span>';
+  // Cargar sprites para todos los Pokémon del grid
+  grid.querySelectorAll('img[data-id]').forEach(img => {
+    const id     = parseInt(img.dataset.id);
+    const nombre = img.dataset.nombre || img.alt;
 
-  // Ataques
-  const ataquesModal = (p.ataques || []).map(a => 
-    `<span class="modal-ataque">${a}</span>`
-  ).join('') || '<span class="modal-ataque">—</span>';
+    // Aplicar tamaño custom si existe en sprite_sizes.json
+    const sizes = SPRITE_SIZES[String(id)];
+    if (sizes && sizes.card) {
+      img.style.width  = sizes.card + 'px';
+      img.style.height = sizes.card + 'px';
+    }
+    setSpriteWithFallback(img, id, nombre);
+  });
+}
 
-  // Curiosidades
-  const curiosidadesHtml = curiosidades.length 
-    ? curiosidades.map(c => `
-        <div class="modal-curiosidad-item">
-          <span class="modal-curiosidad-icon">${c.icon || '💡'}</span>
-          <p class="modal-curiosidad-text">${c.texto}</p>
-        </div>`).join('')
-    : '<p class="modal-no-curiosidades">Sin curiosidades registradas.</p>';
+// ══════════════════════════════════════════════════════
+// FILTROS Y BÚSQUEDA — Event listeners
+// ══════════════════════════════════════════════════════
 
-  // Renderizar modal
-  modal.innerHTML = `
-    <div class="modal-overlay open" onclick="if(event.target===this)closeModal()">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <header class="modal-bar">
-          <div class="modal-bar-left">
-            <span class="modal-bar-icon"></span>
-            <h2 class="modal-bar-title" id="modal-title">POKÉDEX</h2>
-          </div>
-          <div class="modal-bar-right">
-            <span class="modal-bar-btn-label">[B] CERRAR</span>
-            <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
-          </div>
-        </header>
-        
-        <main class="modal-body">
-          <aside class="modal-left">
-            <div class="modal-sprite-wrap" id="modal-sprite-wrap">
-              <img class="modal-sprite" id="modal-sprite" alt="${p.nombre}" src="" />
-              <button class="modal-shiny-btn" id="modal-shiny-btn" onclick="toggleModalShiny()">✨ SHINY</button>
-              <div class="modal-sprite-hint">Hover para ver detalle</div>
-              <div class="pk-loader" id="modal-loader">
-                <img class="pk-loader-ball" src="${POKEBALL_SVG}" alt="Cargando" />
-                <span class="pk-loader-txt">CARGANDO...</span>
-              </div>
-            </div>
-            <table class="modal-ficha">
-              <tr class="modal-ficha-row"><td class="modal-ficha-key">ALTURA</td><td class="modal-ficha-val">${perfil.altura || '—'}</td></tr>
-              <tr class="modal-ficha-row"><td class="modal-ficha-key">PESO</td><td class="modal-ficha-val">${perfil.peso || '—'}</td></tr>
-              <tr class="modal-ficha-row"><td class="modal-ficha-key">ESPECIE</td><td class="modal-ficha-val">${perfil.especie || '—'}</td></tr>
-              <tr class="modal-ficha-row"><td class="modal-ficha-key">TIPOS</td><td class="modal-ficha-val"><div class="modal-tipos">${tiposModal}</div></td></tr>
-            </table>
-          </aside>
-          
-          <section class="modal-right">
-            <div class="modal-name-bar">
-              <h3 class="modal-name" id="modal-pokemon-name">${p.nombre}</h3>
-              <span class="modal-name-num">#${String(p.id).padStart(4,'0')}</span>
-            </div>
-            
-            <div class="modal-right-grid">
-              <div class="modal-stats-panel">
-                <div class="modal-section-hdr">
-                  <span class="modal-section-dot"></span>
-                  <h4 class="modal-section-title">ESTADÍSTICAS</h4>
-                </div>
-                ${statsHtml}
-                <div class="modal-stat-total">
-                  <span class="modal-stat-total-lbl">TOTAL</span>
-                  <span class="modal-stat-total-num">${totalStats}</span>
-                </div>
-              </div>
-              
-              <div class="modal-perfil-panel">
-                <div class="modal-section-hdr">
-                  <span class="modal-section-dot"></span>
-                  <h4 class="modal-section-title">INFORMACIÓN</h4>
-                </div>
-                <div class="modal-perfil-fields">
-                  <div class="modal-perfil-field accent">
-                    <span class="modal-perfil-label">📖</span>
-                    <p class="modal-perfil-value">${perfil.descripcion || 'Sin descripción disponible.'}</p>
-                  </div>
-                  <div class="modal-perfil-field">
-                    <span class="modal-perfil-label">⚔️</span>
-                    <p class="modal-perfil-value"><strong>Ataques:</strong> ${p.ataques?.join(', ') || '—'}</p>
-                  </div>
-                  <div class="modal-perfil-field">
-                    <span class="modal-perfil-label">🌍</span>
-                    <p class="modal-perfil-value"><strong>Región:</strong> ${p.region || '—'} (Gen ${p.generacion})</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="modal-curiosidades-section">
-              <div class="modal-section-hdr">
-                <span class="modal-section-dot"></span>
-                <h4 class="modal-section-title">CURIOSIDADES</h4>
-              </div>
-              <div class="modal-curiosidades-list">
-                ${curiosidadesHtml}
-              </div>
-            </div>
-          </section>
-        </main>
-        
-        <footer class="modal-footer">
-          <span class="modal-footer-hint">✨ Click en ✨ para ver forma Shiny • [ESC] para cerrar</span>
-          <div class="modal-footer-keys">
-            <span class="modal-key">←→ Navegar</span>
-            <span class="modal-key">S Shiny</span>
-            <span class="modal-key">🔊 Sonido</span>
-          </div>
-        </footer>
+document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const gen = parseInt(btn.dataset.filter.split(':')[1]);
+    if (activeGens.has(gen)) {
+      activeGens.clear();
+      btn.classList.remove('active');
+    } else {
+      activeGens.clear();
+      document.querySelectorAll('.gc-btn[data-filter^="gen:"]').forEach(b => b.classList.remove('active'));
+      activeGens.add(gen);
+      btn.classList.add('active');
+    }
+    render();
+  });
+});
+
+document.querySelectorAll('.gc-tipo-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tipo = btn.dataset.filter.split(':')[1];
+    if (activeTipos.has(tipo)) {
+      activeTipos.delete(tipo);
+      btn.classList.remove('active');
+    } else {
+      if (activeTipos.size >= 2) {
+        const primero = activeTipos.values().next().value;
+        activeTipos.delete(primero);
+        document.querySelector(`.gc-tipo-btn[data-filter="tipo:${primero}"]`)?.classList.remove('active');
+      }
+      activeTipos.add(tipo);
+      btn.classList.add('active');
+    }
+    render();
+  });
+});
+
+document.getElementById('search').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  render();
+});
+
+document.getElementById('searchId').addEventListener('input', e => {
+  currentSearchId = e.target.value.trim();
+  render();
+});
+
+// ══════════════════════════════════════════════════════
+// HELPERS DE ESTADÍSTICAS
+// ══════════════════════════════════════════════════════
+
+function getStatClass(v) {
+  if (v < 50)  return 'stat-low';
+  if (v < 80)  return 'stat-mid';
+  if (v < 110) return 'stat-high';
+  return 'stat-great';
+}
+
+function getStatNumColor(v) {
+  if (v < 50)  return '#e05050';
+  if (v < 80)  return '#d4a020';
+  if (v < 110) return '#40a840';
+  return '#2288CC';
+}
+
+function renderStats(stats) {
+  const c = document.getElementById('modalStats');
+  if (!stats) {
+    c.innerHTML = '<div style="color:var(--muted);font-family:\'Press Start 2P\',monospace;font-size:0.38rem;padding:0.5rem 0">SIN DATOS</div>';
+    return;
+  }
+  const total = Object.values(stats).reduce((a, b) => a + b, 0);
+  c.innerHTML = Object.entries(stats).map(([k, v]) => `
+    <div class="modal-stat">
+      <div class="modal-stat-row">
+        <span class="modal-stat-lbl">${STAT_LABELS[k] || k.toUpperCase()}</span>
+        <div class="modal-stat-bar-wrap">
+          <div class="modal-stat-bar-fill ${getStatClass(v)}" data-target="${Math.min((v / MAX_STAT) * 100, 100).toFixed(1)}%" style="width:0%"></div>
+        </div>
+        <span class="modal-stat-num" style="color:${getStatNumColor(v)}">${v}</span>
       </div>
+    </div>`).join('') +
+    `<div class="modal-stat-total">
+      <span class="modal-stat-total-lbl">TOTAL</span>
+      <span class="modal-stat-total-num">${total}</span>
     </div>`;
 
-  // Cargar sprite del modal
-  const modalSprite = document.getElementById('modal-sprite');
-  const loader = document.getElementById('modal-loader');
-  const spriteWrap = document.getElementById('modal-sprite-wrap');
-  
-  if (modalSprite) {
-    modalSprite.classList.add('loading');
-    loader?.classList.add('visible');
-    
-    setSpriteAnimated(modalSprite, p.id, p.nombre, false, 170);
-    
-    // Ocultar loader cuando cargue
-    modalSprite.onload = () => {
-      loader?.classList.remove('visible');
-      modalSprite.classList.remove('loading');
-    };
-  }
-
-  // Navegación con teclado en modal
-  document.addEventListener('keydown', onModalKeydown);
-  
-  // Animación de entrada
+  // Animación de las barras (pequeño delay para que el CSS transition sea visible)
   setTimeout(() => {
-    modal.querySelector('.modal')?.style.setProperty('transform', 'scale(1)');
-  }, 10);
-}
-
-function closeModal() {
-  const modal = document.getElementById('modal');
-  if (!modal) return;
-  
-  // Animación de salida
-  modal.querySelector('.modal')?.style.setProperty('transform', 'scale(0.94)');
-  
-  setTimeout(() => {
-    modal.classList.remove('open');
-    modal.innerHTML = '';
-    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-    currentModalId = null;
-    document.removeEventListener('keydown', onModalKeydown);
-  }, 200);
-}
-
-function onModalKeydown(e) {
-  if (!currentModalId) return;
-  
-  switch(e.key.toLowerCase()) {
-    case 'escape':
-      e.preventDefault();
-      closeModal();
-      break;
-    case 'arrowleft':
-      e.preventDefault();
-      navigateModal(-1);
-      break;
-    case 'arrowright':
-      e.preventDefault();
-      navigateModal(1);
-      break;
-    case 's':
-      e.preventDefault();
-      toggleModalShiny();
-      break;
-  }
-}
-
-function navigateModal(direction) {
-  if (!currentModalId) return;
-  const currentIndex = allPokemons.findIndex(p => p.id === currentModalId);
-  if (currentIndex === -1) return;
-  
-  const newIndex = currentIndex + direction;
-  if (newIndex >= 0 && newIndex < allPokemons.length) {
-    openModal(allPokemons[newIndex].id);
-  }
+    c.querySelectorAll('.modal-stat-bar-fill').forEach(b => b.style.width = b.dataset.target);
+  }, 80);
 }
 
 // ══════════════════════════════════════════════════════
-// SHINY TOGGLE (CARD Y MODAL)
+// MODAL — Abrir / Cerrar / Shiny
 // ══════════════════════════════════════════════════════
-function toggleShiny(id, nombre) {
-  const card = document.querySelector(`.gc-card[data-pkid="${id}"]`);
-  if (!card) return;
-  
-  const img = card.querySelector('img');
-  const btn = card.querySelector('.gc-shiny-btn');
-  const isShiny = btn?.classList.contains('active');
-  
-  if (isShiny) {
-    btn?.classList.remove('active');
-    card.classList.remove('shiny');
-    setSpriteAnimated(img, id, nombre, false);
+
+let currentModalId   = null;
+let currentModalName = null;
+let modalIsShiny     = false;
+let currentModalVariant = null;
+
+function openModal(id, variante = null) {
+  const p = allPokemons.find(x => x.id === id && (variante ? x.variante === variante : !x.variante));
+  if (!p) return;
+
+  currentModalId   = id;
+  currentModalName = p.variante ? p.nombre + "-" + p.variante : p.nombre;
+
+  // Reproducir grito
+  if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+  const audio = new Audio(CRY_URL(id));
+  currentAudio = audio;
+  audio.play().catch(() => {});
+
+  // Barra título
+  document.getElementById('modalBarTitle').textContent = `INFO. POKÉMON — ${p.nombre.toUpperCase()}`;
+
+  // Resetear estado shiny
+  modalIsShiny = false;
+  document.getElementById('modalShinyBtn').classList.remove('active');
+  document.getElementById('modalSprite').closest('.modal-sprite-wrap').classList.remove('shiny');
+  document.getElementById('modalShinyBtn').title = 'Ver shiny';
+
+  // Sprite
+  const spriteEl = document.getElementById('modalSprite');
+  spriteEl.dataset.pkid = id;
+  spriteEl.alt = p.nombre;
+  document.getElementById('modalLoader').classList.add('visible');
+
+  // Aplicar tamaño custom modal si existe en sprite_sizes.json
+  const customSizes = SPRITE_SIZES[String(id)];
+  if (customSizes && customSizes.modal) {
+    spriteEl.style.width  = customSizes.modal + 'px';
+    spriteEl.style.height = customSizes.modal + 'px';
   } else {
-    btn?.classList.add('active');
-    card.classList.add('shiny');
-    setSpriteAnimated(img, id, nombre, true);
+    spriteEl.style.width  = '170px';
+    spriteEl.style.height = '170px';
   }
+  setSpriteWithFallback(spriteEl, p.id, currentModalName, document.getElementById('modalLoader'));
+
+  // Datos básicos
+  document.getElementById('modalNum').textContent       = `NO.${String(p.id).padStart(3, '0')}`;
+  document.getElementById('modalName').textContent      = p.nombre;
+  document.getElementById('modalNameNum').textContent   = `NO.${String(p.id).padStart(3, '0')}`;
+  document.getElementById('modalRegion').textContent    = p.region || '—';
+  document.getElementById('modalGen').textContent       = `GEN ${p.generacion}`;
+
+  // Stats
+  renderStats(p.stats || null);
+
+  // Perfil (perfiles.json)
+  const perf = PERFILES[String(p.id)] || {};
+  const setField = (id, val, placeholder) => {
+    const el = document.getElementById(id);
+    if (val) { el.textContent = val; el.className = 'modal-perfil-value'; }
+    else     { el.textContent = placeholder; el.className = 'modal-perfil-value placeholder'; }
+  };
+  setField('modalAltura',      perf.altura,      'Pendiente de añadir');
+  setField('modalPeso',        perf.peso,        'Pendiente de añadir');
+  setField('modalEspecie',     perf.especie,     'Pendiente de añadir');
+  setField('modalDescripcion', perf.descripcion, 'Sin descripción registrada todavía.');
+
+  // Tipos
+  document.getElementById('modalTipos').innerHTML = p.tipo.map(t =>
+    `<span class="modal-tipo" style="background:${TIPO_COLORS[t] || '#888'}">${t.toUpperCase()}</span>`
+  ).join('');
+
+  // Ataques
+  document.getElementById('modalAtaques').innerHTML = (p.ataques || []).map(a =>
+    `<span class="modal-ataque">${a}</span>`
+  ).join('');
+
+  // Curiosidades (curiosidades.json)
+  const curiosidades = CURIOSIDADES[String(id)] || [];
+  const container    = document.getElementById('modalCuriosidades');
+  if (curiosidades.length === 0) {
+    container.innerHTML = '<div class="modal-no-curiosidades">Sin datos curiosos registrados todavía.</div>';
+  } else {
+    container.innerHTML = curiosidades.map(c =>
+      `<div class="modal-curiosidad-item">
+        <span class="modal-curiosidad-icon">${c.icon || '▶'}</span>
+        <span class="modal-curiosidad-text">${c.texto}</span>
+      </div>`
+    ).join('');
+  }
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function toggleModalShiny() {
-  if (!currentModalId) return;
-  
-  const p = allPokemons.find(x => x.id === currentModalId);
-  if (!p) return;
-  
-  const sprite = document.getElementById('modal-sprite');
-  const btn = document.getElementById('modal-shiny-btn');
-  const wrap = document.getElementById('modal-sprite-wrap');
-  
-  if (!sprite || !btn) return;
-  
-  const isShiny = btn.classList.contains('active');
-  
-  if (isShiny) {
-    btn.classList.remove('active');
-    wrap?.classList.remove('shiny');
-    setSpriteAnimated(sprite, p.id, p.nombre, false, 170);
-  } else {
+  const btn  = document.getElementById('modalShinyBtn');
+  const img  = document.getElementById('modalSprite');
+  const wrap = img.closest('.modal-sprite-wrap');
+  modalIsShiny = !modalIsShiny;
+
+  if (modalIsShiny) {
     btn.classList.add('active');
-    wrap?.classList.add('shiny');
-    setSpriteAnimated(sprite, p.id, p.nombre, true, 170);
+    wrap.classList.add('shiny');
+    btn.title = 'Ver normal';
+    setShinyWithFallback(img, currentModalId, currentModalName, document.getElementById('modalLoader'));
+  } else {
+    btn.classList.remove('active');
+    wrap.classList.remove('shiny');
+    btn.title = 'Ver shiny';
+    setSpriteWithFallback(img, currentModalId, currentModalName, document.getElementById('modalLoader'));
   }
 }
 
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalId   = null;
+  currentModalName = null;
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
 // ══════════════════════════════════════════════════════
-// INICIALIZACIÓN
+// SPRITE VIEWER — Galería normal + shiny
 // ══════════════════════════════════════════════════════
-// El loadPokemons() se llama desde DOMContentLoaded
+
+function openSpriteViewer() {
+  if (!currentModalId) return;
+  const p  = allPokemons.find(x => x.id === currentModalId && (currentModalVariant ? x.variante === currentModalVariant : !x.variante));
+  const id = currentModalId;
+
+  document.getElementById('svPokeName').textContent = p ? p.nombre.toUpperCase() : `#${id}`;
+
+  setSpriteWithFallback(
+    document.getElementById('svFront'),
+    id, currentModalName || '',
+    document.getElementById('svFrontLoader')
+  );
+  setShinyWithFallback(
+    document.getElementById('svShinyFront'),
+    id, currentModalName || '',
+    document.getElementById('svShinyLoader')
+  );
+
+  document.getElementById('svOverlay').classList.add('open');
+}
+
+function closeSpriteViewer() {
+  document.getElementById('svOverlay').classList.remove('open');
+}
+
+function closeSVOutside(e) {
+  if (e.target === document.getElementById('svOverlay')) closeSpriteViewer();
+}
+
+// Cerrar con tecla Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSpriteViewer();
+    closeModal();
+  }
+});
+
+// ══════════════════════════════════════════════════════
+// INICIO
+// ══════════════════════════════════════════════════════
+loadPokemons();
+
