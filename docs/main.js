@@ -239,13 +239,13 @@ function render() {
     const nombreEscaped = (p.nombre_forma || p.nombre).replace(/'/g, "\\'");
 
     return `
-      <div class="gc-card" data-pkid="${p.id}" style="animation-delay:${i * 0.04}s" onclick="openModal(${p.id})">
+      <div class="gc-card" data-pkid="${p.id}" data-baseid="${p.base_id || ''}" data-idx="${i}" style="animation-delay:${i * 0.04}s" onclick="openModalCard(this)">
         <div class="gc-card-bar">
           <span class="gc-card-num">NO.${String(p.id).padStart(3,'0')}</span>
           <span class="gc-card-gen">GEN ${p.generacion}</span>
         </div>
         <div class="gc-card-img">
-          <img data-id="${p.id}" data-nombre="${p.nombre_forma || p.nombre}" alt="${p.nombre_forma || p.nombre}" src=""/>
+          <img data-id="${p.id}" data-baseid="${p.base_id || ''}" data-nombre="${p.nombre_forma || p.nombre}" alt="${p.nombre_forma || p.nombre}" src=""/>
           <button class="gc-shiny-btn" title="Ver shiny" onclick="event.stopPropagation();toggleShiny(this,${p.base_id || p.id},'${nombreEscaped}')">✨</button>
           <div class="gc-sound">🔊</div>
         </div>
@@ -378,12 +378,26 @@ let currentModalId   = null;
 let currentModalName = null;
 let modalIsShiny     = false;
 
-function openModal(id) {
-  const p = allPokemons.find(x => x.id === id);
+function openModalCard(el) {
+  const pkid = parseInt(el.dataset.pkid);
+  const baseid = el.dataset.baseid ? parseInt(el.dataset.baseid) : null;
+  const nombre = el.dataset.nombre;
+
+  // Preferir la entrada que coincida con id + base_id o nombre_forma
+  let p = allPokemons.find(x => x.id === pkid && ((baseid && x.base_id === baseid) || (x.nombre_forma && x.nombre_forma === nombre)));
+  if (!p && baseid) p = allPokemons.find(x => x.id === pkid && x.base_id === baseid);
+  if (!p) p = allPokemons.find(x => x.id === pkid);
   if (!p) return;
 
-  currentModalId      = id;
-  currentModalBaseId  = p.base_id || id;
+  openModal(p);
+}
+
+function openModal(idOrP) {
+  const p = (typeof idOrP === 'object') ? idOrP : allPokemons.find(x => x.id === idOrP);
+  if (!p) return;
+
+  currentModalId      = p.id;
+  currentModalBaseId  = p.base_id || p.id;
   currentModalName    = p.nombre_forma || p.nombre;
 
   // Reproducir grito (usar base_id para archivos de audio)
@@ -393,7 +407,7 @@ function openModal(id) {
   audio.play().catch(() => {});
 
   // Barra título
-  document.getElementById('modalBarTitle').textContent = `INFO. POKÉMON — ${p.nombre.toUpperCase()}`;
+  document.getElementById('modalBarTitle').textContent = `INFO. POKÉMON — ${(p.nombre_forma || p.nombre).toUpperCase()}`;
 
   // Resetear estado shiny
   modalIsShiny = false;
@@ -403,12 +417,12 @@ function openModal(id) {
 
   // Sprite
   const spriteEl = document.getElementById('modalSprite');
-  spriteEl.dataset.pkid = id;
-  spriteEl.alt = p.nombre;
+  spriteEl.dataset.pkid = p.id;
+  spriteEl.alt = p.nombre_forma || p.nombre;
   document.getElementById('modalLoader').classList.add('visible');
 
   // Aplicar tamaño custom modal si existe en sprite_sizes.json
-  const customSizes = SPRITE_SIZES[String(id)];
+  const customSizes = SPRITE_SIZES[String(p.id)] || SPRITE_SIZES[String(currentModalBaseId)];
   if (customSizes && customSizes.modal) {
     spriteEl.style.width  = customSizes.modal + 'px';
     spriteEl.style.height = customSizes.modal + 'px';
@@ -451,7 +465,7 @@ function openModal(id) {
   ).join('');
 
   // Curiosidades (curiosidades.json)
-  const curiosidades = CURIOSIDADES[String(id)] || [];
+  const curiosidades = CURIOSIDADES[String(p.id)] || [];
   const container    = document.getElementById('modalCuriosidades');
   if (curiosidades.length === 0) {
     container.innerHTML = '<div class="modal-no-curiosidades">Sin datos curiosos registrados todavía.</div>';
